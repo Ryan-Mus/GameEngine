@@ -1,20 +1,45 @@
 #pragma once
 #include <memory>
 #include "Transform.h"
+#include "Component.h"
+#include "Time.h"
+#include <vector>
+#include <typeindex>
+#include <unordered_map>
 
 namespace dae
 {
-	class Texture2D;
-
-	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
 		virtual void Update();
+		virtual void FixedUpdate();
 		virtual void Render() const;
 
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
+		template<typename T, typename... Args>
+		T& AddComponent(Args&&... args) {
+			std::type_index typeIdx(typeid(T));
+			auto component = std::make_unique<T>(std::forward<Args>(args)...);
+			T& ref = *component;
+			components[typeIdx] = std::move(component);
+			return ref;
+		}
+
+		template<typename T>
+		void RemoveComponent() {
+			components.erase(std::type_index(typeid(T)));
+		}
+
+		template<typename T>
+		bool HasComponent() const {
+			return components.find(std::type_index(typeid(T))) != components.end();
+		}
+
+		template<typename T>
+		T* GetComponent() {
+			auto it = components.find(std::type_index(typeid(T)));
+			return (it != components.end()) ? dynamic_cast<T*>(it->second.get()) : nullptr;
+		}
 
 		GameObject() = default;
 		virtual ~GameObject();
@@ -24,8 +49,6 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
+		std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
 	};
 }
