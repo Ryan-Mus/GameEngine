@@ -15,13 +15,12 @@ namespace dae
 		void Render() const override;
 
 		void SetText(const std::string& text);
-		void SetPosition(float x, float y);
 
-		TextComponent(const std::string& text, std::shared_ptr<Font> font);
+		explicit TextComponent(const std::string& text, std::shared_ptr<Font> font, GameObject* owner)
+			:Component{ owner }, m_NeedsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr) {};
 	private:
-		bool m_needsUpdate;
+		bool m_NeedsUpdate;
 		std::string m_text;
-		Transform m_transform{};
 		std::shared_ptr<Font> m_font;
 		std::shared_ptr<Texture2D> m_textTexture;
 	};

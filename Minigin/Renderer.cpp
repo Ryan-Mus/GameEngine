@@ -20,7 +20,7 @@ int GetOpenGLDriverIndex()
 void dae::Renderer::Init(SDL_Window* window)
 {
 	m_window = window;
-	m_renderer = SDL_CreateRenderer(window, GetOpenGLDriverIndex(), SDL_RENDERER_ACCELERATED);
+	m_renderer = SDL_CreateRenderer(window, GetOpenGLDriverIndex(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (m_renderer == nullptr) 
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
@@ -64,6 +64,26 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+}
+
+void dae::Renderer::RenderTexture(const Texture2D& texture, const float dstX, const float dstY, 
+	const int srcX,const int srcY,const int scrWidth,const int scrHeight) const
+{
+	SDL_Rect dst{};
+	dst.x = static_cast<int>(dstX);
+	dst.y = static_cast<int>(dstY);
+
+	SDL_Rect src{};
+	src.x = srcX;
+	src.y = srcY;
+	src.w = scrWidth;
+	src.h = scrHeight;
+
+	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+
+	dst.w = scrWidth;
+	dst.h = scrHeight;
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 }
 
 SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }

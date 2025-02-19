@@ -90,6 +90,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	while (doContinue)
 	{
 		time.Update();
+
 		doContinue = input.ProcessInput();
 
 		while (time.NeedsStep())
@@ -101,8 +102,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		sceneManager.Update();
 		renderer.Render();
 
-		auto currentTime = std::chrono::high_resolution_clock::now();
-		auto sleepTime = currentTime + std::chrono::milliseconds(16) - std::chrono::high_resolution_clock::now();
-		std::this_thread::sleep_for(sleepTime);
+		//Vsync is enabled so no sleep thread needed.
+		SDL_Delay(0);
 	}
 }
