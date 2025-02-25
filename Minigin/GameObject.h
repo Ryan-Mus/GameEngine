@@ -60,7 +60,14 @@ namespace dae
 		//Transform functions
 		glm::vec3 GetWorldPosition()	{ return m_Transform.GetWorldPosition(); };
 		void SetLocalPostion(const glm::vec3 pos);
-		void SetPositionDirty()			{ m_Transform.SetPositionDirty(); };
+		void SetPositionDirty()
+		{
+			m_Transform.SetPositionDirty();
+			for (int i{}; i < m_pChildren.size(); ++i)
+			{
+				m_pChildren[i]->SetPositionDirty();
+			}
+		};
 
 		void Rotate(float x, float y, float z) { m_Transform.Rotate(x, y, z); };
 		void Translate(float x, float y, float z) { m_Transform.Translate(x, y, z); };

@@ -27,11 +27,11 @@ namespace dae
 		void SetPositionDirty() { m_IsPositionDirty = true; };
 		
 	private:
-		bool m_IsPositionDirty{ false };
-
 		GameObject* m_pParent;
 
 		glm::vec3 m_WorldPosition{};
 		glm::vec3 m_LocalPosition{};
+
+		bool m_IsPositionDirty{ false };
 	};
 }

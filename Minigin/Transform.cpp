@@ -43,6 +43,7 @@ void dae::Transform::Rotate(float,float,float z)
 	SetLocalPosition(newPosition);
 }
 
+//Not implemented yet
 void dae::Transform::Translate(float x, float y, float z)
 {
 	glm::mat4 translateMatrix
@@ -57,6 +58,7 @@ void dae::Transform::Translate(float x, float y, float z)
 	SetPositionDirty();
 }
 
+//Not implemented yet
 void dae::Transform::Scale(float x, float y, float z)
 {
 	glm::mat4 scaleMatrix
