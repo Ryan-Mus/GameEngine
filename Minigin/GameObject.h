@@ -63,7 +63,7 @@ namespace dae
 		void SetPositionDirty()
 		{
 			m_Transform.SetPositionDirty();
-			for (int i{}; i < m_pChildren.size(); ++i)
+			for (uint16_t i{}; i < m_pChildren.size(); ++i)
 			{
 				m_pChildren[i]->SetPositionDirty();
 			}
