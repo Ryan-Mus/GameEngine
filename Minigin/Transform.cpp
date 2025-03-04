@@ -54,8 +54,8 @@ void dae::Transform::Translate(float x, float y, float z)
 		{0,0,0,1}
 	};
 
-	//m_LocalPosition *= translateMatrix;
-	SetPositionDirty();
+	glm::vec4 newPosition =glm::vec4(m_LocalPosition, 1)*translateMatrix;
+	SetLocalPosition(newPosition);
 }
 
 //Not implemented yet

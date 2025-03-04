@@ -6,6 +6,7 @@
 #include <SDL_ttf.h>
 #include <chrono>
 #include <thread>
+#include <iostream>
 #include "Time.h"
 #include "Minigin.h"
 #include "InputManager.h"
