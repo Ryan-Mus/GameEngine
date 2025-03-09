@@ -1,6 +1,6 @@
 #include "GamepadController.h"
 
-//using std::max instead of the max macro
+// Using std::max instead of the max macro
 #define NOMINMAX
 #include <Windows.h>
 #include <Xinput.h>

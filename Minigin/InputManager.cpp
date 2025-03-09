@@ -151,7 +151,7 @@ dae::KeyState dae::InputManager::GetButtonState(int buttonId, int playerIndex)
 {
     GamepadController* controller = m_Controllers[playerIndex].get();
     if (!controller || !controller->IsConnected())
-        return KeyState::Released;
+        return KeyState::Up;
 
     bool isDown = controller->IsButtonDown(buttonId);
     bool wasDown = controller->WasButtonDown(buttonId);
@@ -162,6 +162,90 @@ dae::KeyState dae::InputManager::GetButtonState(int buttonId, int playerIndex)
         return KeyState::Released;
     else if (isDown && wasDown)
         return KeyState::Down;
+    // if !isDown and !wasDown = up
+    return KeyState::Up;
+}
 
-    return KeyState::Released;
+std::vector<dae::InputBinding>::iterator dae::InputManager::FindBinding(InputType type, int keyCode,KeyState state, int playerIndex)
+{
+    return std::find_if(m_InputBindings.begin(), m_InputBindings.end(),
+        [type, keyCode, state, playerIndex](const InputBinding& binding) -> bool 
+        {
+            return binding.type == type &&
+                binding.keyCode == keyCode &&
+                binding.keyState == state &&
+                (type == InputType::Keyboard || binding.playerIndex == playerIndex);
+        });
+}
+
+void dae::InputManager::RemoveKeyboardBinding(int keyCode, KeyState state)
+{
+    auto it = FindBinding(InputType::Keyboard, keyCode, state);
+    if (it != m_InputBindings.end()) 
+    {
+        m_InputBindings.erase(it);
+    }
+}
+
+void dae::InputManager::RemoveControllerBinding(int buttonId, int playerIndex, KeyState state)
+{
+    auto it = FindBinding(InputType::Controller, buttonId, state, playerIndex);
+    if (it != m_InputBindings.end()) 
+    {
+        m_InputBindings.erase(it);
+    }
+}
+
+void dae::InputManager::RemoveAllBindings()
+{
+    m_InputBindings.clear();
+}
+
+void dae::InputManager::RemoveAllKeyboardBindings()
+{
+    m_InputBindings.erase(
+        std::remove_if(m_InputBindings.begin(), m_InputBindings.end(),
+            [](const InputBinding& binding) 
+            {
+                return binding.type == InputType::Keyboard;
+            }),
+        m_InputBindings.end());
+}
+
+void dae::InputManager::RemoveAllControllerBindings(int playerIndex)
+{
+    if (playerIndex >= 0) 
+    {
+        // Remove bindings for specific controller
+        m_InputBindings.erase(
+            std::remove_if(m_InputBindings.begin(), m_InputBindings.end(),
+                [playerIndex](const InputBinding& binding) 
+                {
+                    return binding.type == InputType::Controller &&
+                        binding.playerIndex == playerIndex;
+                }),
+            m_InputBindings.end());
+    }
+    else 
+    {
+        // Remove all controller bindings
+        m_InputBindings.erase(
+            std::remove_if(m_InputBindings.begin(), m_InputBindings.end(),
+                [](const InputBinding& binding) {
+                    return binding.type == InputType::Controller;
+                }),
+            m_InputBindings.end());
+    }
+}
+
+void dae::InputManager::RemoveCommandBinding(std::shared_ptr<Command> command)
+{
+    //Goes through all bindings and removes the ones with a specific command
+    m_InputBindings.erase(
+        std::remove_if(m_InputBindings.begin(), m_InputBindings.end(),
+            [command](const InputBinding& binding) 
+            {
+                return binding.command == command;
+            }),
+        m_InputBindings.end());
 }

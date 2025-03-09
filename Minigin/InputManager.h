@@ -12,7 +12,8 @@ namespace dae
     {
         Pressed,    // Key was just pressed this frame
         Released,   // Key was just released this frame
-        Down        // Key is being held down
+        Down,        // Key is being held down
+        Up
     };
 
     enum class InputType
@@ -44,6 +45,15 @@ namespace dae
         // Bind controller button to a command
         void BindControllerCommand(int buttonId, int playerIndex, KeyState state, std::shared_ptr<Command> command);
 
+        void RemoveKeyboardBinding(int keyCode, KeyState state);
+        void RemoveControllerBinding(int buttonId, int playerIndex, KeyState state);
+        void RemoveAllBindings();
+        void RemoveAllKeyboardBindings();
+        void RemoveAllControllerBindings(int playerIndex = -1); // -1 means all controllers
+
+        // Remove a specific command binding
+        void RemoveCommandBinding(std::shared_ptr<Command> command);
+
         void AddController(int playerIndex);
         void RemoveController(int playerIndex);
         GamepadController* GetController(int playerIndex);
@@ -66,5 +76,7 @@ namespace dae
         // Get key state (Pressed, Released, Down)
         KeyState GetKeyState(int keyCode);
         KeyState GetButtonState(int buttonId, int playerIndex);
+
+        std::vector<InputBinding>::iterator FindBinding(InputType type, int keyCode, KeyState state, int playerIndex = 0);
     };
 }
