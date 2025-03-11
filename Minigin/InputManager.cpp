@@ -100,7 +100,7 @@ void dae::InputManager::AddController(int playerIndex)
 {
     if (playerIndex >= 0 && playerIndex < XUSER_MAX_COUNT)
     {
-        m_Controllers[playerIndex] = std::make_unique<GamepadController>(playerIndex);
+       m_Controllers[playerIndex] = std::make_unique<GamepadController>(playerIndex);
     }
 }
 

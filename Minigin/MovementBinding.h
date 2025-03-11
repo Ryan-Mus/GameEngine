@@ -4,7 +4,7 @@
 
 namespace dae 
 {
-	static void AddControllerMovement(float speed, int playerIndex, GameObject* pOwner)
+	void AddControllerMovement(float speed, int playerIndex, GameObject* pOwner)
 	{
 		auto& input = InputManager::GetInstance();
 		input.AddController(playerIndex);
@@ -26,7 +26,17 @@ namespace dae
 			KeyState::Down,
 			std::make_shared<MoveCommand>(speed, glm::vec2(1, 0), pOwner));
 	}
-	static void AddKeyboardMovement(float speed, GameObject* pOwner)
+
+	void RemoveControllerMovement(int playerIndex)
+	{
+		auto& input = InputManager::GetInstance();
+		input.RemoveControllerBinding(XINPUT_GAMEPAD_DPAD_DOWN, playerIndex, KeyState::Down);
+		input.RemoveControllerBinding(XINPUT_GAMEPAD_DPAD_UP, playerIndex, KeyState::Down);
+		input.RemoveControllerBinding(XINPUT_GAMEPAD_DPAD_LEFT, playerIndex, KeyState::Down);
+		input.RemoveControllerBinding(XINPUT_GAMEPAD_DPAD_RIGHT, playerIndex, KeyState::Down);
+	}
+
+	void AddKeyboardMovement(float speed, GameObject* pOwner)
 	{
 		auto& input = InputManager::GetInstance();
 
@@ -42,5 +52,14 @@ namespace dae
 		input.BindKeyboardCommand('D'
 			, KeyState::Down,
 			std::make_shared<MoveCommand>(speed, glm::vec2(1, 0), pOwner));
+	}
+
+	void RemoveKeyboardMovement()
+	{
+		auto& input = InputManager::GetInstance();
+		input.RemoveKeyboardBinding('W', KeyState::Down);
+		input.RemoveKeyboardBinding('A', KeyState::Down);
+		input.RemoveKeyboardBinding('S', KeyState::Down);
+		input.RemoveKeyboardBinding('D', KeyState::Down);
 	}
 }

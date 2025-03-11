@@ -120,6 +120,30 @@
     <ClInclude Include="XInputDefines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreUIcomponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesUIComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractionCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DieComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PickUpPelletsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -201,6 +225,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GamepadController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreUIcomponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesUIComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DieComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PickUpPelletsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

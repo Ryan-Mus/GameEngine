@@ -6,6 +6,7 @@
 #include <vector>
 #include <typeindex>
 #include <unordered_map>
+#include "Subject.h"
 
 namespace dae
 {
@@ -45,9 +46,10 @@ namespace dae
 		}
 
 		template<typename T>
-		T* GetComponent() 
+		T* GetComponent()
 		{
 			auto it = components.find(std::type_index(typeid(T)));
+			assert(it != components.end() && "Component not found!");
 			return (it != components.end()) ? dynamic_cast<T*>(it->second.get()) : nullptr;
 		}
 

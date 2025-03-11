@@ -1,7 +1,6 @@
 #pragma once
 #include "Command.h"
 #include "GameObject.h"
-#pragma once
 #include <glm.hpp>
 #include "Time.h"
 namespace dae
