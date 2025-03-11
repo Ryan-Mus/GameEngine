@@ -1,55 +1,23 @@
 #pragma once
 #include "Command.h"
 #include "GameObject.h"
+#pragma once
+#include <glm.hpp>
 #include "Time.h"
 namespace dae
 {
-	class MoveUpCommand final : public Command
+	class MoveCommand final : public Command
 	{
 	public:
-		MoveUpCommand(float speed, GameObject* pOwner) :m_Speed{speed},m_GameObject { pOwner } {};
+		MoveCommand(float speed, glm::vec2 direction, GameObject* pOwner) :m_Speed{ speed }, m_Direction{direction}, m_GameObject{ pOwner } {};
 		void Execute() override 
 		{
-			m_GameObject->Translate(0, -m_Speed*Time::GetInstance().GetDeltaTime(), 0);
+			m_GameObject->Translate(m_Direction.x * m_Speed * Time::GetInstance().GetDeltaTime(),
+			m_Direction.y * m_Speed * Time::GetInstance().GetDeltaTime(), 0);
 		}
 	private:
 		float m_Speed;
 		GameObject* m_GameObject;
-	};
-	class MoveRightCommand final : public Command
-	{
-	public:
-		MoveRightCommand(float speed, GameObject* pOwner) :m_Speed{ speed }, m_GameObject{ pOwner } {};
-		void Execute() override
-		{
-			m_GameObject->Translate(m_Speed * Time::GetInstance().GetDeltaTime(), 0, 0);
-		}
-	private:
-		float m_Speed;
-		GameObject* m_GameObject;
-	};
-	class MoveDownCommand final : public Command
-	{
-	public:
-		MoveDownCommand(float speed, GameObject* pOwner) :m_Speed{ speed }, m_GameObject{ pOwner } {};
-		void Execute() override
-		{
-			m_GameObject->Translate(0, m_Speed * Time::GetInstance().GetDeltaTime(), 0);
-		}
-	private:
-		float m_Speed;
-		GameObject* m_GameObject;
-	};
-	class MoveLeftCommand final : public Command
-	{
-	public:
-		MoveLeftCommand(float speed, GameObject* pOwner) :m_Speed{ speed }, m_GameObject{ pOwner } {};
-		void Execute() override
-		{
-			m_GameObject->Translate(-m_Speed * Time::GetInstance().GetDeltaTime(), 0, 0);
-		}
-	private:
-		float m_Speed;
-		GameObject* m_GameObject;
+		glm::vec2 m_Direction;
 	};
 }

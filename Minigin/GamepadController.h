@@ -2,8 +2,7 @@
 
 namespace dae
 {
-    class GamepadControllerImpl; // Forward declaration
-
+    class GamepadControllerImpl;
     class GamepadController
     {
     public:
@@ -25,8 +24,8 @@ namespace dae
         float GetRightTrigger() const;
 
         void SetVibration(float leftMotor, float rightMotor);
-
     private:
+        
         GamepadControllerImpl* m_pImpl;
     };
 }

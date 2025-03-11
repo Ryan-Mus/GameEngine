@@ -5,10 +5,10 @@
 
 namespace dae
 {
-    class ImGuiComponent final : public Component
+    class ThrashTheCacheComponent final : public Component
     {
     public:
-        ImGuiComponent(GameObject* pOwner): Component{ pOwner } {}
+        ThrashTheCacheComponent(GameObject* pOwner): Component{ pOwner } {}
         void Render() const override;
         void RunBenchmarkEx1();
         void RunBenchmarkEx2(); 

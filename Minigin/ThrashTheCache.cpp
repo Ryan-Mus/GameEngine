@@ -1,4 +1,4 @@
-﻿#include "ImGuiComponent.h"
+﻿#include "ThrashTheCache.h"
 #include "imgui_plot.h"
 #include <array>
 #include <chrono>
@@ -8,7 +8,7 @@
 
 using namespace dae;
 
-void ImGuiComponent::RunBenchmarkEx1()
+void ThrashTheCacheComponent::RunBenchmarkEx1()
 {
     std::thread([this]()
         {
@@ -42,7 +42,7 @@ void ImGuiComponent::RunBenchmarkEx1()
         }).detach();
 }
 
-void ImGuiComponent::RunBenchmarkEx2()
+void ThrashTheCacheComponent::RunBenchmarkEx2()
 {
     std::thread([this]()
         {
@@ -76,7 +76,7 @@ void ImGuiComponent::RunBenchmarkEx2()
         }).detach();
 }
 
-void ImGuiComponent::RunBenchmarkEx2Alt()
+void ThrashTheCacheComponent::RunBenchmarkEx2Alt()
 {
     std::thread([this]()
         {
@@ -111,7 +111,7 @@ void ImGuiComponent::RunBenchmarkEx2Alt()
 }
 
 
-void ImGuiComponent::Render() const
+void ThrashTheCacheComponent::Render() const
 {
     if (ImGui::Begin("Exercise 1"))
     {
@@ -123,8 +123,8 @@ void ImGuiComponent::Render() const
 
         if (ImGui::Button("Run Benchmark"))
         {
-            const_cast<ImGuiComponent*>(this)->m_NumRunsEx2 = numRuns;
-            const_cast<ImGuiComponent*>(this)->RunBenchmarkEx1();
+            const_cast<ThrashTheCacheComponent*>(this)->m_NumRunsEx2 = numRuns;
+            const_cast<ThrashTheCacheComponent*>(this)->RunBenchmarkEx1();
         }
 
         if (!m_TimingsEx1.empty())
@@ -144,15 +144,15 @@ void ImGuiComponent::Render() const
 
         if (ImGui::Button("Run Benchmark"))
         {
-            const_cast<ImGuiComponent*>(this)->m_NumRunsEx2 = numRuns;
-            const_cast<ImGuiComponent*>(this)->RunBenchmarkEx2();
+            const_cast<ThrashTheCacheComponent*>(this)->m_NumRunsEx2 = numRuns;
+            const_cast<ThrashTheCacheComponent*>(this)->RunBenchmarkEx2();
 
         }
         ImGui::SameLine();
         if (ImGui::Button("Run Alt Benchmark"))
         {
-            const_cast<ImGuiComponent*>(this)->m_NumRunsEx2 = numRuns;
-            const_cast<ImGuiComponent*>(this)->RunBenchmarkEx2Alt();
+            const_cast<ThrashTheCacheComponent*>(this)->m_NumRunsEx2 = numRuns;
+            const_cast<ThrashTheCacheComponent*>(this)->RunBenchmarkEx2Alt();
         }
 
         if (!m_TimingsEx2.empty())

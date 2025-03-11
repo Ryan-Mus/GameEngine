@@ -102,7 +102,7 @@
     <ClInclude Include="..\3rdParty\imgui\imgui_plot.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiComponent.h">
+    <ClInclude Include="ThrashTheCache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Command.h">
@@ -111,13 +111,10 @@
     <ClInclude Include="GamepadController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ControllerMovementComponent.h">
+    <ClInclude Include="MovementBinding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MoveCommands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardMovementComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XInputDefines.h">
@@ -197,19 +194,13 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiComponent.cpp">
+    <ClCompile Include="ThrashTheCache.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GamepadController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ControllerMovementComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardMovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,7 +6,6 @@
 #include <Xinput.h>
 #include <memory>
 
-
 namespace dae
 {
     class GamepadControllerImpl
@@ -81,7 +80,7 @@ namespace dae
     };
 
     GamepadController::GamepadController(int playerIndex)
-        : m_pImpl(new GamepadControllerImpl(playerIndex)) {
+        : m_pImpl(new dae::GamepadControllerImpl(playerIndex)) {
     }
 
     GamepadController::~GamepadController()
@@ -100,4 +99,5 @@ namespace dae
     float GamepadController::GetLeftTrigger() const { return m_pImpl->GetLeftTrigger(); }
     float GamepadController::GetRightTrigger() const { return m_pImpl->GetRightTrigger(); }
     void GamepadController::SetVibration(float leftMotor, float rightMotor) { m_pImpl->SetVibration(leftMotor, rightMotor); }
+
 }
