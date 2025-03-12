@@ -13,7 +13,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include <steam_api.h>
+
 
 SDL_Window* g_window{};
 
@@ -104,7 +104,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		sceneManager.Update();
 		renderer.Render();
 
-		SteamAPI_RunCallbacks();
+		
 		//Vsync is enabled so no sleep thread needed.
 		SDL_Delay(0);
 	}

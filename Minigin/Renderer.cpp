@@ -6,6 +6,7 @@
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
+#include <steam_api.h>
 
 
 int GetOpenGLDriverIndex()
@@ -51,13 +52,13 @@ void dae::Renderer::Render() const
 
 	SceneManager::GetInstance().Render();
 	
-	
 	//ImGui::ShowDemoWindow();
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-
 	SDL_RenderPresent(m_renderer);
+
+	SteamAPI_RunCallbacks();
 }
 
 void dae::Renderer::Destroy()

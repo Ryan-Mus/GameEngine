@@ -137,7 +137,11 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)3rdParty\steam\redistributable_bin\win64\*.dll $(OutputPath) /Y</Command>
+      <Command>xcopy $(SolutionDir)3rdParty\SDL2\lib\x64\SDL2.dll $(OutputPath) /R /Y
+xcopy $(SolutionDir)3rdParty\SDL2_image\lib\x64\*.dll $(OutputPath) /R /Y
+xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll $(OutputPath) /R /Y
+xcopy $(SolutionDir)3rdParty\steam\redistributable_bin\win64\*.dll $(OutputPath) /Y
+echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -193,7 +197,11 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)3rdParty\steam\redistributable_bin\win64\*.dll $(OutputPath) /Y</Command>
+      <Command>xcopy $(SolutionDir)3rdParty\SDL2\lib\x64\SDL2.dll $(OutputPath) /R /Y
+xcopy $(SolutionDir)3rdParty\SDL2_image\lib\x64\*.dll $(OutputPath) /R /Y
+xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll $(OutputPath) /R /Y
+xcopy $(SolutionDir)3rdParty\steam\redistributable_bin\win64\*.dll $(OutputPath) /Y
+echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -209,6 +217,7 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="CSteamAchievements.h" />
     <ClInclude Include="DieComponent.h" />
     <ClInclude Include="LivesUIComponent.h" />
     <ClInclude Include="MovementBinding.h" />
@@ -251,6 +260,7 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="CSteamAchievements.cpp" />
     <ClCompile Include="DieComponent.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FpsComponent.cpp" />
