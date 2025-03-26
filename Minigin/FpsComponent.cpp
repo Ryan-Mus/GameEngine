@@ -1,6 +1,11 @@
+#pragma once
+#include <iostream>
+
 #include "FpsComponent.h"
 #include "Time.h"
-#include <iostream>
+#include "TextComponent.h"
+#include "GameObject.h"
+
 dae::FpsComponent::FpsComponent(GameObject* pOwner)
 	:Component{pOwner}
 {

@@ -1,8 +1,9 @@
 #pragma once
 #include "Component.h"
-#include "TextComponent.h"
+
 namespace dae
 {
+	class GameObject;
 	class FpsComponent final : public Component
 	{
 	public:

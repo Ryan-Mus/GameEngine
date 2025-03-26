@@ -1,8 +1,11 @@
+#pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <stdexcept>
+
 #include "Texture2D.h"
 #include "Renderer.h"
-#include <stdexcept>
+
 
 dae::Texture2D::~Texture2D()
 {

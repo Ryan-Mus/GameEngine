@@ -1,10 +1,13 @@
-﻿#include "ThrashTheCache.h"
-#include "imgui_plot.h"
+﻿#pragma once
 #include <array>
 #include <chrono>
 #include <iostream>
 #include <algorithm>
 #include <thread>
+
+#include "ThrashTheCache.h"
+#include "imgui_plot.h"
+
 
 using namespace dae;
 

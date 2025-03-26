@@ -1,7 +1,8 @@
 #pragma once
+#include <glm.hpp>
+
 #include "Command.h"
 #include "GameObject.h"
-#include <glm.hpp>
 #include "Time.h"
 namespace dae
 {

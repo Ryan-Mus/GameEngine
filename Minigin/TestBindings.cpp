@@ -1,3 +1,4 @@
+#pragma once
 #include "TestBindings.h"
 #include "InputManager.h"
 #include "XInputDefines.h"

@@ -1,8 +1,10 @@
+#pragma once
 #include <SDL.h>
 #include <Windows.h>
 #include <Xinput.h>
 #include <imgui_impl_sdl2.h>
 #include <cstring>
+
 #include "InputManager.h"
 
 dae::InputManager::InputManager()

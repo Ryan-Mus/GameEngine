@@ -182,9 +182,6 @@
     <ClCompile Include="Minigin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -219,9 +216,6 @@
       <Filter>ImGui</Filter>
     </ClCompile>
     <ClCompile Include="ThrashTheCache.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GamepadController.cpp">

@@ -1,11 +1,13 @@
+#pragma once
 #include <stdexcept>
-#include "Renderer.h"
-#include "SceneManager.h"
-#include "Texture2D.h"
 #include <SDL_opengl.h>
 #include <imgui.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
+
+#include "Renderer.h"
+#include "SceneManager.h"
+#include "Texture2D.h"
 
 
 int GetOpenGLDriverIndex()

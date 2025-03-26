@@ -1,5 +1,7 @@
+#pragma once
 #include <stdexcept>
 #include <SDL_ttf.h>
+
 #include "TextComponent.h"
 #include "Renderer.h"
 #include "Font.h"

@@ -1,8 +1,8 @@
-#include "Scene.h"
-#include "GameObject.h"
-
+#pragma once
 #include <algorithm>
 
+#include "Scene.h"
+#include "GameObject.h"
 using namespace dae;
 
 unsigned int Scene::m_idCounter = 0;

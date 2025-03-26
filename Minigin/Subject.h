@@ -1,7 +1,7 @@
 #pragma once
-#pragma once
 #include <vector>
 #include <algorithm>
+
 #include "Observer.h"
 namespace dae
 {

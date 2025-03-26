@@ -1,6 +1,7 @@
 #pragma once
 #include <chrono>
 #include <thread>
+
 #include "Singleton.h"
 
 namespace dae

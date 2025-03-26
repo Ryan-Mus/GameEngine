@@ -1,3 +1,4 @@
+#pragma once
 #include <stdexcept>
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
@@ -7,6 +8,7 @@
 #include <chrono>
 #include <thread>
 #include <iostream>
+
 #include "Time.h"
 #include "Minigin.h"
 #include "InputManager.h"

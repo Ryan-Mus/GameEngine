@@ -1,10 +1,9 @@
-#include "GamepadController.h"
-
-// Using std::max instead of the max macro
-#define NOMINMAX
+#pragma once
 #include <Windows.h>
 #include <Xinput.h>
 #include <memory>
+
+#include "GamepadController.h"
 
 namespace dae
 {

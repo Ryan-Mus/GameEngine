@@ -1,4 +1,10 @@
+#pragma once
+#include <String>
+
 #include "LivesUIComponent.h"
+#include "GameObject.h"
+#include "TextComponent.h"
+
 
 void dae::LivesUIComponent::LoseLife()
 {

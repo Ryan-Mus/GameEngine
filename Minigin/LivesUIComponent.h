@@ -1,10 +1,10 @@
 #pragma once
 #include "Component.h"
-#include "TextComponent.h"
 #include "Observer.h"
 
 namespace dae 
 {
+	class GameObject;
 	class LivesUIComponent : public Component, public Observer
 	{
 	public:

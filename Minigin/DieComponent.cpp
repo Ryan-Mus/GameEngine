@@ -1,5 +1,8 @@
-#include "DieComponent.h"
+#pragma once
 #include <iostream>
+
+#include "DieComponent.h"
+
 
 void dae::DieComponent::Die()
 {

@@ -2,6 +2,7 @@
 //No XInput or Windows or SDL in these headers
 #include <vector>
 #include <memory>
+
 #include "GamepadController.h"
 #include "Command.h"
 #include "Singleton.h"

@@ -1,7 +1,8 @@
 #pragma once
+#include <memory>
+
 #include "Component.h"
 #include "Subject.h"
-#include <memory>
 
 namespace dae
 {

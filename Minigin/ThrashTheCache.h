@@ -1,7 +1,8 @@
 #pragma once
-#include "Component.h"
 #include <mutex>
 #include <vector>
+
+#include "Component.h"
 
 namespace dae
 {

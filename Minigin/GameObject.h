@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
-#include "Transform.h"
-#include "Component.h"
-#include "Time.h"
 #include <vector>
 #include <typeindex>
 #include <unordered_map>
-#include "Subject.h"
+
+#include "Transform.h"
+#include "Component.h"
+#include "Time.h"
 
 namespace dae
 {
