@@ -153,6 +153,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MsPacman.cpp" />
+    <ClCompile Include="PickUpPelletsComponent.cpp" />
+    <ClCompile Include="TestBindings.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InteractionCommands.h" />
+    <ClInclude Include="PickUpPelletsComponent.h" />
+    <ClInclude Include="TestBindings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
