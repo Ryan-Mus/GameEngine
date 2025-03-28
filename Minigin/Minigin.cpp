@@ -9,7 +9,7 @@
 #include <thread>
 #include <iostream>
 
-#include "Time.h"
+#include "TimeSingleton.h"
 #include "Minigin.h"
 #include "InputManager.h"
 #include "SceneManager.h"

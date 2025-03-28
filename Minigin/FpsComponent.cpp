@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "FpsComponent.h"
-#include "Time.h"
+#include "TimeSingleton.h"
 #include "TextComponent.h"
 #include "GameObject.h"
 

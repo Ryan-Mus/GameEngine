@@ -3,7 +3,7 @@
 
 #include "Command.h"
 #include "GameObject.h"
-#include "Time.h"
+#include "TimeSingleton.h"
 namespace dae
 {
 	class MoveCommand final : public Command
