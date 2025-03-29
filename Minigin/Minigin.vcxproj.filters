@@ -102,9 +102,6 @@
     <ClInclude Include="..\3rdParty\imgui\imgui_plot.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="ThrashTheCache.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -118,9 +115,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XInputDefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreUIcomponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LivesUIComponent.h">
@@ -203,13 +197,7 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="ThrashTheCache.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GamepadController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreUIcomponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LivesUIComponent.cpp">

@@ -111,8 +111,7 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;opengl32.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +133,7 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;opengl32.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -160,8 +159,7 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;opengl32.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -187,7 +185,7 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;opengl32.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -211,9 +209,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamepadController.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="ScoreUIcomponent.h" />
     <ClInclude Include="Subject.h" />
-    <ClInclude Include="ThrashTheCache.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="MoveCommands.h" />
@@ -246,8 +242,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamepadController.cpp" />
     <ClCompile Include="LivesUIComponent.cpp" />
-    <ClCompile Include="ScoreUIcomponent.cpp" />
-    <ClCompile Include="ThrashTheCache.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Renderer.cpp" />

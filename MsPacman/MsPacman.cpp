@@ -22,6 +22,7 @@
 #include "DieComponent.h"
 #include "PickUpPelletsComponent.h"
 #include "Scene.h"
+#include "MsPacmanSubject.h"
 
 
 void load()
@@ -69,7 +70,7 @@ void load()
 	auto pacman = std::make_shared<dae::GameObject>();
 	pacman->AddComponent<dae::TextureComponent>("spritesheet.png", 0, 0, 20, 20);
 	pacman->AddComponent<dae::DieComponent>(std::make_unique<dae::Subject>());
-	pacman->AddComponent<dae::PickUpPelletsComponent>(std::make_unique<dae::Subject>());
+	pacman->AddComponent<dae::PickUpPelletsComponent>(std::make_unique<MsPacmanSubject>());
 	dae::AddControllerMovement(200.f, 0, pacman.get());
 	dae::AddControllerInteraction(0, pacman.get());
 	pacman->SetLocalPostion({ 100.f,100.f,0.f });
@@ -95,7 +96,7 @@ void load()
 	auto msPacman = std::make_shared<dae::GameObject>();
 	msPacman->AddComponent<dae::TextureComponent>("spritesheet.png", 80, 0, 20, 20);
 	msPacman->AddComponent<dae::DieComponent>(std::make_unique<dae::Subject>());
-	msPacman->AddComponent<dae::PickUpPelletsComponent>(std::make_unique<dae::Subject>());
+	msPacman->AddComponent<dae::PickUpPelletsComponent>(std::make_unique<MsPacmanSubject>());
 	dae::AddKeyboardMovement(100.f, msPacman.get());
 	dae::AddKeyboardInteraction(msPacman.get());
 	msPacman->SetLocalPostion({ 200.f,100.f,0.f });

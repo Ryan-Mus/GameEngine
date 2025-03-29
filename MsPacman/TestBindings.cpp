@@ -24,7 +24,6 @@ namespace dae
 			playerIndex,
 			KeyState::Pressed,
 			std::make_shared<PickUpPelletsCommand>(false, pOwner));
-
     }
 
     void AddKeyboardInteraction(GameObject* pOwner)

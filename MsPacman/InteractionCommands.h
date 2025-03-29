@@ -1,7 +1,6 @@
 #pragma once
 #include "Command.h"
 #include "GameObject.h"
-#include "Subject.h"
 #include "DieComponent.h"
 #include "PickUpPelletsComponent.h"
 
