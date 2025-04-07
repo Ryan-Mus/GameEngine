@@ -1,6 +1,4 @@
 #pragma once
-
-
 enum class MsPacmanEvent
 {
 	EATEN_BIG_PELLET,

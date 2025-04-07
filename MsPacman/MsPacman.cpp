@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_mixer.h>
 
 #if _DEBUG
 #if __has_include(<vld.h>)
@@ -23,7 +24,7 @@
 #include "PickUpPelletsComponent.h"
 #include "Scene.h"
 #include "MsPacmanSubject.h"
-
+#include "ServiceLocator.h"
 
 void load()
 {
@@ -68,7 +69,7 @@ void load()
 
 	//Pacman
 	auto pacman = std::make_shared<dae::GameObject>();
-	pacman->AddComponent<dae::TextureComponent>("spritesheet.png", 0, 0, 20, 20);
+	pacman->AddComponent<dae::TextureComponent>("spritesheet.png", 456, 0, 16, 16);
 	pacman->AddComponent<dae::DieComponent>(std::make_unique<dae::Subject>());
 	pacman->AddComponent<dae::PickUpPelletsComponent>(std::make_unique<MsPacmanSubject>());
 	dae::AddControllerMovement(200.f, 0, pacman.get());
@@ -94,7 +95,7 @@ void load()
 
 	//ms Pacman
 	auto msPacman = std::make_shared<dae::GameObject>();
-	msPacman->AddComponent<dae::TextureComponent>("spritesheet.png", 80, 0, 20, 20);
+	msPacman->AddComponent<dae::TextureComponent>("spritesheet.png", 456, 144, 16, 16);
 	msPacman->AddComponent<dae::DieComponent>(std::make_unique<dae::Subject>());
 	msPacman->AddComponent<dae::PickUpPelletsComponent>(std::make_unique<MsPacmanSubject>());
 	dae::AddKeyboardMovement(100.f, msPacman.get());
@@ -117,6 +118,10 @@ void load()
 	//Add observers
 	msPacman->GetComponent<dae::DieComponent>()->AddObserver(msPacmanLives->GetComponent<dae::LivesUIComponent>());
 	msPacman->GetComponent<dae::PickUpPelletsComponent>()->AddObserver(msPacmanScore->GetComponent<dae::ScoreUIcomponent>());
+
+	auto& soundManager = dae::ServiceLocator::GetSoundManager();
+	soundManager.LoadSound("Test", "Sounds/mscoin.wav");
+	soundManager.PlaySound("Test", -1, 100);
 }
 
 int main(int, char* []) {

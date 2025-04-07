@@ -5482,7 +5482,7 @@ static void ShowDemoWindowTables()
         // Here we use ImGuiTableFlags_SizingFixedFit (even though _ScrollX is not set)
         // So columns will adopt the "Fixed" policy and will maintain a fixed width regardless of the whole available width (unless table is small)
         // If there is not enough available width to fit all columns, they will however be resized down.
-        // FIXME-TABLE: Providing a stretch-on-init would make sense especially for tables which don't have saved settings
+        // FIXME-TABLE: Providing a stretch-on-Init would make sense especially for tables which don't have saved settings
         HelpMarker(
             "Using _Resizable + _SizingFixedFit flags.\n"
             "Fixed-width columns generally makes more sense if you want to use horizontal scrolling.\n\n"
@@ -5705,13 +5705,13 @@ static void ShowDemoWindowTables()
         if (ImGui::BeginTable("table_padding_2", 3, flags2))
         {
             static char text_bufs[3 * 5][16]; // Mini text storage for 3x5 cells
-            static bool init = true;
+            static bool Init = true;
             if (!show_widget_frame_bg)
                 ImGui::PushStyleColor(ImGuiCol_FrameBg, 0);
             for (int cell = 0; cell < 3 * 5; cell++)
             {
                 ImGui::TableNextColumn();
-                if (init)
+                if (Init)
                     strcpy(text_bufs[cell], "edit me");
                 ImGui::SetNextItemWidth(-FLT_MIN);
                 ImGui::PushID(cell);
@@ -5720,7 +5720,7 @@ static void ShowDemoWindowTables()
             }
             if (!show_widget_frame_bg)
                 ImGui::PopStyleColor();
-            init = false;
+            Init = false;
             ImGui::EndTable();
         }
         ImGui::PopStyleVar();
@@ -7912,10 +7912,10 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
     static ImGuiStyle ref_saved_style;
 
     // Default to using internal storage as reference
-    static bool init = true;
-    if (init && ref == NULL)
+    static bool Init = true;
+    if (Init && ref == NULL)
         ref_saved_style = style;
-    init = false;
+    Init = false;
     if (ref == NULL)
         ref = &ref_saved_style;
 

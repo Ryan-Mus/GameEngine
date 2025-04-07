@@ -3595,14 +3595,14 @@ bool ImGui::TempInputText(const ImRect& bb, ImGuiID id, const char* label, char*
     // On the first frame, g.TempInputTextId == 0, then on subsequent frames it becomes == id.
     // We clear ActiveID on the first frame to allow the InputText() taking it back.
     ImGuiContext& g = *GImGui;
-    const bool init = (g.TempInputId != id);
-    if (init)
+    const bool Init = (g.TempInputId != id);
+    if (Init)
         ClearActiveID();
 
     g.CurrentWindow->DC.CursorPos = bb.Min;
     g.LastItemData.ItemFlags |= ImGuiItemFlags_AllowDuplicateId;
     bool value_changed = InputTextEx(label, NULL, buf, buf_size, bb.GetSize(), flags | ImGuiInputTextFlags_MergedItem);
-    if (init)
+    if (Init)
     {
         // First frame we started displaying the InputText widget, we expect it to take the active id.
         IM_ASSERT(g.ActiveId == id);
@@ -9001,7 +9001,7 @@ bool ImGui::BeginMenuEx(const char* label, const char* icon, bool enabled)
         if (menu_is_open)
         {
             // Implement what ImGuiPopupFlags_NoReopenAlwaysNavInit would do:
-            // Perform an init request in the case the popup was already open (via a previous mouse hover)
+            // Perform an Init request in the case the popup was already open (via a previous mouse hover)
             if (want_open && want_open_nav_init && !g.NavInitRequest)
             {
                 FocusWindow(g.CurrentWindow, ImGuiFocusRequestFlags_UnlessBelowModal);

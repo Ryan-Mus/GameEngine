@@ -15,6 +15,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "ServiceLocator.h"
 
 SDL_Window* g_window{};
 
@@ -71,11 +72,14 @@ dae::Minigin::Minigin(const std::string &dataPath)
 	Renderer::GetInstance().Init(g_window);
 
 	ResourceManager::GetInstance().Init(dataPath);
+
+	ServiceLocator::GetSoundManager().Init(dataPath);
 }
 
 dae::Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
+	ServiceLocator::DestroySoundManager();
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	SDL_Quit();

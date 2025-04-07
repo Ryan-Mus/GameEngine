@@ -145,7 +145,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -209,6 +209,12 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamepadController.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="ServiceLocator.h" />
+    <ClInclude Include="SoundEvent.h" />
+    <ClInclude Include="SoundEventQueue.h" />
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="SoundService.h" />
+    <ClInclude Include="SoundServiceSDL.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
@@ -249,6 +255,10 @@
     <ClCompile Include="RotatorComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="SoundEventQueue.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="SoundServiceSDL.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
