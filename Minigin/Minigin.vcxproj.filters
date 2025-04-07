@@ -69,9 +69,6 @@
     <ClInclude Include="FpsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RotatorComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imconfig.h">
       <Filter>ImGui</Filter>
     </ClInclude>
@@ -108,25 +105,13 @@
     <ClInclude Include="GamepadController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovementBinding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveCommands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="XInputDefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesUIComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Subject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DieComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SoundService.h">
@@ -145,6 +130,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServiceLocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteSheetAnimatorComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -188,9 +176,6 @@
     <ClCompile Include="FpsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RotatorComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
@@ -218,12 +203,6 @@
     <ClCompile Include="GamepadController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LivesUIComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DieComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SoundServiceSDL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -234,6 +213,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteSheetAnimatorComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

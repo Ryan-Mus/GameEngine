@@ -33,6 +33,18 @@
     <ClCompile Include="MsPacmanSubject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DieComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesUIComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RotatorComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacmanMovement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InteractionCommands.h">
@@ -41,19 +53,31 @@
     <ClInclude Include="PickUpPelletsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestBindings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreUIcomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ThrashTheCache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MsPacmanObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MsPacmanSubject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DieComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesUIComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementBinding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RotatorComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PacmanMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

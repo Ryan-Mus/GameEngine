@@ -25,103 +25,74 @@
 #include "Scene.h"
 #include "MsPacmanSubject.h"
 #include "ServiceLocator.h"
+#include "PacmanMovement.h"
+#include "SpriteSheetAnimatorComponent.h"
 
 void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 
-	auto background = std::make_shared<dae::GameObject>();
-	background->AddComponent<dae::TextureComponent>("background.tga");
-	scene.Add(background);
-
-	auto titleFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto UIFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
-
-	auto title = std::make_shared<dae::GameObject>(background.get());
-	title->AddComponent<dae::TextComponent>("Programming 4 Assignment", titleFont);
-	title->SetLocalPostion({ 80.f,20.f,0.f });
-	scene.Add(title);
-
-	auto logo = std::make_shared<dae::GameObject>(background.get());
-	logo->AddComponent<dae::TextureComponent>("logo.tga");
-	logo->SetLocalPostion({ 220, 180, 0.f });
-	scene.Add(logo);
-
-	auto infoKill = std::make_shared<dae::GameObject>(background.get());
-	infoKill->AddComponent<dae::TextComponent>("Press 'C' to kill MsPacman or Button X to kill Pacman", UIFont);
-	infoKill->SetLocalPostion({ 10.f, 400.f, 0.f });
-	scene.Add(infoKill);
-
-	auto infoPickUpBig = std::make_shared<dae::GameObject>(background.get());
-	infoPickUpBig->AddComponent<dae::TextComponent>("Press 'X' or Button B to pick up a big pellet", UIFont);
-	infoPickUpBig->SetLocalPostion({ 10.f, 420.f, 0.f });
-	scene.Add(infoPickUpBig);
-
-	auto infoPickUpSmall = std::make_shared<dae::GameObject>(background.get());
-	infoPickUpSmall->AddComponent<dae::TextComponent>("Press 'Z' or Button A to pick up a small pellet", UIFont);
-	infoPickUpSmall->SetLocalPostion({ 10.f, 440.f, 0.f });
-	scene.Add(infoPickUpSmall);
-
-	auto fps = std::make_shared<dae::GameObject>(background.get());
-	fps->AddComponent<dae::TextComponent>(" ", titleFont);
-	fps->AddComponent<dae::FpsComponent>();
-	scene.Add(fps);
-
-	//Pacman
-	auto pacman = std::make_shared<dae::GameObject>();
-	pacman->AddComponent<dae::TextureComponent>("spritesheet.png", 456, 0, 16, 16);
-	pacman->AddComponent<dae::DieComponent>(std::make_unique<dae::Subject>());
-	pacman->AddComponent<dae::PickUpPelletsComponent>(std::make_unique<MsPacmanSubject>());
-	dae::AddControllerMovement(200.f, 0, pacman.get());
-	dae::AddControllerInteraction(0, pacman.get());
-	pacman->SetLocalPostion({ 100.f,100.f,0.f });
-	scene.Add(pacman);
-
-	auto pacmanLives = std::make_shared<dae::GameObject>(pacman.get());
-	pacmanLives->AddComponent<dae::TextComponent>("Lives: 3", UIFont);
-	pacmanLives->AddComponent<dae::LivesUIComponent>();
-	pacmanLives->SetLocalPostion({ 0.f,-20.f,0.f });
-	scene.Add(pacmanLives);
-
-	auto pacmanScore = std::make_shared<dae::GameObject>(pacman.get());
-	pacmanScore->AddComponent<dae::TextComponent>("Score: 0", UIFont);
-	pacmanScore->AddComponent<dae::ScoreUIcomponent>();
-	pacmanScore->SetLocalPostion({ 0.f,-40.f,0.f });
-	scene.Add(pacmanScore);
-
-	//Add observers
-	pacman->GetComponent<dae::DieComponent>()->AddObserver(pacmanLives->GetComponent<dae::LivesUIComponent>());
-	pacman->GetComponent<dae::PickUpPelletsComponent>()->AddObserver(pacmanScore->GetComponent<dae::ScoreUIcomponent>());
+	auto UIFont = dae::ResourceManager::GetInstance().LoadFont("emulogic.ttf", 24);
+	std::string texturePath = "spritesheet.png";
 
 	//ms Pacman
 	auto msPacman = std::make_shared<dae::GameObject>();
-	msPacman->AddComponent<dae::TextureComponent>("spritesheet.png", 456, 144, 16, 16);
-	msPacman->AddComponent<dae::DieComponent>(std::make_unique<dae::Subject>());
-	msPacman->AddComponent<dae::PickUpPelletsComponent>(std::make_unique<MsPacmanSubject>());
-	dae::AddKeyboardMovement(100.f, msPacman.get());
-	dae::AddKeyboardInteraction(msPacman.get());
+	msPacman->AddComponent<dae::TextureComponent>(texturePath, 456, 0, 16, 16,3);
+	msPacman->AddComponent<PacmanMovement>(200.f);
+	dae::AddKeyboardMovement(msPacman.get());
+	dae::AddControllerMovement(0, msPacman.get());
 	msPacman->SetLocalPostion({ 200.f,100.f,0.f });
+
+	auto& msPacmanAnimator = msPacman->AddComponent<dae::SpriteSheetAnimator>();
+	//
+	// Will later be read from a file
+	//
+	std::vector<dae::AnimationFrame> moveRightFrames = {
+	{456, 0, 16, 16, 0.1f},    // First frame: x, y, width, height, duration
+	{472, 0, 16, 16, 0.1f},   // Second frame
+	{488, 0, 16, 16, 0.1f}   // Third frame
+	};
+	msPacmanAnimator.AddAnimation("Right", moveRightFrames, true);
+
+	std::vector<dae::AnimationFrame> moveLeftFrames = {
+	{456, 16, 16, 16, 0.1f},    // First frame: x, y, width, height, duration
+	{472, 16, 16, 16, 0.1f},   // Second frame
+	{488, 16, 16, 16, 0.1f}   // Third frame
+	};
+	msPacmanAnimator.AddAnimation("Left", moveLeftFrames, true);
+
+	std::vector<dae::AnimationFrame> moveUpFrames = {
+	{456, 32, 16, 16, 0.1f},    // First frame: x, y, width, height, duration
+	{472, 32, 16, 16, 0.1f},   // Second frame
+	{488, 32, 16, 16, 0.1f}   // Third frame
+	};
+	msPacmanAnimator.AddAnimation("Up", moveUpFrames, true);
+
+	std::vector<dae::AnimationFrame> moveDownFrames = {
+	{456, 48, 16, 16, 0.1f},    // First frame: x, y, width, height, duration
+	{472, 48, 16, 16, 0.1f},   // Second frame
+	{488, 48, 16, 16, 0.1f}   // Third frame
+	};
+	msPacmanAnimator.AddAnimation("Down", moveDownFrames, true);
+	
 	scene.Add(msPacman);
 
-	auto msPacmanLives = std::make_shared<dae::GameObject>(msPacman.get());
-	msPacmanLives->AddComponent<dae::TextComponent>("Lives: 3", UIFont);
-	msPacmanLives->AddComponent<dae::LivesUIComponent>();
-	msPacmanLives->SetLocalPostion({ 0.f,-20.f,0.f });
-	scene.Add(msPacmanLives);
+	//background
+	auto background = std::make_shared<dae::GameObject>();
+	background->AddComponent<dae::TextureComponent>(texturePath, 228, 0, 224, 248,3);
+	background->SetLocalPostion({ 0.f,72.f,0.f });
+	scene.Add(background);
 
-	auto msPacmanScore = std::make_shared<dae::GameObject>(msPacman.get());
-	msPacmanScore->AddComponent<dae::TextComponent>("Score: 0", UIFont);
-	msPacmanScore->AddComponent<dae::ScoreUIcomponent>();
-	msPacmanScore->SetLocalPostion({ 0.f,-40.f,0.f });
-	scene.Add(msPacmanScore);
-
-	//Add observers
-	msPacman->GetComponent<dae::DieComponent>()->AddObserver(msPacmanLives->GetComponent<dae::LivesUIComponent>());
-	msPacman->GetComponent<dae::PickUpPelletsComponent>()->AddObserver(msPacmanScore->GetComponent<dae::ScoreUIcomponent>());
+	auto highScore = std::make_shared <dae::GameObject>();
+	highScore->AddComponent<dae::TextComponent>("High Score: 0", UIFont);
+	highScore->SetLocalPostion({0,0,0});
+	scene.Add(highScore);
 
 	auto& soundManager = dae::ServiceLocator::GetSoundManager();
-	soundManager.LoadSound("Test", "Sounds/mscoin.wav");
-	soundManager.PlaySound("Test", -1, 100);
+	soundManager.LoadSound("Intro", "Sounds/msstart.wav");
+	soundManager.PlaySound("Intro", 0);
+
+	soundManager.LoadSound("moving", "Sounds/mscoin.wav");
 }
 
 int main(int, char* []) {

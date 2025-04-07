@@ -12,10 +12,19 @@ namespace dae
 	public:
 		explicit TextureComponent(const std::string& filename,GameObject* pOwner);
 		explicit TextureComponent(const std::string& filename,int x,int y, int width,int height, GameObject* pOwner);
+		explicit TextureComponent(const std::string& filename, int x, int y, int width, int height, int scale, GameObject* pOwner);
+
+		void SetSource(int SrcX, int SrcY, int width, int height)
+		{
+			x = SrcX;
+			y = SrcY;
+			w = width;
+			h = height;
+		};
 		virtual void Render() const override;
 	private:
 		std::shared_ptr<Texture2D> m_Texture;
-		int x, y, w, h;
+		int x, y, w, h, s;
 	};
 }
 

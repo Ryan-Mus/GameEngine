@@ -159,21 +159,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DieComponent.cpp" />
+    <ClCompile Include="LivesUIComponent.cpp" />
     <ClCompile Include="MsPacman.cpp" />
     <ClCompile Include="MsPacmanSubject.cpp" />
+    <ClCompile Include="PacmanMovement.cpp" />
     <ClCompile Include="PickUpPelletsComponent.cpp" />
+    <ClCompile Include="RotatorComponent.cpp" />
     <ClCompile Include="ScoreUIcomponent.cpp" />
     <ClCompile Include="TestBindings.cpp" />
     <ClCompile Include="ThrashTheCache.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DieComponent.h" />
     <ClInclude Include="InteractionCommands.h" />
+    <ClInclude Include="LivesUIComponent.h" />
+    <ClInclude Include="MoveCommands.h" />
+    <ClInclude Include="MovementBinding.h" />
     <ClInclude Include="MsPacmanObserver.h" />
     <ClInclude Include="MsPacmanSubject.h" />
+    <ClInclude Include="PacmanMovement.h" />
     <ClInclude Include="PickUpPelletsComponent.h" />
+    <ClInclude Include="RotatorComponent.h" />
     <ClInclude Include="ScoreUIcomponent.h" />
-    <ClInclude Include="TestBindings.h" />
-    <ClInclude Include="ThrashTheCache.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
