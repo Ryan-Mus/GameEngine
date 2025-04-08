@@ -1,18 +1,27 @@
 #pragma once
 #include <Component.h>
 #include <Transform.h>
-class GameObject;
-class PacmanMovement final: public dae::Component
+class PacmanGrid;
+class PacmanMovement final : public dae::Component
 {
 public:
-	explicit PacmanMovement(float speed, dae::GameObject* owner)
-		:Component{ owner }, m_Speed{speed} {};
-	void Update() override;
+    explicit PacmanMovement(float speed, dae::GameObject* owner)
+        :Component{ owner }, m_Speed{ speed }
+    {
+    };
 
-	void SetDirection(const glm::vec3& direction) { m_Direction = direction; };
-	glm::vec3 GetDirection() { return m_Direction; };
+    void Update() override;
+    bool SetDirection(const glm::vec3& direction);
+    glm::vec3 GetDirection() const { return m_Direction; };
+    void SetGrid(PacmanGrid* grid) { m_Grid = grid; };
+
 private:
-	glm::vec3 m_Direction{};
-	float m_Speed;
-};
+    glm::vec3 m_Direction{0,0,0}; // Current movement direction
+    float m_Speed;
+    PacmanGrid* m_Grid{ nullptr };
 
+    // Helper methods
+    bool IsAlignedWithGrid() const;
+    bool CanMoveInDirection(const glm::vec3& direction);
+    void SnapToGridAlignment();
+};

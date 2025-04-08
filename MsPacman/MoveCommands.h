@@ -14,17 +14,19 @@ namespace dae
 		MoveCommand(glm::vec2 direction, GameObject* pOwner) :m_Direction{direction}, m_GameObject{ pOwner } {};
 		void Execute() override 
 		{
-			m_GameObject->GetComponent<PacmanMovement>()->SetDirection({ m_Direction.x,m_Direction.y,0.f});
-			auto animator = m_GameObject->GetComponent<SpriteSheetAnimator>();
+			if (m_GameObject->GetComponent<PacmanMovement>()->SetDirection({ m_Direction.x,m_Direction.y,0.f }))
+			{
+				auto animator = m_GameObject->GetComponent<SpriteSheetAnimator>();
 
-			if (m_Direction.x > 0)
-				animator->PlayAnimation("Right");
-			else if (m_Direction.x < 0)
-				animator->PlayAnimation("Left");
-			else if (m_Direction.y > 0)
-				animator->PlayAnimation("Down");
-			else if (m_Direction.y < 0)
-				animator->PlayAnimation("Up");
+				if (m_Direction.x > 0)
+					animator->PlayAnimation("Right");
+				else if (m_Direction.x < 0)
+					animator->PlayAnimation("Left");
+				else if (m_Direction.y > 0)
+					animator->PlayAnimation("Down");
+				else if (m_Direction.y < 0)
+					animator->PlayAnimation("Up");
+			}
 		}
 	private:
 		GameObject* m_GameObject;

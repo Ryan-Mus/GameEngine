@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\SDL2_mixer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)3rdParty\imgui;$(SolutionDir)3rdParty\SDL2_mixer\include;$(SolutionDir)3rdParty\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -163,6 +163,7 @@
     <ClCompile Include="LivesUIComponent.cpp" />
     <ClCompile Include="MsPacman.cpp" />
     <ClCompile Include="MsPacmanSubject.cpp" />
+    <ClCompile Include="PacmanGrid.cpp" />
     <ClCompile Include="PacmanMovement.cpp" />
     <ClCompile Include="PickUpPelletsComponent.cpp" />
     <ClCompile Include="RotatorComponent.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="ThrashTheCache.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomPacmanDefines.h" />
     <ClInclude Include="DieComponent.h" />
     <ClInclude Include="InteractionCommands.h" />
     <ClInclude Include="LivesUIComponent.h" />
@@ -178,6 +180,7 @@
     <ClInclude Include="MovementBinding.h" />
     <ClInclude Include="MsPacmanObserver.h" />
     <ClInclude Include="MsPacmanSubject.h" />
+    <ClInclude Include="PacmanGrid.h" />
     <ClInclude Include="PacmanMovement.h" />
     <ClInclude Include="PickUpPelletsComponent.h" />
     <ClInclude Include="RotatorComponent.h" />

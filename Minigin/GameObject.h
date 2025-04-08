@@ -61,6 +61,7 @@ namespace dae
 
 		//Transform functions
 		glm::vec3 GetWorldPosition()	{ return m_Transform.GetWorldPosition(); };
+		glm::vec3 GetLocalPosition() { return m_Transform.GetLocalPosition(); };
 		void SetLocalPostion(const glm::vec3 pos);
 		void SetPositionDirty()
 		{

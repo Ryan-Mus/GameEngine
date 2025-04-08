@@ -21,10 +21,27 @@ namespace dae
 			w = width;
 			h = height;
 		};
+
+		void SetScale(int scale)
+		{
+			s = scale;
+		}
+
+		void SetOffset(int offSetX, int offSetY)
+		{
+			offsetX = offSetX;
+			offsetY = offSetY;
+		}
 		virtual void Render() const override;
+
+		Texture2D* GetTexture() const
+		{
+			return m_Texture.get();
+		}
 	private:
 		std::shared_ptr<Texture2D> m_Texture;
 		int x, y, w, h, s;
+		int offsetX, offsetY;
 	};
 }
 

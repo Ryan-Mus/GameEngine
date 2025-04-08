@@ -27,6 +27,9 @@
 #include "ServiceLocator.h"
 #include "PacmanMovement.h"
 #include "SpriteSheetAnimatorComponent.h"
+#include "PacmanGrid.h"
+
+#include  "CustomPacmanDefines.h"
 
 void load()
 {
@@ -35,13 +38,25 @@ void load()
 	auto UIFont = dae::ResourceManager::GetInstance().LoadFont("emulogic.ttf", 24);
 	std::string texturePath = "spritesheet.png";
 
+	//background
+	auto background = std::make_shared<dae::GameObject>();
+	background->AddComponent<dae::TextureComponent>(texturePath, 228, 0, 224, 248, PACMAN_RENDERSCALE);
+	auto& grid = background->AddComponent<PacmanGrid>();
+	background->GetComponent<PacmanGrid>()->loadGrid("Level1.txt");
+	background->SetLocalPostion({ 0.f,64.f,0.f });
+	scene.Add(background);
+
 	//ms Pacman
-	auto msPacman = std::make_shared<dae::GameObject>();
-	msPacman->AddComponent<dae::TextureComponent>(texturePath, 456, 0, 16, 16,3);
+	auto msPacman = std::make_shared<dae::GameObject>(background.get());
+	auto& textureMsPacman = msPacman->AddComponent<dae::TextureComponent>(texturePath, 456, 0, 16, 16, PACMAN_RENDERSCALE);
+	//Draw the texture in the middle of the cell
+	textureMsPacman.SetOffset(-4 * PACMAN_RENDERSCALE, -4 * PACMAN_RENDERSCALE);
 	msPacman->AddComponent<PacmanMovement>(200.f);
+	msPacman->SetLocalPostion({grid.GridToLocalPosition(14, 17), 0});
 	dae::AddKeyboardMovement(msPacman.get());
 	dae::AddControllerMovement(0, msPacman.get());
-	msPacman->SetLocalPostion({ 200.f,100.f,0.f });
+
+	msPacman->GetComponent<PacmanMovement>()->SetGrid(&grid);
 
 	auto& msPacmanAnimator = msPacman->AddComponent<dae::SpriteSheetAnimator>();
 	//
@@ -77,11 +92,8 @@ void load()
 	
 	scene.Add(msPacman);
 
-	//background
-	auto background = std::make_shared<dae::GameObject>();
-	background->AddComponent<dae::TextureComponent>(texturePath, 228, 0, 224, 248,3);
-	background->SetLocalPostion({ 0.f,72.f,0.f });
-	scene.Add(background);
+
+
 
 	auto highScore = std::make_shared <dae::GameObject>();
 	highScore->AddComponent<dae::TextComponent>("High Score: 0", UIFont);
@@ -90,7 +102,7 @@ void load()
 
 	auto& soundManager = dae::ServiceLocator::GetSoundManager();
 	soundManager.LoadSound("Intro", "Sounds/msstart.wav");
-	soundManager.PlaySound("Intro", 0);
+	//soundManager.PlaySound("Intro", 0);
 
 	soundManager.LoadSound("moving", "Sounds/mscoin.wav");
 }

@@ -25,6 +25,6 @@ void dae::TextureComponent::Render() const
 {
 	if (m_Texture == nullptr) return;
 	const glm::vec3 pos{ GetOwner()->GetWorldPosition()};
-	if (w == 0 || h == 0)Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
-	else Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, x, y, w, h,s);
+	if (w == 0 || h == 0)Renderer::GetInstance().RenderTexture(*m_Texture, pos.x+offsetX, pos.y+offsetY);
+	else Renderer::GetInstance().RenderTexture(*m_Texture, pos.x + offsetX, pos.y + offsetY, x, y, w, h,s);
 }
