@@ -1,6 +1,5 @@
+// ServiceLocator.cpp
 #include "ServiceLocator.h"
+#include "NullSoundService.h"
 
-namespace dae
-{
-    std::unique_ptr<SoundManager> ServiceLocator::soundManager = nullptr;
-}
+std::unique_ptr<dae::ISoundService> dae::ServiceLocator::soundService = std::make_unique<NullSoundService>();

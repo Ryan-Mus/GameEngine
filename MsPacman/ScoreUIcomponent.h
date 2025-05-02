@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "TextComponent.h"
 #include "MsPacmanObserver.h"
+#include "ServiceLocator.h"
+
 namespace dae
 {
 	class ScoreUIcomponent : public Component, public MsPacmanObserver
@@ -17,9 +19,11 @@ namespace dae
 			{
 			case MsPacmanEvent::EATEN_SMALL_PELLET:
 				AddScore(10);
+				dae::ServiceLocator::GetSoundService().PlaySound("eatPellet", 0);
 				break;
 			case MsPacmanEvent::EATEN_BIG_PELLET:
-				AddScore(100);
+				AddScore(50);
+				dae::ServiceLocator::GetSoundService().PlaySound("eatBigPellet", 0);
 				break;
 			}
 		}

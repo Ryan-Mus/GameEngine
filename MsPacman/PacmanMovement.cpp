@@ -80,12 +80,25 @@ void PacmanMovement::Update()
 
 
 	// Get the center position for pellet detection
+	int cellSize = m_Grid->GetCellSize();
 	float halfCellSize = m_Grid->GetCellSize() / 2.0f;
 	glm::vec2 centerPos(nextPos.x + halfCellSize, nextPos.y + halfCellSize);
 
 	// Use center position for grid position calculation
 	auto gridPos = m_Grid->LocalToGridPosition(centerPos.x, centerPos.y);
 	auto cellType = m_Grid->GetCellType(gridPos.first, gridPos.second);
+
+	if (pos.x > cellSize * (m_Grid->GetColumns()+1))
+	{
+		GetOwner()->SetLocalPostion({-halfCellSize,pos.y,0});
+		return;
+	}
+
+	if (pos.x < -cellSize)
+	{
+		GetOwner()->SetLocalPostion({ cellSize * (m_Grid->GetColumns() + 0.5f), pos.y, 0 });
+		return;
+	}
 
 	if (CanMoveInDirection(m_Direction) == false)
 	{

@@ -1,0 +1,246 @@
+{
+  "scenes": [
+    {
+      "name": "Level1",
+      "gameObjects": [
+        {
+          "name": "grid",
+          "position": [0, 64],
+          "components": [
+            {
+              "textureComponent": {
+                "x": 228,
+                "y": 0,
+                "width": 224,
+                "height": 248
+              }
+            },
+            {
+              "pacmanGrid": {
+                "gridFile": "Level1.txt"
+              }
+            }
+          ]
+        },
+        {
+          "name": "msPacman",
+          "parent": "grid",
+          "gridPosition": 
+		  {
+			"pos": [14, 23],
+		    "grid": "grid"
+		  },
+          "components": [
+            {
+              "textureComponent": {
+                "x": 456,
+                "y": 0,
+                "width": 16,
+                "height": 16,
+                "offset": [-4, -4]
+              }
+            },
+            {
+              "pacmanMovement": {
+                "speed": 200.0,
+                "grid": "grid"
+              }
+            },
+            {
+              "spriteSheetAnimator": {
+                "animations": [
+                  {
+                    "name": "Right",
+                    "loop": true,
+                    "frames": [
+                      [456, 0, 16, 16, 0.1],
+                      [472, 0, 16, 16, 0.1],
+                      [488, 0, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Left",
+                    "loop": true,
+                    "frames": [
+                      [456, 16, 16, 16, 0.1],
+                      [472, 16, 16, 16, 0.1],
+                      [488, 16, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Up",
+                    "loop": true,
+                    "frames": [
+                      [456, 32, 16, 16, 0.1],
+                      [472, 32, 16, 16, 0.1],
+                      [488, 32, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Down",
+                    "loop": true,
+                    "frames": [
+                      [456, 48, 16, 16, 0.1],
+                      [472, 48, 16, 16, 0.1],
+                      [488, 48, 16, 16, 0.1]
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "keyboardMovement": {},
+          "controllerMovement": {
+            "controllerIndex": 0
+          }
+        },
+        {
+          "name": "highScore",
+          "components": [
+            {
+              "textComponent": {
+                "text": "High Score: 0"
+              }
+            },
+            {
+              "scoreUIComponent": {}
+            }
+          ]
+        }
+      ],
+	  "observerBindings": [
+	  {
+		"subject": {
+			"gameObject": "grid",
+			"component": "pacmanGrid"
+		},
+		"observer": {
+			"gameObject": "highScore",
+			"component": "scoreUIComponent"
+		}
+	  }
+	 ]
+	},
+	{
+      "name": "Level2",
+      "gameObjects": [
+        {
+          "name": "grid",
+          "position": [0, 64],
+          "components": [
+            {
+              "textureComponent": {
+                "x": 228,
+                "y": 248,
+                "width": 224,
+                "height": 248
+              }
+            },
+            {
+              "pacmanGrid": {
+                "gridFile": "Level2.txt"
+              }
+            }
+          ]
+        },
+        {
+          "name": "msPacman",
+          "parent": "grid",
+          "gridPosition": 
+		  {
+			"pos": [14, 23],
+		    "grid": "grid"
+		  },
+          "components": [
+            {
+              "textureComponent": {
+                "x": 456,
+                "y": 0,
+                "width": 16,
+                "height": 16,
+                "offset": [-4, -4]
+              }
+            },
+            {
+              "pacmanMovement": {
+                "speed": 200.0,
+                "grid": "grid"
+              }
+            },
+            {
+              "spriteSheetAnimator": {
+                "animations": [
+                  {
+                    "name": "Right",
+                    "loop": true,
+                    "frames": [
+                      [456, 0, 16, 16, 0.1],
+                      [472, 0, 16, 16, 0.1],
+                      [488, 0, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Left",
+                    "loop": true,
+                    "frames": [
+                      [456, 16, 16, 16, 0.1],
+                      [472, 16, 16, 16, 0.1],
+                      [488, 16, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Up",
+                    "loop": true,
+                    "frames": [
+                      [456, 32, 16, 16, 0.1],
+                      [472, 32, 16, 16, 0.1],
+                      [488, 32, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Down",
+                    "loop": true,
+                    "frames": [
+                      [456, 48, 16, 16, 0.1],
+                      [472, 48, 16, 16, 0.1],
+                      [488, 48, 16, 16, 0.1]
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "keyboardMovement": {},
+          "controllerMovement": {
+            "controllerIndex": 0
+          }
+        },
+        {
+          "name": "highScore",
+          "components": [
+            {
+              "textComponent": {
+                "text": "High Score: 0"
+              }
+            },
+            {
+              "scoreUIComponent": {}
+            }
+          ]
+        }
+      ],
+	  "observerBindings": [
+	  {
+		"subject": {
+			"gameObject": "grid",
+			"component": "pacmanGrid"
+		},
+		"observer": {
+			"gameObject": "highScore",
+			"component": "scoreUIComponent"
+		}
+	  }
+	 ]
+	}
+  ]
+}

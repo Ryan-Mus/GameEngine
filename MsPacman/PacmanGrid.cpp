@@ -12,9 +12,9 @@ void PacmanGrid::loadGrid(const std::string& filePath)
 	}
 	std::string line;
 	int row = 0;
-	while (std::getline(file, line) && row < rows)
+	while (std::getline(file, line) && row < m_Rows)
 	{
-		for (int column = 0; column < columns && column < line.size(); ++column)
+		for (int column = 0; column < m_Columns && static_cast<size_t>(column) < line.size(); ++column)
 		{
 			char cell = line[column];
 			m_Grid[row][column].type = static_cast<CellType>(cell - '0'); // Convert ASCII to integer value
@@ -26,9 +26,9 @@ void PacmanGrid::loadGrid(const std::string& filePath)
 }
 void PacmanGrid::Render() const
 {
-	for (int row = 0; row < rows; ++row)
+	for (int row = 0; row < m_Rows; ++row)
 	{
-		for (int column = 0; column < columns; ++column)
+		for (int column = 0; column < m_Columns; ++column)
 		{
 			glm::vec2 pos = GridToWorldPosition(column, row);
 			switch (m_Grid[row][column].type)

@@ -1,34 +1,53 @@
-#pragma once
 #include "SceneManager.h"
 #include "Scene.h"
 
-void dae::SceneManager::Update()
+namespace dae
 {
-	for(auto& scene : m_scenes)
-	{
-		scene->Update();
-	}
-}
+    Scene& SceneManager::CreateScene(const std::string& name)
+    {
+        const auto& scene = std::shared_ptr<Scene>(new Scene(name));
+        m_scenes.push_back(scene);
+        return *scene;
+    }
 
-void dae::SceneManager::FixedUpdate()
-{
-	for (auto& scene : m_scenes)
-	{
-		scene->FixedUpdate();
-	}
-}
+    void SceneManager::SetActiveScene(const std::string& name)
+    {
+        for (const auto& scene : m_scenes)
+        {
+            if (scene->GetName() == name)
+            {
+                m_pActiveScene = scene.get();
+                break;
+            }
+        }
+    }
 
-void dae::SceneManager::Render()
-{
-	for (const auto& scene : m_scenes)
-	{
-		scene->Render();
-	}
-}
+    Scene* SceneManager::GetActiveScene() const
+    {
+        return m_pActiveScene;
+    }
 
-dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
-{
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
-	return *scene;
+    void SceneManager::Update()
+    {
+        if (m_pActiveScene)
+        {
+            m_pActiveScene->Update();
+        }
+    }
+
+    void SceneManager::FixedUpdate()
+    {
+        if (m_pActiveScene)
+        {
+            m_pActiveScene->FixedUpdate();
+        }
+    }
+
+    void SceneManager::Render()
+    {
+        if (m_pActiveScene)
+        {
+            m_pActiveScene->Render();
+        }
+    }
 }

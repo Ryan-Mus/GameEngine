@@ -71,14 +71,12 @@ dae::Minigin::Minigin(const std::string &dataPath)
 	Renderer::GetInstance().Init(g_window);
 
 	ResourceManager::GetInstance().Init(dataPath);
-
-	ServiceLocator::GetSoundManager().Init(dataPath);
 }
 
 dae::Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
-	ServiceLocator::DestroySoundManager();
+	ServiceLocator::DestroySoundService();
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	SDL_Quit();

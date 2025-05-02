@@ -7,35 +7,44 @@
 
 namespace dae
 {
-    class SoundManager
+    class SoundManager final : public ISoundService
     {
     public:
-        void Init(const std::string& dataPath);
         SoundManager();
         ~SoundManager();
 
-        // Client API
-        void LoadSound(const std::string& id, const std::string& filePath);
-        void PlaySound(const std::string& id, int loops = 0, int volume = 100);
-        void StopSound(const std::string& id);
-        void StopAllSounds();
+        SoundManager(const SoundManager&) = delete;
+        SoundManager(SoundManager&&) = delete;
+        SoundManager& operator=(const SoundManager&) = delete;
+        SoundManager& operator=(SoundManager&&) = delete;
 
-        void LoadMusic(const std::string& id, const std::string& filePath);
-        void PlayMusic(const std::string& id, int loops = -1, int volume = 100);
-        void StopMusic();
+        void Init(const std::string& dataPath);
 
-        void SetMasterVolume(int volume);
+        // ISoundService interface
+        void LoadSound(const std::string& id, const std::string& filePath) override;
+        void PlaySound(const std::string& id, int loops = 0, int volume = 100) override;
+        void StopSound(const std::string& id) override;
+        void StopAllSounds() override;
+
+        void LoadMusic(const std::string& id, const std::string& filePath) override;
+        void PlayMusic(const std::string& id, int loops = -1, int volume = 100) override;
+        void StopMusic() override;
+
+        void SetMasterVolume(int volume) override;
+
+        // New method to set the internal sound service
+        void SetSoundServiceImpl(std::unique_ptr<ISoundService> service);
 
     private:
         void WorkerThread();
         void ProcessEvent(const SoundEvent& event);
 
-        std::unique_ptr<ISoundService> soundService;
+        std::unique_ptr<ISoundService> soundServiceImpl;
         SoundEventQueue eventQueue;
         std::thread workerThread;
         std::atomic<bool> running;
 
-		std::string m_DataPath;
+        std::string m_DataPath;
     };
 }
 

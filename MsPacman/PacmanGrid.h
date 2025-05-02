@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "TextureComponent.h"
 #include "CustomPacmanDefines.h"
+#include "MsPacmanSubject.h"
 #include <vector>
 #include <glm.hpp>
 #include <iostream>
@@ -22,54 +23,56 @@ struct Cell
 	CellType type{ CellType::Empty };
 };
 
-class PacmanGrid final : public dae::Component
+class PacmanGrid final : public dae::Component, public MsPacmanSubject
 {
 public:
 	explicit PacmanGrid(dae::GameObject* pOwner, int columns = 28, int rows = 31, float cellSize = 8.f*PACMAN_RENDERSCALE) :
 		dae::Component{ pOwner },
-		rows{ rows },
-		columns{ columns },
-		cellSize{ static_cast<int>(cellSize) }
+		m_Rows{ rows },
+		m_Columns{ columns },
+		m_CellSize{ static_cast<int>(cellSize) }
 	{
 		m_Grid.resize(rows, std::vector<Cell>(columns));
 		m_Texture = GetOwner()->GetComponent<dae::TextureComponent>()->GetTexture();
 	};
+
+	~PacmanGrid() override = default;
 
 	void Render() const override;
 
 	//Top Left corner of the cell
 	glm::vec2 GridToWorldPosition(int column, int row) const
 	{
-		if (column < 0 || column >= columns || row < 0 || row >= rows)
+		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
 			//Improve for logging
 			std::cout << "GridToWorldPosition: Out of bounds" << std::endl;
 			return { -1.f, -1.f }; // Out of bounds
 		}
 		glm::vec3 pos = GetOwner()->GetWorldPosition();
-		glm::vec2 worldPos = { pos.x + column * cellSize, pos.y + row * cellSize };
+		glm::vec2 worldPos = { pos.x + column * m_CellSize, pos.y + row * m_CellSize };
 		return worldPos;
 	};
 
 	glm::vec2 GridToLocalPosition(int column, int row) const
 	{
-		if (column < 0 || column >= columns || row < 0 || row >= rows)
+		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
 			//Improve for logging
 			std::cout << "GridToLocalPosition: Out of bounds" << std::endl;
 			return { -1.f, -1.f }; // Out of bounds
 		}
-		glm::vec2 localPos = { column * cellSize, row * cellSize };
+		glm::vec2 localPos = { column * m_CellSize, row * m_CellSize };
 		return localPos;
 	};
 
 	std::pair<int, int> WorldToGridPosition(float x, float y) const
 	{
 		glm::vec3 pos = GetOwner()->GetWorldPosition();
-		int column = static_cast<int>((x - pos.x) / cellSize);
-		int row = static_cast<int>((y - pos.y) / cellSize);
+		int column = static_cast<int>((x - pos.x) / m_CellSize);
+		int row = static_cast<int>((y - pos.y) / m_CellSize);
 
-		if (column < 0 || column >= columns || row < 0 || row >= rows)
+		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
 			//Improve for logging
 			std::cout << "WorldToGridPosition: Out of bounds" << std::endl;
@@ -80,9 +83,9 @@ public:
 
 	std::pair<int, int> LocalToGridPosition(float x, float y) const
 	{
-		int column = static_cast<int>(x / cellSize);
-		int row = static_cast<int>(y / cellSize);
-		if (column < 0 || column >= columns || row < 0 || row >= rows)
+		int column = static_cast<int>(x / m_CellSize);
+		int row = static_cast<int>(y / m_CellSize);
+		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
 			std::cout << "LocalToGridPosition: Out of bounds" << std::endl;
 			return { -1, -1 }; // Out of bounds
@@ -92,18 +95,20 @@ public:
 
 	void ConsumePellet(int column, int row)
 	{
-		if (column < 0 || column >= columns || row < 0 || row >= rows)
+		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
 			std::cout << "ConsumePellet: Out of bounds" << std::endl;
 			return; // Out of bounds
 		}
 		if (m_Grid[row][column].type == CellType::Pellet)
 		{
+			Notify(MsPacmanEvent::EATEN_SMALL_PELLET);
 			m_Grid[row][column].type = CellType::Empty;
 			std::cout << "Pellet consumed at (" << column << ", " << row << ")" << std::endl;
 		}
 		else if (m_Grid[row][column].type == CellType::BigPellet)
 		{
+			Notify(MsPacmanEvent::EATEN_BIG_PELLET);
 			m_Grid[row][column].type = CellType::Empty;
 			std::cout << "Big pellet consumed at (" << column << ", " << row << ")" << std::endl;
 		}
@@ -115,7 +120,7 @@ public:
 
 	CellType GetCellType(int column, int row) const
 	{
-		if (column < 0 || column >= columns || row < 0 || row >= rows)
+		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
 			std::cout << "GetCellType: Out of bounds" << std::endl;
 			return CellType::Empty; // Out of bounds
@@ -123,16 +128,16 @@ public:
 		return m_Grid[row][column].type;
 	}
 
-	int GetRows() const { return rows; }
-	int GetColumns() const { return columns; }
-	int GetCellSize() const { return cellSize; }
+	int GetRows() const { return m_Rows; }
+	int GetColumns() const { return m_Columns; }
+	int GetCellSize() const { return m_CellSize; }
 
 	void loadGrid(const std::string& filePath);
-
 private:
-	int rows{};
-	int columns{};
-	int cellSize{};
+	int m_Rows{};
+	int m_Columns{};
+	int m_CellSize{};
 	std::vector<std::vector<Cell>> m_Grid;
 	dae::Texture2D* m_Texture{ nullptr };
+
 };

@@ -1,4 +1,5 @@
-#include "SoundManager.h"
+#pragma once
+#include "SoundService.h"
 #include <memory>
 
 namespace dae
@@ -6,19 +7,22 @@ namespace dae
     class ServiceLocator
     {
     public:
-        static SoundManager& GetSoundManager()
+        static ISoundService& GetSoundService()
         {
-            if (!soundManager)
-                soundManager = std::make_unique<SoundManager>();
-            return *soundManager;
+            return *soundService;
         }
 
-        static void DestroySoundManager()
+        static void RegisterSoundService(std::unique_ptr<ISoundService> service)
         {
-            soundManager.reset();
+            soundService = std::move(service);
+        }
+
+        static void DestroySoundService()
+        {
+            soundService.reset();
         }
 
     private:
-        static std::unique_ptr<SoundManager> soundManager;
+        static std::unique_ptr<ISoundService> soundService;
     };
 }
