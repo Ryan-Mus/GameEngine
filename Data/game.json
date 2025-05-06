@@ -94,6 +94,98 @@
             "controllerIndex": 0
           }
         },
+		{
+          "name": "redGhost",
+          "parent": "grid",
+          "gridPosition": 
+		  {
+			"pos": [1, 1],
+		    "grid": "grid"
+		  },
+          "components": [
+            {
+              "textureComponent": 
+			  {
+                "x": 456,
+                "y": 64,
+                "width": 16,
+                "height": 16,
+                "offset": [-4, -4]
+              }
+            },
+            {
+              "spriteSheetAnimator": 
+			  {
+                "animations": 
+				[
+                  {
+                    "name": "Right",
+                    "loop": true,
+                    "frames": [
+                      [456, 64, 16, 16, 0.1],
+                      [472, 64, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Left",
+                    "loop": true,
+                    "frames": [
+                      [488, 64, 16, 16, 0.1],
+                      [504, 64, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Up",
+                    "loop": true,
+                    "frames": [
+                      [520, 64, 16, 16, 0.1],
+                      [536, 64, 16, 16, 0.1]
+                    ]
+                  },
+                  {
+                    "name": "Down",
+                    "loop": true,
+                    "frames": [
+                      [552, 64, 16, 16, 0.1],
+                      [568, 64, 16, 16, 0.1]
+                    ]
+                  },
+				  {
+                    "name": "Evade",
+                    "loop": true,
+                    "frames": [
+                      [586, 64, 16, 16, 0.1],
+                      [602, 64, 16, 16, 0.1]
+                    ]
+                  },
+				  {
+                    "name": "Freight",
+                    "loop": true,
+                    "frames": [
+                      [586, 64, 16, 16, 0.1],
+					  [618, 64, 16, 16, 0.1],
+					  [602, 64, 16, 16, 0.1],
+                      [634, 64, 16, 16, 0.1]
+                    ]
+                  }
+                ]
+              }
+            },
+			{
+				"ghostMovement": 
+				{
+					"speed": 150.0,
+					"grid": "grid"
+				}
+			},
+			{
+				"ghostStateComponent": 
+				{
+				"initialState": "ChaseState"
+				}
+			}
+          ]
+        },
         {
           "name": "highScore",
           "components": [

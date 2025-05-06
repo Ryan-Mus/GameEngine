@@ -133,11 +133,26 @@ public:
 	int GetCellSize() const { return m_CellSize; }
 
 	void loadGrid(const std::string& filePath);
+
+	void setMsPacmanPos(int column, int row)
+	{
+		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
+		{
+			std::cout << "SetMsPacmanPos: Out of bounds" << std::endl;
+			return; // Out of bounds
+		}
+		m_MsPacmanPos = { column, row };
+	}
+
+	glm::ivec2 GetMsPacmanPos() const
+	{
+		return m_MsPacmanPos;
+	}
 private:
 	int m_Rows{};
 	int m_Columns{};
 	int m_CellSize{};
+	glm::ivec2 m_MsPacmanPos{ 0, 0 }; // Pacman's position in the grid
 	std::vector<std::vector<Cell>> m_Grid;
 	dae::Texture2D* m_Texture{ nullptr };
-
 };

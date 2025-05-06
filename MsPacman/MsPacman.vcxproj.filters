@@ -42,10 +42,25 @@
     <ClCompile Include="RotatorComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PacmanMovement.cpp">
+    <ClCompile Include="BaseMovement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PacmanGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostStateComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostMovement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacmanMovement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,13 +95,28 @@
     <ClInclude Include="RotatorComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PacmanMovement.h">
+    <ClInclude Include="BaseMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PacmanGrid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CustomPacmanDefines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostStateComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostMovement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PacmanMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

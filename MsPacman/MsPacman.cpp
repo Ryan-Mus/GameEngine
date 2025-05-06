@@ -30,6 +30,9 @@
 #include "MsPacmanSubject.h"
 #include "ServiceLocator.h"
 #include "PacmanMovement.h"
+#include "GhostMovement.h"
+#include "GhostStateComponent.h"
+#include "ChaseState.h"
 #include "SpriteSheetAnimatorComponent.h"
 #include "PacmanGrid.h"
 #include "SoundManager.h"
@@ -211,6 +214,44 @@ void load()
 								gameObject->GetComponent<PacmanMovement>()->SetGrid(it->second->GetComponent<PacmanGrid>());
 							}
 						}
+					}
+
+
+					// GhostMovement
+					if (componentJson.contains("ghostMovement"))
+					{
+						float speed = componentJson["ghostMovement"]["speed"];
+						auto& ghostMovement = gameObject->AddComponent<GhostMovement>(speed);
+
+						if (componentJson["ghostMovement"].contains("grid"))
+						{
+							auto gridName = componentJson["ghostMovement"]["grid"];
+							auto it = gameObjectMap.find(gridName);
+							if (it != gameObjectMap.end())
+							{
+								ghostMovement.SetGrid(it->second->GetComponent<PacmanGrid>());
+							}
+						}
+					}
+
+					// GhostStateComponent
+					else if (componentJson.contains("ghostStateComponent"))
+					{
+						// Create initial GhostState
+						std::unique_ptr<GhostState> initialState = nullptr;
+
+						if (componentJson["ghostStateComponent"].contains("initialState"))
+						{
+							std::string stateType = componentJson["ghostStateComponent"]["initialState"];
+							if (stateType == "ChaseState")
+							{
+								initialState = std::make_unique<ChaseState>(gameObject.get());
+							}
+							// Add other states as needed
+						}
+
+						// Add GhostStateComponent
+						gameObject->AddComponent<GhostStateComponent>(std::move(initialState));
 					}
 
 					//PickUpPelletsComponent
