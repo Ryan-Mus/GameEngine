@@ -63,6 +63,12 @@
     <ClCompile Include="PacmanMovement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FrightenedState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EatenState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InteractionCommands.h">
@@ -117,6 +123,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PacmanMovement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrightenedState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EatenState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

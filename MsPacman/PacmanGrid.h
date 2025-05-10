@@ -132,6 +132,8 @@ public:
 	int GetColumns() const { return m_Columns; }
 	int GetCellSize() const { return m_CellSize; }
 
+	glm::ivec2 GetDimensions() const { return { m_Columns, m_Rows }; }
+
 	void loadGrid(const std::string& filePath);
 
 	void setMsPacmanPos(int column, int row)

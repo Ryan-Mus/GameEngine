@@ -12,6 +12,7 @@ public:
 
     void Update() override;
     bool SetDirection(const glm::vec3& direction);
+	void SetSpeed(float speed) { m_Speed = speed; };
     glm::vec3 GetDirection() const { return m_Direction; };
     void SetGrid(PacmanGrid* grid) { m_Grid = grid; };
     PacmanGrid* GetGrid() { return m_Grid; };

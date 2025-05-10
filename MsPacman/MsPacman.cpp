@@ -45,7 +45,12 @@ using ComponentGetter = std::function<dae::Component* (dae::GameObject*)>;
 
 std::unordered_map<std::string, ComponentGetter> componentGetters = {
 	{ "pacmanGrid", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<PacmanGrid>(); } },
-	{ "scoreUIComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ScoreUIcomponent>(); } }
+	{ "scoreUIComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ScoreUIcomponent>(); } },
+	{ "livesUIComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::LivesUIComponent>(); } },
+	{ "dieComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::DieComponent>(); } },
+	{ "pickUpPelletsComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::PickUpPelletsComponent>(); } },
+	{ "ghostStateComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostStateComponent>(); } },
+	{ "ghostMovement", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostMovement>(); } },
 	// Add other components as needed
 };
 
@@ -75,7 +80,7 @@ void AddObserverToSubject(dae::Component* subjectComponent, dae::Component* obse
 	}
 }
 
-void load()
+void loadGameJSON()
 {
 	auto Font = dae::ResourceManager::GetInstance().LoadFont("emulogic.ttf", 24);
 	std::string texturePath = "spritesheet.png";
@@ -350,6 +355,11 @@ void load()
 			}
 		}
 	}
+}
+
+void load()
+{
+	loadGameJSON();
 	//
 	// Outside of the JSON file
 	// 

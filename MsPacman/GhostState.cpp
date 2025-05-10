@@ -3,4 +3,12 @@
 GhostState::GhostState(dae::GameObject* pGhost)
 	:m_pGhost{ pGhost }
 {
+	OnEnter();
 }
+
+GhostState::~GhostState()
+{
+	OnExit();
+}
+
+

@@ -14,7 +14,17 @@ void GhostStateComponent::Update()
     else
     {
 		std::cout << "GhostState is not initialized." << std::endl;
-        // Uncomment this if you want to throw an exception when m_State is not initialized
-        // throw std::runtime_error("GhostState is not initialized.");
     }
+}
+
+void GhostStateComponent::OnNotify(MsPacmanEvent event)
+{
+	if (m_State)
+	{
+		m_State->OnNotify(event);
+	}
+	else
+	{
+		std::cout << "GhostState is not initialized." << std::endl;
+	}
 }
