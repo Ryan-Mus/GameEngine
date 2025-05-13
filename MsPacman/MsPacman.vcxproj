@@ -175,6 +175,7 @@
     <ClCompile Include="PickUpPelletsComponent.cpp" />
     <ClCompile Include="RotatorComponent.cpp" />
     <ClCompile Include="ScoreUIcomponent.cpp" />
+    <ClCompile Include="StartState.cpp" />
     <ClCompile Include="TestBindings.cpp" />
     <ClCompile Include="ThrashTheCache.cpp" />
   </ItemGroup>
@@ -199,6 +200,7 @@
     <ClInclude Include="PickUpPelletsComponent.h" />
     <ClInclude Include="RotatorComponent.h" />
     <ClInclude Include="ScoreUIcomponent.h" />
+    <ClInclude Include="StartState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

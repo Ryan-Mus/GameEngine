@@ -33,6 +33,9 @@
 #include "GhostMovement.h"
 #include "GhostStateComponent.h"
 #include "ChaseState.h"
+#include "FrightenedState.h"
+#include "EatenState.h"
+#include "StartState.h"
 #include "SpriteSheetAnimatorComponent.h"
 #include "PacmanGrid.h"
 #include "SoundManager.h"
@@ -252,7 +255,22 @@ void loadGameJSON()
 							{
 								initialState = std::make_unique<ChaseState>(gameObject.get());
 							}
-							// Add other states as needed
+							else if (stateType == "FrightenedState")
+							{
+								initialState = std::make_unique<FrightenedState>(gameObject.get());
+							}
+							else if (stateType == "StartState")
+							{
+								initialState = std::make_unique<StartState>(gameObject.get());
+							}
+							else if (stateType == "EatenState")
+							{
+								initialState = std::make_unique<EatenState>(gameObject.get());
+							}
+							else
+							{
+								assert(false && "Unknown GhostState type");
+							}
 						}
 
 						// Add GhostStateComponent
@@ -378,8 +396,9 @@ void load()
 	dae::ServiceLocator::GetSoundService().LoadSound("Ghost1", "Sounds/msghost1.wav");
 
 	dae::ServiceLocator::GetSoundService().PlaySound("MsPacman");
+	dae::ServiceLocator::GetSoundService().SetMasterVolume(32);
 
-	dae::SceneManager::GetInstance().SetActiveScene("Level1");
+	dae::SceneManager::GetInstance().SetActiveScene("Level3");
 }
 
 int main(int, char* []) {

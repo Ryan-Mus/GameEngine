@@ -15,11 +15,6 @@ void ChaseState::OnExit()
 
 std::unique_ptr<GhostState> ChaseState::Update()
 {
-	if (!m_IsChasing)
-	{
-		return std::make_unique<FrightenedState>(m_pGhost);
-	}
-
 	auto movement = m_pGhost->GetComponent<GhostMovement>();
 	auto grid = movement->GetGrid();
 
@@ -44,10 +39,11 @@ std::unique_ptr<GhostState> ChaseState::Update()
     return nullptr;
 }
 
-void ChaseState::OnNotify(MsPacmanEvent event)
+std::unique_ptr<GhostState> ChaseState::OnNotify(MsPacmanEvent event)
 {
 	if (event == MsPacmanEvent::EATEN_BIG_PELLET)
 	{
-		m_IsChasing = false;
+		return std::make_unique<FrightenedState>(m_pGhost);
 	}
+	return nullptr;
 }

@@ -69,6 +69,9 @@
     <ClCompile Include="EatenState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StartState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InteractionCommands.h">
@@ -129,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EatenState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StartState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -55,9 +55,7 @@ void FrightenedState::OnExit()
 	m_pGhost->GetComponent<GhostMovement>()->SetSpeed(150.f);
 }
 
-void FrightenedState::OnNotify(MsPacmanEvent event)
+std::unique_ptr<GhostState> FrightenedState::OnNotify(MsPacmanEvent)
 {
-	if (event == MsPacmanEvent::EATEN_GHOST)
-	{
-	}
+	return nullptr;
 }

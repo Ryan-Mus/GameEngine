@@ -3,28 +3,24 @@
 
 void GhostStateComponent::Update()
 {
-    if (m_State)
-    {
-        auto state = m_State->Update();
-        if (state)
-        {
-            m_State = std::move(state);
-        }
-    }
-    else
-    {
-		std::cout << "GhostState is not initialized." << std::endl;
-    }
+  auto state = m_State->Update();
+  if (state)
+  {
+	  m_State->OnExit();
+      m_State = std::move(state);
+	  m_State->OnEnter();
+  }
 }
 
 void GhostStateComponent::OnNotify(MsPacmanEvent event)
 {
-	if (m_State)
+	auto state  = m_State->OnNotify(event);
+
+	if (state)
 	{
-		m_State->OnNotify(event);
+		m_State->OnExit();
+		m_State = std::move(state);
+		m_State->OnEnter();
 	}
-	else
-	{
-		std::cout << "GhostState is not initialized." << std::endl;
-	}
+
 }

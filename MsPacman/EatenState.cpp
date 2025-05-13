@@ -39,6 +39,7 @@ void EatenState::OnExit()
 	m_pGhost->GetComponent<GhostMovement>()->SetSpeed(150.f);
 }
 
-void EatenState::OnNotify(MsPacmanEvent)
+std::unique_ptr<GhostState> EatenState::OnNotify(MsPacmanEvent)
 {
+	return nullptr;
 }
