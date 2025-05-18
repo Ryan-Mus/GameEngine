@@ -2,6 +2,13 @@
 #include "GhostState.h"
 #include "MsPacmanObserver.h"
 
+enum class GhostType;
+class PacmanGrid;
+class GhostMovement;
+namespace dae
+{
+	class SpriteSheetAnimator;
+}
 class ChaseState : public GhostState
 {
 public:
@@ -14,4 +21,8 @@ public:
 
 	std::unique_ptr<GhostState> OnNotify(MsPacmanEvent event) override;
 private:
+	GhostMovement* m_pMovement;
+	dae::SpriteSheetAnimator* m_pAnimator;
+	PacmanGrid* m_pGrid;
+	GhostType m_Type;
 };

@@ -23,4 +23,8 @@ void GhostStateComponent::OnNotify(MsPacmanEvent event)
 		m_State->OnEnter();
 	}
 
+	if (event == MsPacmanEvent::START_LEVEL)
+	{
+		m_State->OnEnter();
+	}
 }

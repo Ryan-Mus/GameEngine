@@ -4,7 +4,8 @@
 class StartState : public GhostState
 {
 public:
-	StartState(dae::GameObject* ghost) : GhostState(ghost) { OnEnter(); }
+	StartState(dae::GameObject* ghost);
+	void OnEnter() override;
 	std::unique_ptr<GhostState> Update() override;
 private:
 	float m_Timer{ 0.f };

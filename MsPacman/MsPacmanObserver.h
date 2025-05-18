@@ -5,6 +5,7 @@ enum class MsPacmanEvent
 	EATEN_SMALL_PELLET,
 	EATEN_GHOST,
 	LEVEL_COMPLETE,
+	START_LEVEL,
 	GAME_OVER,
 };
 

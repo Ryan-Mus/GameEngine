@@ -273,8 +273,30 @@ void loadGameJSON()
 							}
 						}
 
+						GhostType type{ GhostType::Blinky }; // Default value
+						if (componentJson["ghostStateComponent"].contains("ghostType"))
+						{
+							std::string ghostType = componentJson["ghostStateComponent"]["ghostType"];
+							if (ghostType == "Blinky")
+							{
+								type = GhostType::Blinky;
+							}
+							else if (ghostType == "Pinky")
+							{
+								type = GhostType::Pinky;
+							}
+							else if (ghostType == "Inky")
+							{
+								type = GhostType::Inky;
+							}
+							else if (ghostType == "Clyde")
+							{
+								type = GhostType::Clyde;
+							}
+						}
+
 						// Add GhostStateComponent
-						gameObject->AddComponent<GhostStateComponent>(std::move(initialState));
+						gameObject->AddComponent<GhostStateComponent>(std::move(initialState), type);
 					}
 
 					//PickUpPelletsComponent
@@ -398,7 +420,7 @@ void load()
 	dae::ServiceLocator::GetSoundService().PlaySound("MsPacman");
 	dae::ServiceLocator::GetSoundService().SetMasterVolume(32);
 
-	dae::SceneManager::GetInstance().SetActiveScene("Level3");
+	dae::SceneManager::GetInstance().SetActiveScene("Level1");
 }
 
 int main(int, char* []) {
