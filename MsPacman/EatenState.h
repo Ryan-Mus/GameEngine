@@ -13,6 +13,8 @@ public:
 	void OnExit() override;
 
 	std::unique_ptr<GhostState> OnNotify(MsPacmanEvent) override;
+
+	GhostStateType GetStateType() const override { return GhostStateType::EATEN; }
 private:
 };
 

@@ -15,6 +15,7 @@ public:
 	void OnExit() override;
 
 	std::unique_ptr<GhostState> OnNotify(MsPacmanEvent event) override;
+	GhostStateType GetStateType() const override { return GhostStateType::FRIGHTENED; }
 private:
 	float m_Timer{ 0.f };
 	float m_Duration{ 7.f };

@@ -5,6 +5,7 @@
 #include <queue>
 #include <unordered_map>
 #include <algorithm>
+#include <iostream>
 
 void GhostMovement::Update()
 {
@@ -13,7 +14,7 @@ void GhostMovement::Update()
         return;
 
     // Get current position in world coordinates
-    glm::vec3 currentWorldPos = BaseMovement::Component::GetOwner()->GetWorldPosition();
+    glm::vec3 currentWorldPos = GetOwner()->GetWorldPosition();
 
     // Convert world position to grid coordinates
     auto currentGridPos = m_Grid->WorldToGridPosition(currentWorldPos.x, currentWorldPos.y);

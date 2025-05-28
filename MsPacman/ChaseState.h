@@ -20,6 +20,7 @@ public:
 	std::unique_ptr<GhostState> Update() override;
 
 	std::unique_ptr<GhostState> OnNotify(MsPacmanEvent event) override;
+	GhostStateType GetStateType() const override { return GhostStateType::CHASE; }
 private:
 	GhostMovement* m_pMovement;
 	dae::SpriteSheetAnimator* m_pAnimator;

@@ -7,6 +7,7 @@ enum class MsPacmanEvent
 	LEVEL_COMPLETE,
 	START_LEVEL,
 	GAME_OVER,
+	DIE,
 };
 
 class MsPacmanObserver

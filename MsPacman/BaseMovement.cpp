@@ -6,6 +6,10 @@
 
 bool BaseMovement::SetDirection(const glm::vec3& direction)
 {
+	if (!m_CanMove)
+	{
+		return false; // Movement is disabled
+	}
 	if (m_Direction == direction)
 	{
 		return false; // No change in direction

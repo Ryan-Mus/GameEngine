@@ -10,10 +10,6 @@ namespace dae
     {
         auto& input = InputManager::GetInstance();
         input.AddController(playerIndex);
-        input.BindControllerCommand(XINPUT_GAMEPAD_X,
-            playerIndex,
-            KeyState::Pressed,
-            std::make_shared<LoseLifeCommand>(pOwner));
 
 		input.BindControllerCommand(XINPUT_GAMEPAD_B,
 			playerIndex,
@@ -29,9 +25,6 @@ namespace dae
     void AddKeyboardInteraction(GameObject* pOwner)
     {
         auto& input = InputManager::GetInstance();
-        input.BindKeyboardCommand('C',
-            KeyState::Pressed,
-            std::make_shared<LoseLifeCommand>(pOwner));
 
 		input.BindKeyboardCommand('X',
 			KeyState::Pressed,

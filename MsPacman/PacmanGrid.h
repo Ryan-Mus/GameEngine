@@ -4,6 +4,8 @@
 #include "TextureComponent.h"
 #include "CustomPacmanDefines.h"
 #include "MsPacmanSubject.h"
+#include "GhostStateComponent.h"
+#include "GhostState.h"
 #include <vector>
 #include <glm.hpp>
 #include <iostream>
@@ -150,6 +152,12 @@ public:
 	{
 		return m_MsPacmanPos;
 	}
+
+	void RegisterMsPacman(dae::GameObject* pMsPacman);
+	void RegisterGhost(dae::GameObject* pGhost);
+
+	void Update() override;
+
 private:
 	int m_Rows{};
 	int m_Columns{};
@@ -157,4 +165,6 @@ private:
 	glm::ivec2 m_MsPacmanPos{ 0, 0 }; // Pacman's position in the grid
 	std::vector<std::vector<Cell>> m_Grid;
 	dae::Texture2D* m_Texture{ nullptr };
+	dae::GameObject* m_pMsPacman{ nullptr };
+	std::vector<dae::GameObject*> m_pGhosts{};
 };

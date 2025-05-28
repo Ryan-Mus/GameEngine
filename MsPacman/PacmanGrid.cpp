@@ -43,3 +43,62 @@ void PacmanGrid::Render() const
 		}
 	}
 }
+
+void PacmanGrid::RegisterMsPacman(dae::GameObject* pMsPacman)
+{
+	m_pMsPacman = pMsPacman;
+}
+
+void PacmanGrid::RegisterGhost(dae::GameObject* pGhost)
+{
+	m_pGhosts.emplace_back(pGhost);
+}
+
+void PacmanGrid::Update()
+{
+	if (!m_pMsPacman || m_pGhosts.empty())
+	{
+		return;
+	}
+
+	// The existing setMsPacmanPos seems to track pacman's position based on movement completion.
+	// For direct collision, we should use its current world position converted to grid cell.
+	// However, PacmanGrid already has m_MsPacmanPos which is updated by setMsPacmanPos.
+	// Let's assume m_MsPacmanPos is the authoritative grid position for MsPacman.
+	// If not, this logic might need adjustment based on how MsPacman's position is truly managed.
+	const auto pacmanGridPos = GetMsPacmanPos();
+
+	for (auto& pGhost : m_pGhosts)
+	{
+		if (!pGhost) continue;
+
+		const auto ghostWorldPos = pGhost->GetWorldPosition();
+		const auto ghostGridPosPair = WorldToGridPosition(ghostWorldPos.x, ghostWorldPos.y);
+		const glm::ivec2 ghostGridPos = { ghostGridPosPair.first, ghostGridPosPair.second };
+
+		//std::cout << "Ghost Position: " << ghostGridPos.x << ", " << ghostGridPos.y << std::endl;
+
+
+		// Check if ghost and MsPacman are in the same cell
+		if (ghostGridPos.x == pacmanGridPos.x && ghostGridPos.y == pacmanGridPos.y)
+		{
+			auto* ghostStateComp = pGhost->GetComponent<GhostStateComponent>();
+			if (ghostStateComp)
+			{
+				GhostState* currentGhostState = ghostStateComp->GetState();
+				if (currentGhostState)
+				{
+					GhostStateType stateType = currentGhostState->GetStateType();
+					if (stateType == GhostStateType::FRIGHTENED)
+					{
+						Notify(MsPacmanEvent::EATEN_GHOST);
+					}
+					else if (stateType == GhostStateType::CHASE || stateType == GhostStateType::START)
+					{
+						Notify(MsPacmanEvent::DIE);
+					}
+				}
+			}
+		}
+	}
+}

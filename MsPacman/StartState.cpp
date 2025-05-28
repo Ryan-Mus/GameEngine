@@ -1,6 +1,7 @@
 #include "StartState.h"
 #include "TimeSingleton.h"
 #include "ChaseState.h"
+#include "GhostMovement.h"
 #include "GhostStateComponent.h"
 
 StartState::StartState(dae::GameObject* ghost)

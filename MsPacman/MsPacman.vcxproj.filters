@@ -33,9 +33,6 @@
     <ClCompile Include="MsPacmanSubject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DieComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LivesUIComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,6 +69,9 @@
     <ClCompile Include="StartState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MsPacmanDieComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InteractionCommands.h">
@@ -87,9 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MsPacmanSubject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DieComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LivesUIComponent.h">
@@ -135,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StartState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MsPacmanDieComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

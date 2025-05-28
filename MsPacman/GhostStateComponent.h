@@ -1,5 +1,6 @@
 #pragma once
 #include "GhostState.h"
+
 #include "MsPacmanObserver.h"
 
 enum class GhostType
@@ -13,8 +14,8 @@ enum class GhostType
 class GhostStateComponent final : public dae::Component, public MsPacmanObserver
 {
 public:
-    GhostStateComponent(std::unique_ptr<GhostState> state,GhostType type, dae::GameObject* pOwner)
-		: dae::Component{ pOwner }, m_State{ std::move(state) }, m_GhostType{ type } {};
+	GhostStateComponent(std::unique_ptr<GhostState> state, GhostType type, glm::ivec2 startPos, dae::GameObject* pOwner);
+
     virtual void Update() override; // Ensure this matches the implementation
 
     virtual void OnNotify(MsPacmanEvent event) override;
@@ -23,7 +24,10 @@ public:
 	{
 		return m_GhostType;
 	}
+
+    GhostState* GetState() const { return m_State.get(); }
 private:
     std::unique_ptr<GhostState> m_State;
 	GhostType m_GhostType{ GhostType::Blinky };
+	glm::ivec2 m_StartPos{ 0, 0 };
 };

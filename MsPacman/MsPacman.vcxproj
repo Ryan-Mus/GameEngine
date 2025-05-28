@@ -160,7 +160,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ChaseState.cpp" />
-    <ClCompile Include="DieComponent.cpp" />
     <ClCompile Include="EatenState.cpp" />
     <ClCompile Include="FrightenedState.cpp" />
     <ClCompile Include="GhostMovement.cpp" />
@@ -168,6 +167,7 @@
     <ClCompile Include="GhostStateComponent.cpp" />
     <ClCompile Include="LivesUIComponent.cpp" />
     <ClCompile Include="MsPacman.cpp" />
+    <ClCompile Include="MsPacmanDieComponent.cpp" />
     <ClCompile Include="MsPacmanSubject.cpp" />
     <ClCompile Include="PacmanGrid.cpp" />
     <ClCompile Include="BaseMovement.cpp" />
@@ -182,7 +182,6 @@
   <ItemGroup>
     <ClInclude Include="ChaseState.h" />
     <ClInclude Include="CustomPacmanDefines.h" />
-    <ClInclude Include="DieComponent.h" />
     <ClInclude Include="EatenState.h" />
     <ClInclude Include="FrightenedState.h" />
     <ClInclude Include="GhostMovement.h" />
@@ -192,6 +191,7 @@
     <ClInclude Include="LivesUIComponent.h" />
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementBinding.h" />
+    <ClInclude Include="MsPacmanDieComponent.h" />
     <ClInclude Include="MsPacmanObserver.h" />
     <ClInclude Include="MsPacmanSubject.h" />
     <ClInclude Include="PacmanGrid.h" />

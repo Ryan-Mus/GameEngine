@@ -24,7 +24,6 @@
 #include "MovementBinding.h"
 #include "ScoreUIcomponent.h"
 #include "LivesUIComponent.h"
-#include "DieComponent.h"
 #include "PickUpPelletsComponent.h"
 #include "Scene.h"
 #include "MsPacmanSubject.h"
@@ -40,9 +39,17 @@
 #include "PacmanGrid.h"
 #include "SoundManager.h"
 #include "SoundServiceSDL.h"
+#include "MsPacmanDieComponent.h"
 
 #include  "CustomPacmanDefines.h"
 
+// Helper struct for deferred grid registration
+struct PendingGridRegistration
+{
+	PacmanGrid* gridInstance{ nullptr };
+	std::string msPacmanObjectName;
+	std::vector<std::string> ghostObjectNames;
+};
 
 using ComponentGetter = std::function<dae::Component* (dae::GameObject*)>;
 
@@ -50,11 +57,10 @@ std::unordered_map<std::string, ComponentGetter> componentGetters = {
 	{ "pacmanGrid", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<PacmanGrid>(); } },
 	{ "scoreUIComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ScoreUIcomponent>(); } },
 	{ "livesUIComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::LivesUIComponent>(); } },
-	{ "dieComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::DieComponent>(); } },
+	{ "dieComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<MsPacmanDieComponent>(); } },
 	{ "pickUpPelletsComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::PickUpPelletsComponent>(); } },
 	{ "ghostStateComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostStateComponent>(); } },
 	{ "ghostMovement", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostMovement>(); } },
-	// Add other components as needed
 };
 
 dae::Component* GetComponentByName(dae::GameObject* gameObject, const std::string& componentName)
@@ -69,7 +75,6 @@ dae::Component* GetComponentByName(dae::GameObject* gameObject, const std::strin
 
 void AddObserverToSubject(dae::Component* subjectComponent, dae::Component* observerComponent)
 {
-	// For this example, we assume MsPacmanSubject and MsPacmanObserver are the base classes
 	auto subject = dynamic_cast<MsPacmanSubject*>(subjectComponent);
 	auto observer = dynamic_cast<MsPacmanObserver*>(observerComponent);
 
@@ -83,17 +88,17 @@ void AddObserverToSubject(dae::Component* subjectComponent, dae::Component* obse
 	}
 }
 
-void loadGameJSON()
+void loadGameJSON(const std::string& path)
 {
 	auto Font = dae::ResourceManager::GetInstance().LoadFont("emulogic.ttf", 24);
 	std::string texturePath = "spritesheet.png";
 
-	std::ifstream file("../Data/game.json");
+	std::ifstream file(path);
 	nlohmann::json sceneData;
 	file >> sceneData;
 
-	// Map to store game objects by name for parent relationships
 	std::unordered_map<std::string, std::shared_ptr<dae::GameObject>> gameObjectMap;
+	std::vector<PendingGridRegistration> allPendingGridRegistrations; // To store registration tasks
 
 	// Iterate over scenes
 	for (const auto& sceneJson : sceneData["scenes"])
@@ -190,23 +195,41 @@ void loadGameJSON()
 						}
 					}
 
-					//DieComponent
-					else if (componentJson.contains("dieComponent"))
-					{
-						gameObject->AddComponent<dae::DieComponent>(std::make_unique<dae::Subject>());
-					}
-
 					//LivesUIComponent
 					else if (componentJson.contains("livesUIComponent"))
 					{
 						gameObject->AddComponent<dae::LivesUIComponent>();
 					}
 
+					//MsPacmanDieComponent
+					else if (componentJson.contains("dieComponent"))
+					{
+						gameObject->AddComponent<MsPacmanDieComponent>();
+					}
+
 					//PacmanGrid
 					else if (componentJson.contains("pacmanGrid"))
 					{
+						auto& gridComponentJson = componentJson["pacmanGrid"];
 						auto& grid = gameObject->AddComponent<PacmanGrid>();
-						grid.loadGrid(componentJson["pacmanGrid"]["gridFile"]);
+						grid.loadGrid(gridComponentJson["gridFile"]);
+
+						PendingGridRegistration pendingReg;
+						pendingReg.gridInstance = &grid;
+
+						if (gridComponentJson.contains("registerMsPacman"))
+						{
+							pendingReg.msPacmanObjectName = gridComponentJson["registerMsPacman"];
+						}
+
+						if (gridComponentJson.contains("registerGhosts"))
+						{
+							for (const auto& ghostNameJson : gridComponentJson["registerGhosts"])
+							{
+								pendingReg.ghostObjectNames.push_back(ghostNameJson.get<std::string>());
+							}
+						}
+						allPendingGridRegistrations.push_back(pendingReg);
 					}
 
 					//PacmanMovement
@@ -274,29 +297,35 @@ void loadGameJSON()
 						}
 
 						GhostType type{ GhostType::Blinky }; // Default value
+						glm::ivec2 startPosition{ 0, 0 }; // Default value
 						if (componentJson["ghostStateComponent"].contains("ghostType"))
 						{
 							std::string ghostType = componentJson["ghostStateComponent"]["ghostType"];
 							if (ghostType == "Blinky")
 							{
 								type = GhostType::Blinky;
+								startPosition = { 13, 11 };
 							}
 							else if (ghostType == "Pinky")
 							{
 								type = GhostType::Pinky;
+								startPosition = { 14, 14 };
+
 							}
 							else if (ghostType == "Inky")
 							{
 								type = GhostType::Inky;
+								startPosition = { 12, 14 };
+
 							}
 							else if (ghostType == "Clyde")
 							{
 								type = GhostType::Clyde;
+								startPosition = { 16, 14 };
 							}
 						}
-
 						// Add GhostStateComponent
-						gameObject->AddComponent<GhostStateComponent>(std::move(initialState), type);
+						gameObject->AddComponent<GhostStateComponent>(std::move(initialState), type, startPosition);
 					}
 
 					//PickUpPelletsComponent
@@ -395,11 +424,45 @@ void loadGameJSON()
 			}
 		}
 	}
+
+	// Process all pending grid registrations after all game objects from all scenes are created
+	for (const auto& regInfo : allPendingGridRegistrations)
+	{
+		if (!regInfo.gridInstance) continue;
+
+		if (!regInfo.msPacmanObjectName.empty())
+		{
+			auto it = gameObjectMap.find(regInfo.msPacmanObjectName);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.gridInstance->RegisterMsPacman(it->second.get());
+			}
+			else
+			{
+				std::cerr << "Error: Could not find MsPacman GameObject with name '" << regInfo.msPacmanObjectName << "' for grid registration post-load." << std::endl;
+			}
+		}
+
+		for (const auto& ghostName : regInfo.ghostObjectNames)
+		{
+			auto it = gameObjectMap.find(ghostName);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.gridInstance->RegisterGhost(it->second.get());
+			}
+			else
+			{
+				std::cerr << "Error: Could not find Ghost GameObject with name '" << ghostName << "' for grid registration post-load." << std::endl;
+			}
+		}
+	}
 }
 
 void load()
 {
-	loadGameJSON();
+	loadGameJSON("../Data/Level1.json");
+	loadGameJSON("../Data/Level2.json");
+	loadGameJSON("../Data/Level3.json");
 	//
 	// Outside of the JSON file
 	// 
