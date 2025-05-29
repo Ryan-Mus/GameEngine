@@ -8,6 +8,9 @@ enum class MsPacmanEvent
 	START_LEVEL,
 	GAME_OVER,
 	DIE,
+	EATEN_CHERRY,
+	EATEN_STRAWBERRY,
+	EATEN_ORANGE
 };
 
 class MsPacmanObserver

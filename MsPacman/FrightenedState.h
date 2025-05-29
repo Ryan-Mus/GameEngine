@@ -1,5 +1,7 @@
 #pragma once
 #include "GhostState.h"
+#include "FrightenedState.h"
+#include "CustomPacmanDefines.h"
 
 class FrightenedState : public GhostState
 {
@@ -18,7 +20,7 @@ public:
 	GhostStateType GetStateType() const override { return GhostStateType::FRIGHTENED; }
 private:
 	float m_Timer{ 0.f };
-	float m_Duration{ 7.f };
+	float m_Duration{ PACMAN_FRIGHTENED_DURATION };
 	bool m_EndAnimation{ false };
 };
 

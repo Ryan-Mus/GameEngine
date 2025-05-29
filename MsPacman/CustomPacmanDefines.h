@@ -1,2 +1,3 @@
 #pragma once
 #define PACMAN_RENDERSCALE 3
+#define PACMAN_FRIGHTENED_DURATION 7.f

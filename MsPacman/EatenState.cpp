@@ -30,7 +30,7 @@ std::unique_ptr<GhostState> EatenState::Update()
 
 void EatenState::OnEnter()
 {
-	m_pGhost->GetComponent<GhostMovement>()->SetTarget({ 14, 11 });
+	m_pGhost->GetComponent<GhostMovement>()->SetTarget({ 12, 14 });
 	m_pGhost->GetComponent<GhostMovement>()->SetSpeed(300.f);
 }
 

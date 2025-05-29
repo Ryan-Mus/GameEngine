@@ -40,6 +40,7 @@
 #include "SoundManager.h"
 #include "SoundServiceSDL.h"
 #include "MsPacmanDieComponent.h"
+#include "ScorePopUp.h"
 
 #include  "CustomPacmanDefines.h"
 
@@ -56,11 +57,12 @@ using ComponentGetter = std::function<dae::Component* (dae::GameObject*)>;
 std::unordered_map<std::string, ComponentGetter> componentGetters = {
 	{ "pacmanGrid", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<PacmanGrid>(); } },
 	{ "scoreUIComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ScoreUIcomponent>(); } },
-	{ "livesUIComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::LivesUIComponent>(); } },
+	{ "livesUIComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<LivesUIComponent>(); } },
 	{ "dieComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<MsPacmanDieComponent>(); } },
 	{ "pickUpPelletsComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::PickUpPelletsComponent>(); } },
 	{ "ghostStateComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostStateComponent>(); } },
 	{ "ghostMovement", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostMovement>(); } },
+	{ "scorePopUp", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<ScorePopUp>(); } },
 };
 
 dae::Component* GetComponentByName(dae::GameObject* gameObject, const std::string& componentName)
@@ -198,7 +200,7 @@ void loadGameJSON(const std::string& path)
 					//LivesUIComponent
 					else if (componentJson.contains("livesUIComponent"))
 					{
-						gameObject->AddComponent<dae::LivesUIComponent>();
+						gameObject->AddComponent<LivesUIComponent>();
 					}
 
 					//MsPacmanDieComponent
@@ -212,7 +214,31 @@ void loadGameJSON(const std::string& path)
 					{
 						auto& gridComponentJson = componentJson["pacmanGrid"];
 						auto& grid = gameObject->AddComponent<PacmanGrid>();
-						grid.loadGrid(gridComponentJson["gridFile"]);
+
+						if (gridComponentJson.contains("levels") && gridComponentJson["levels"].is_array())
+						{
+							for (const auto& levelJson : gridComponentJson["levels"])
+							{
+								LevelData levelData;
+								levelData.gridFilePath = levelJson["gridFile"].get<std::string>();
+								levelData.mazeTextureSourceX = levelJson["textureSourceX"].get<int>();
+								levelData.mazeTextureSourceY = levelJson["textureSourceY"].get<int>();
+								levelData.mazeTextureSourceWidth = levelJson["textureSourceWidth"].get<int>();
+								levelData.mazeTextureSourceHeight = levelJson["textureSourceHeight"].get<int>();
+								grid.AddLevelData(levelData);
+							}
+						}
+						else
+						{
+							throw std::runtime_error("PacmanGrid component in JSON must contain a 'levels' array.");
+						}
+
+						int initialLevel = 0;
+						if (gridComponentJson.contains("initialLevelIndex"))
+						{
+							initialLevel = gridComponentJson["initialLevelIndex"].get<int>();
+						}
+						grid.LoadLevel(initialLevel); // Load the initial level
 
 						PendingGridRegistration pendingReg;
 						pendingReg.gridInstance = &grid;
@@ -239,7 +265,7 @@ void loadGameJSON(const std::string& path)
 						if (componentJson["pacmanMovement"].contains("grid"))
 						{
 							auto gridName = componentJson["pacmanMovement"]["grid"];
-							auto it = gameObjectMap.find(gridName);
+							auto it = gameObjectMap.find(gridName.get<std::string>()); // Ensure gridName is used as string
 							if (it != gameObjectMap.end())
 							{
 								gameObject->GetComponent<PacmanMovement>()->SetGrid(it->second->GetComponent<PacmanGrid>());
@@ -257,7 +283,7 @@ void loadGameJSON(const std::string& path)
 						if (componentJson["ghostMovement"].contains("grid"))
 						{
 							auto gridName = componentJson["ghostMovement"]["grid"];
-							auto it = gameObjectMap.find(gridName);
+							auto it = gameObjectMap.find(gridName.get<std::string>()); // Ensure gridName is used as string
 							if (it != gameObjectMap.end())
 							{
 								ghostMovement.SetGrid(it->second->GetComponent<PacmanGrid>());
@@ -340,6 +366,17 @@ void loadGameJSON(const std::string& path)
 						gameObject->AddComponent<dae::ScoreUIcomponent>();
 					}
 
+					//ScorePopUp
+					else if (componentJson.contains("scorePopUp"))
+					{
+						auto& scorePopUp = gameObject->AddComponent<ScorePopUp>();
+						// If the parent is the grid, set the grid reference
+						if (gameObject->GetParent() && gameObject->GetParent()->GetComponent<PacmanGrid>())
+						{
+							scorePopUp.SetGrid(gameObject->GetParent()->GetComponent<PacmanGrid>());
+						}
+					}
+
 					//RotatorComponent
 					else if (componentJson.contains("rotatorComponent"))
 					{
@@ -367,7 +404,7 @@ void loadGameJSON(const std::string& path)
 				auto gridName = objectJson["gridPosition"]["grid"];
 				auto pos = objectJson["gridPosition"]["pos"];
 
-				auto gridIt = gameObjectMap.find(gridName);
+				auto gridIt = gameObjectMap.find(gridName.get<std::string>()); // Ensure gridName is used as string
 				if (gridIt != gameObjectMap.end())
 				{
 					auto grid = gridIt->second->GetComponent<PacmanGrid>();
@@ -460,12 +497,8 @@ void loadGameJSON(const std::string& path)
 
 void load()
 {
-	loadGameJSON("../Data/Level1.json");
-	loadGameJSON("../Data/Level2.json");
-	loadGameJSON("../Data/Level3.json");
-	//
-	// Outside of the JSON file
-	// 
+	loadGameJSON("../Data/Solo.json");
+	
 
 	auto soundManager = std::make_unique<dae::SoundManager>();
 	soundManager->Init("../Data/");
@@ -483,7 +516,7 @@ void load()
 	dae::ServiceLocator::GetSoundService().PlaySound("MsPacman");
 	dae::ServiceLocator::GetSoundService().SetMasterVolume(32);
 
-	dae::SceneManager::GetInstance().SetActiveScene("Level1");
+	dae::SceneManager::GetInstance().SetActiveScene("Solo");
 }
 
 int main(int, char* []) {

@@ -1,7 +1,7 @@
 {
     "scenes": [
       {
-        "name": "Level1",
+        "name": "Solo",
         "gameObjects": [
           {
             "name": "grid",
@@ -17,7 +17,30 @@
               },
               {
                 "pacmanGrid": {
-                  "gridFile": "Level1.txt",
+                  "initialLevelIndex": 0,
+                  "levels": [
+                    {
+                      "gridFile": "Level1.txt",
+                      "textureSourceX": 228,
+                      "textureSourceY": 0,
+                      "textureSourceWidth": 224,
+                      "textureSourceHeight": 248
+                    },
+                    {
+                      "gridFile": "Level2.txt",
+                      "textureSourceX": 228,
+                      "textureSourceY": 248,
+                      "textureSourceWidth": 224,
+                      "textureSourceHeight": 248
+                    },
+                    {
+                      "gridFile": "Level3.txt",
+                      "textureSourceX": 228,
+                      "textureSourceY": 496,
+                      "textureSourceWidth": 224,
+                      "textureSourceHeight": 248
+                    }
+                  ],
                   "registerMsPacman": "msPacman",
                   "registerGhosts": [
                     "Blinky",
@@ -598,6 +621,102 @@
                 "scoreUIComponent": {}
               }
             ]
+          },
+          {
+            "name": "livesDisplay",
+            "position": [0, 816],
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 472,
+                  "y": 0,
+                  "width": 1,
+                  "height": 1
+                }
+              },
+              {
+                "livesUIComponent": {}
+              }
+            ]
+          },
+          {
+            "name": "scorePopUp",
+            "parent": "grid",
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 456,
+                  "y": 128,
+                  "width": 1,
+                  "height": 1
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "200",
+                      "loop": false,
+                      "frames": [
+                        [456, 128, 16, 16, 1.0],
+                        [456, 128, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "400",
+                      "loop": false,
+                      "frames": [
+                        [472, 128, 16, 16, 1.0],
+                        [456, 128, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "800",
+                      "loop": false,
+                      "frames": [
+                        [488, 128, 16, 16, 1.0],
+                        [456, 128, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "1600",
+                      "loop": false,
+                      "frames": [
+                        [504, 128, 16, 16, 1.0],
+                        [456, 128, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "cherry",
+                      "loop": false,
+                      "frames": [
+                        [504, 16, 16, 16, 1.0],
+                        [504, 16, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "strawberry",
+                      "loop": false,
+                      "frames": [
+                        [520, 16, 16, 16, 1.0],
+                        [520, 16, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "orange",
+                      "loop": false,
+                      "frames": [
+                        [536, 16, 16, 16, 1.0],
+                        [536, 16, 1, 1, 0.1]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "scorePopUp": {}
+              }
+            ]
           }
         ],
         "observerBindings": [
@@ -659,6 +778,26 @@
           "observer": {
               "gameObject": "msPacman",
               "component": "dieComponent"
+          }
+        },
+        {
+          "subject": {
+            "gameObject": "grid",
+            "component": "pacmanGrid"
+          },
+          "observer": {
+            "gameObject": "livesDisplay",
+            "component": "livesUIComponent"
+          }
+        },
+        {
+          "subject": {
+            "gameObject": "grid",
+            "component": "pacmanGrid"
+          },
+          "observer": {
+            "gameObject": "scorePopUp",
+            "component": "scorePopUp"
           }
         }
         ]

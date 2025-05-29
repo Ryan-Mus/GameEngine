@@ -1,21 +1,26 @@
 #pragma once
 #include "Component.h"
-#include "Observer.h"
+#include "MsPacmanObserver.h"
+#include "TextureComponent.h"
+#include "GameObject.h"
 
-namespace dae 
+class LivesUIComponent : public dae::Component, public MsPacmanObserver
 {
-	class GameObject;
-	class LivesUIComponent : public Component, public Observer
+public:
+	LivesUIComponent(dae::GameObject* pOwner):Component(pOwner) 
 	{
-	public:
-		LivesUIComponent(GameObject* pOwner):Component(pOwner) {};
+		m_pTexture = GetOwner()->GetComponent<dae::TextureComponent>()->GetTexture();
+	}
 
-		void LoseLife();
-		void ResetLives();
+	void Render() const override;
 
-		void OnNotify(EventType e) override { if(e == EventType::PlayerDied) LoseLife(); }
-	private:
-		int m_Lives = 3;
-	};
-}
+	void LoseLife();
+	void ResetLives();
+
+	void OnNotify(MsPacmanEvent e) override { if(e == MsPacmanEvent::DIE) LoseLife(); }
+private:
+	int m_Lives = 4;
+	dae::Texture2D* m_pTexture{ nullptr };
+};
+
 

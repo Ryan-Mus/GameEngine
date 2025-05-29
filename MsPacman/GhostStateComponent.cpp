@@ -2,6 +2,7 @@
 #include "StartState.h"
 #include "PacmanGrid.h"
 #include "GhostMovement.h"
+#include "SpriteSheetAnimatorComponent.h"
 #include <iostream>
 
 GhostStateComponent::GhostStateComponent(std::unique_ptr<GhostState> state, GhostType type, glm::ivec2 startPos, dae::GameObject* pOwner)
@@ -33,12 +34,7 @@ void GhostStateComponent::OnNotify(MsPacmanEvent event)
 		m_State->OnEnter();
 	}
 
-	if (event == MsPacmanEvent::START_LEVEL)
-	{
-		m_State->OnEnter();
-	}
-
-	if (event == MsPacmanEvent::DIE)
+	if (event == MsPacmanEvent::DIE || event == MsPacmanEvent::START_LEVEL)
 	{
 		m_State->OnExit();
 		m_State = std::make_unique<StartState>(GetOwner());
@@ -49,5 +45,8 @@ void GhostStateComponent::OnNotify(MsPacmanEvent event)
 
 		movement->SetTarget(m_StartPos);
 		GetOwner()->SetLocalPostion({ grid->GridToLocalPosition(m_StartPos.x,m_StartPos.y),0 });
+
+		auto animation = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
+		animation->PlayAnimation("Up");
 	}
 }

@@ -174,6 +174,7 @@
     <ClCompile Include="PacmanMovement.cpp" />
     <ClCompile Include="PickUpPelletsComponent.cpp" />
     <ClCompile Include="RotatorComponent.cpp" />
+    <ClCompile Include="ScorePopUp.cpp" />
     <ClCompile Include="ScoreUIcomponent.cpp" />
     <ClCompile Include="StartState.cpp" />
     <ClCompile Include="TestBindings.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="PacmanMovement.h" />
     <ClInclude Include="PickUpPelletsComponent.h" />
     <ClInclude Include="RotatorComponent.h" />
+    <ClInclude Include="ScorePopUp.h" />
     <ClInclude Include="ScoreUIcomponent.h" />
     <ClInclude Include="StartState.h" />
   </ItemGroup>

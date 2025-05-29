@@ -72,6 +72,9 @@
     <ClCompile Include="MsPacmanDieComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ScorePopUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InteractionCommands.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MsPacmanDieComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScorePopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

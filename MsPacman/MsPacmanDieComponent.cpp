@@ -32,4 +32,16 @@ void MsPacmanDieComponent::OnNotify(MsPacmanEvent event)
 		GetOwner()->GetComponent<dae::SpriteSheetAnimator>()->PlayAnimation("Death");
 		GetOwner()->GetComponent<PacmanMovement>()->ToggleMovement();
 	}
+
+	if (event == MsPacmanEvent::START_LEVEL)
+	{
+		m_IsDying = false;
+		m_elapsedTime = 0.f;
+		auto grid = GetOwner()->GetComponent<PacmanMovement>()->GetGrid();
+		GetOwner()->SetLocalPostion({ grid->GridToLocalPosition(14, 23),0 });
+		GetOwner()->GetComponent<PacmanMovement>()->ToggleMovement();
+		GetOwner()->GetComponent<PacmanMovement>()->ToggleMovement();
+		auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
+		animator->PlayAnimation("Right");
+	}
 }

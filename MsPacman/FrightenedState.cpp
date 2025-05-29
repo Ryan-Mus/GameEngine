@@ -28,11 +28,6 @@ std::unique_ptr<GhostState> FrightenedState::Update()
     // Get Ms. Pac-Man's position
     auto pacmanPos = grid->GetMsPacmanPos();
 
-	if (m_pGhost->GetComponent<GhostMovement>()->GetGridPosition() == pacmanPos)
-	{
-		return std::make_unique<EatenState>(m_pGhost);
-	}
-
     // Calculate the opposite position
     glm::ivec2 gridDimensions = grid->GetDimensions(); // Assuming GetDimensions() returns {width, height}
     glm::ivec2 oppositePos = { gridDimensions.x - pacmanPos.x - 1, gridDimensions.y - pacmanPos.y - 1 };
@@ -55,7 +50,15 @@ void FrightenedState::OnExit()
 	m_pGhost->GetComponent<GhostMovement>()->SetSpeed(150.f);
 }
 
-std::unique_ptr<GhostState> FrightenedState::OnNotify(MsPacmanEvent)
+std::unique_ptr<GhostState> FrightenedState::OnNotify(MsPacmanEvent e)
 {
+	if (e != MsPacmanEvent::EATEN_GHOST) return nullptr;
+
+	auto pacmanPos = m_pGhost->GetComponent<GhostMovement>()->GetGrid()->GetMsPacmanPos();
+    if (m_pGhost->GetComponent<GhostMovement>()->GetGridPosition() == pacmanPos)
+    {
+        return std::make_unique<EatenState>(m_pGhost);
+    }
+
 	return nullptr;
 }

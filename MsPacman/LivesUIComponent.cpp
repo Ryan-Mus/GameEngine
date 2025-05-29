@@ -4,16 +4,25 @@
 #include "LivesUIComponent.h"
 #include "GameObject.h"
 #include "TextComponent.h"
+#include "Renderer.h"
+#include "CustomPacmanDefines.h"
 
 
-void dae::LivesUIComponent::LoseLife()
+void LivesUIComponent::Render() const
 {
-	m_Lives--;
-	GetOwner()->GetComponent<TextComponent>()->SetText("Lives: " + std::to_string(m_Lives));
+	for (int i{}; i < m_Lives; ++i)
+	{
+		float offsetX = i * 16.f * PACMAN_RENDERSCALE;
+		dae::Renderer::GetInstance().RenderTexture(*m_pTexture, GetOwner()->GetWorldPosition().x + offsetX, GetOwner()->GetWorldPosition().y,472, 0, 16, 16, PACMAN_RENDERSCALE);
+	}
 }
 
-void dae::LivesUIComponent::ResetLives()
+void LivesUIComponent::LoseLife()
 {
-	m_Lives = 3;
-	GetOwner()->GetComponent<TextComponent>()->SetText("Lives: " + std::to_string(m_Lives));
+	m_Lives--;
+}
+
+void LivesUIComponent::ResetLives()
+{
+	m_Lives = 4;
 }

@@ -25,6 +25,15 @@ struct Cell
 	CellType type{ CellType::Empty };
 };
 
+struct LevelData
+{
+	std::string gridFilePath;
+	int mazeTextureSourceX;
+	int mazeTextureSourceY;
+	int mazeTextureSourceWidth;
+	int mazeTextureSourceHeight;
+};
+
 class PacmanGrid final : public dae::Component, public MsPacmanSubject
 {
 public:
@@ -35,7 +44,7 @@ public:
 		m_CellSize{ static_cast<int>(cellSize) }
 	{
 		m_Grid.resize(rows, std::vector<Cell>(columns));
-		m_Texture = GetOwner()->GetComponent<dae::TextureComponent>()->GetTexture();
+		m_pTexture = GetOwner()->GetComponent<dae::TextureComponent>()->GetTexture();
 	};
 
 	~PacmanGrid() override = default;
@@ -95,30 +104,7 @@ public:
 		return { column, row };
 	};
 
-	void ConsumePellet(int column, int row)
-	{
-		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
-		{
-			std::cout << "ConsumePellet: Out of bounds" << std::endl;
-			return; // Out of bounds
-		}
-		if (m_Grid[row][column].type == CellType::Pellet)
-		{
-			Notify(MsPacmanEvent::EATEN_SMALL_PELLET);
-			m_Grid[row][column].type = CellType::Empty;
-			std::cout << "Pellet consumed at (" << column << ", " << row << ")" << std::endl;
-		}
-		else if (m_Grid[row][column].type == CellType::BigPellet)
-		{
-			Notify(MsPacmanEvent::EATEN_BIG_PELLET);
-			m_Grid[row][column].type = CellType::Empty;
-			std::cout << "Big pellet consumed at (" << column << ", " << row << ")" << std::endl;
-		}
-		else
-		{
-			std::cout << "No pellet at (" << column << ", " << row << ")" << std::endl;
-		}
-	}
+	void ConsumePellet(int column, int row);
 
 	CellType GetCellType(int column, int row) const
 	{
@@ -137,16 +123,10 @@ public:
 	glm::ivec2 GetDimensions() const { return { m_Columns, m_Rows }; }
 
 	void loadGrid(const std::string& filePath);
+	void AddLevelData(const LevelData& levelData);
+	void LoadLevel(int levelIndex);
 
-	void setMsPacmanPos(int column, int row)
-	{
-		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
-		{
-			std::cout << "SetMsPacmanPos: Out of bounds" << std::endl;
-			return; // Out of bounds
-		}
-		m_MsPacmanPos = { column, row };
-	}
+	
 
 	glm::ivec2 GetMsPacmanPos() const
 	{
@@ -164,7 +144,22 @@ private:
 	int m_CellSize{};
 	glm::ivec2 m_MsPacmanPos{ 0, 0 }; // Pacman's position in the grid
 	std::vector<std::vector<Cell>> m_Grid;
-	dae::Texture2D* m_Texture{ nullptr };
+	dae::Texture2D* m_pTexture{ nullptr };
 	dae::GameObject* m_pMsPacman{ nullptr };
 	std::vector<dae::GameObject*> m_pGhosts{};
+
+	std::vector<LevelData> m_Levels;
+	int m_CurrentLevelIndex = -1;
+	int m_TotalPelletsThisLevel = 0;
+	int m_PelletsEatenThisLevel = 0;
+
+	void setMsPacmanPos(int column, int row)
+	{
+		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
+		{
+			std::cout << "SetMsPacmanPos: Out of bounds" << std::endl;
+			return; // Out of bounds
+		}
+		m_MsPacmanPos = { column, row };
+	}
 };
