@@ -135,6 +135,7 @@ public:
 
 	void RegisterMsPacman(dae::GameObject* pMsPacman);
 	void RegisterGhost(dae::GameObject* pGhost);
+	void RegisterFruit(dae::GameObject* pFruit);
 
 	void Update() override;
 
@@ -146,12 +147,15 @@ private:
 	std::vector<std::vector<Cell>> m_Grid;
 	dae::Texture2D* m_pTexture{ nullptr };
 	dae::GameObject* m_pMsPacman{ nullptr };
+	dae::GameObject* m_pFruit{ nullptr };
 	std::vector<dae::GameObject*> m_pGhosts{};
 
 	std::vector<LevelData> m_Levels;
 	int m_CurrentLevelIndex = -1;
 	int m_TotalPelletsThisLevel = 0;
 	int m_PelletsEatenThisLevel = 0;
+
+	bool m_FruitEaten{ false };
 
 	void setMsPacmanPos(int column, int row)
 	{

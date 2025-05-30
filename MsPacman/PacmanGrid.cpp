@@ -62,6 +62,11 @@ void PacmanGrid::RegisterGhost(dae::GameObject* pGhost)
 	m_pGhosts.emplace_back(pGhost);
 }
 
+void PacmanGrid::RegisterFruit(dae::GameObject* pFruit)
+{
+	m_pFruit = pFruit;
+}
+
 void PacmanGrid::Update()
 {
 	if (!m_pMsPacman || m_pGhosts.empty())
@@ -98,6 +103,18 @@ void PacmanGrid::Update()
 					}
 				}
 			}
+		}
+	}
+
+	if (m_pFruit && !m_FruitEaten)
+	{
+		const auto fruitWorldPos = m_pFruit->GetWorldPosition();
+		const auto fruitGridPosPair = WorldToGridPosition(fruitWorldPos.x, fruitWorldPos.y);
+		const glm::ivec2 fruitGridPos = { fruitGridPosPair.first, fruitGridPosPair.second };
+		if (fruitGridPos.x == pacmanGridPos.x && fruitGridPos.y == pacmanGridPos.y)
+		{
+			m_FruitEaten = true;
+			Notify(static_cast<MsPacmanEvent>((int)MsPacmanEvent::EATEN_CHERRY + m_CurrentLevelIndex));
 		}
 	}
 
@@ -154,6 +171,11 @@ void PacmanGrid::ConsumePellet(int column, int row)
 			// Potentially notify game over or victory screen
 		}
 	}
+
+	else if (m_PelletsEatenThisLevel == 64)
+	{
+		Notify(MsPacmanEvent::SPAWN_FRUIT);
+	}
 }
 
 void PacmanGrid::AddLevelData(const LevelData& levelData)
@@ -195,5 +217,7 @@ void PacmanGrid::LoadLevel(int levelIndex)
 	}
 
 	std::cout << "Loaded level " << m_CurrentLevelIndex << " with grid: " << currentLevelData.gridFilePath << std::endl;
+
+	m_FruitEaten = false;
 	Notify(MsPacmanEvent::START_LEVEL); // Notify observers that a new level has started
 }

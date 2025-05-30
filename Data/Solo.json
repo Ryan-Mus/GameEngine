@@ -42,6 +42,7 @@
                     }
                   ],
                   "registerMsPacman": "msPacman",
+                  "registerFruit": "fruit",
                   "registerGhosts": [
                     "Blinky",
                     "Pinky",
@@ -717,6 +718,64 @@
                 "scorePopUp": {}
               }
             ]
+          },
+          {
+            "name": "fruit",
+            "parent": "grid",
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 504,
+                  "y": 16,
+                  "width": 16,
+                  "height": 16,
+                  "offset": [-4, -4]
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "Cherry",
+                      "loop": true,
+                      "frames": [
+                        [504, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "Strawberry",
+                      "loop": true,
+                      "frames": [
+                        [520, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "Orange",
+                      "loop": true,
+                      "frames": [
+                        [536, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "Idle",
+                      "loop": true,
+                      "frames": [
+                        [504, 0, 1, 1, 1.0]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "ghostMovement": {
+                  "speed": 100.0,
+                  "grid": "grid"
+                }
+              },
+              {
+                "fruitBehavior": {}
+              }
+            ]
           }
         ],
         "observerBindings": [
@@ -798,6 +857,16 @@
           "observer": {
             "gameObject": "scorePopUp",
             "component": "scorePopUp"
+          }
+        },
+        {
+          "subject": {
+            "gameObject": "grid",
+            "component": "pacmanGrid"
+          },
+          "observer": {
+            "gameObject": "fruit",
+            "component": "fruitBehavior"
           }
         }
         ]

@@ -52,6 +52,10 @@ void FrightenedState::OnExit()
 
 std::unique_ptr<GhostState> FrightenedState::OnNotify(MsPacmanEvent e)
 {
+	if (e == MsPacmanEvent::EATEN_BIG_PELLET)
+	{
+		return std::make_unique<FrightenedState>(m_pGhost);
+	}
 	if (e != MsPacmanEvent::EATEN_GHOST) return nullptr;
 
 	auto pacmanPos = m_pGhost->GetComponent<GhostMovement>()->GetGrid()->GetMsPacmanPos();

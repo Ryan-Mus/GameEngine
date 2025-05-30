@@ -41,6 +41,7 @@
 #include "SoundServiceSDL.h"
 #include "MsPacmanDieComponent.h"
 #include "ScorePopUp.h"
+#include "FruitBehavior.h"
 
 #include  "CustomPacmanDefines.h"
 
@@ -49,6 +50,7 @@ struct PendingGridRegistration
 {
 	PacmanGrid* gridInstance{ nullptr };
 	std::string msPacmanObjectName;
+	std::string fruitObjectName;
 	std::vector<std::string> ghostObjectNames;
 };
 
@@ -63,6 +65,7 @@ std::unordered_map<std::string, ComponentGetter> componentGetters = {
 	{ "ghostStateComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostStateComponent>(); } },
 	{ "ghostMovement", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostMovement>(); } },
 	{ "scorePopUp", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<ScorePopUp>(); } },
+	{ "fruitBehavior", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<FruitBehavior>(); } },
 };
 
 dae::Component* GetComponentByName(dae::GameObject* gameObject, const std::string& componentName)
@@ -248,6 +251,11 @@ void loadGameJSON(const std::string& path)
 							pendingReg.msPacmanObjectName = gridComponentJson["registerMsPacman"];
 						}
 
+						if (gridComponentJson.contains("registerFruit"))
+						{
+							pendingReg.fruitObjectName = gridComponentJson["registerFruit"];
+						}
+
 						if (gridComponentJson.contains("registerGhosts"))
 						{
 							for (const auto& ghostNameJson : gridComponentJson["registerGhosts"])
@@ -377,6 +385,12 @@ void loadGameJSON(const std::string& path)
 						}
 					}
 
+					//FruitBehavior
+					else if (componentJson.contains("fruitBehavior"))
+					{
+						gameObject->AddComponent<FruitBehavior>();
+					}
+
 					//RotatorComponent
 					else if (componentJson.contains("rotatorComponent"))
 					{
@@ -477,6 +491,19 @@ void loadGameJSON(const std::string& path)
 			else
 			{
 				std::cerr << "Error: Could not find MsPacman GameObject with name '" << regInfo.msPacmanObjectName << "' for grid registration post-load." << std::endl;
+			}
+		}
+
+		if (!regInfo.fruitObjectName.empty())
+		{
+			auto it = gameObjectMap.find(regInfo.fruitObjectName);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.gridInstance->RegisterFruit(it->second.get());
+			}
+			else
+			{
+				std::cerr << "Error: Could not find Fruit GameObject with name '" << regInfo.fruitObjectName << "' for grid registration post-load." << std::endl;
 			}
 		}
 

@@ -162,6 +162,7 @@
     <ClCompile Include="ChaseState.cpp" />
     <ClCompile Include="EatenState.cpp" />
     <ClCompile Include="FrightenedState.cpp" />
+    <ClCompile Include="FruitBehavior.cpp" />
     <ClCompile Include="GhostMovement.cpp" />
     <ClCompile Include="GhostState.cpp" />
     <ClCompile Include="GhostStateComponent.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="CustomPacmanDefines.h" />
     <ClInclude Include="EatenState.h" />
     <ClInclude Include="FrightenedState.h" />
+    <ClInclude Include="FruitBehavior.h" />
     <ClInclude Include="GhostMovement.h" />
     <ClInclude Include="GhostState.h" />
     <ClInclude Include="GhostStateComponent.h" />
