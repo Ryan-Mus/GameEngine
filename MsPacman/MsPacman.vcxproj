@@ -166,6 +166,7 @@
     <ClCompile Include="GhostMovement.cpp" />
     <ClCompile Include="GhostState.cpp" />
     <ClCompile Include="GhostStateComponent.cpp" />
+    <ClCompile Include="HighScoreManager.cpp" />
     <ClCompile Include="LivesUIComponent.cpp" />
     <ClCompile Include="MsPacman.cpp" />
     <ClCompile Include="MsPacmanDieComponent.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="GhostMovement.h" />
     <ClInclude Include="GhostState.h" />
     <ClInclude Include="GhostStateComponent.h" />
+    <ClInclude Include="HighScoreManager.h" />
     <ClInclude Include="InteractionCommands.h" />
     <ClInclude Include="LivesUIComponent.h" />
     <ClInclude Include="MoveCommands.h" />

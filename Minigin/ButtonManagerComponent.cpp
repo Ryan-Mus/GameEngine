@@ -1,6 +1,7 @@
 #include "ButtonManagerComponent.h"
 #include "ButtonComponent.h"
 #include "GameObject.h"
+#include "TextComponent.h"
 
 #include <iostream>
 #include <algorithm>
@@ -8,6 +9,30 @@
 dae::ButtonManagerComponent::ButtonManagerComponent(GameObject* pOwner)
 	:Component(pOwner)
 {
+}
+
+void dae::ButtonManagerComponent::Update()
+{
+	if(m_NeedsToUpdate)
+	{
+		// Hacky solution to resize buttons based on text size (text size is set on the first frame)
+		for(auto button : m_pButtons)
+		{
+			auto textComponent = button->GetComponent<TextComponent>();
+			if (textComponent)
+			{
+				auto size = textComponent->GetSize();
+				if(size == glm::ivec2(0, 0))
+				{
+					return;
+				}
+			}
+			ButtonComponent* buttonComponent = button->GetComponent<ButtonComponent>();
+		
+			buttonComponent->SetBorderAroundText();	
+		}
+		m_NeedsToUpdate = false;
+	}
 }
 
 void dae::ButtonManagerComponent::AddButton(const GameObject* pButton)

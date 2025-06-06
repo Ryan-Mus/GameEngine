@@ -96,9 +96,16 @@ std::shared_ptr<dae::Command> CreateCommand(const std::string& commandType)
     if (commandType == "startSoloGame") {
         return std::make_shared<StartSoloLevelCommand>();
     }
+	else if (commandType == "startCoopGame") {
+		return std::make_shared<StartCoopLevelCommand>();
+	}
+	else if (commandType == "startVersusGame") {
+		return std::make_shared<StartVersusLevelCommand>();
+	}
     else if (commandType == "quitGame") {
         return std::make_shared<QuitGameCommand>();
     }
+
     return nullptr;
 }
 
@@ -497,6 +504,20 @@ void loadGameJSON(const std::string& path)
 				if (gameObject->HasComponent<dae::ButtonManagerComponent>())
 				{
 					AddUIKeyboardBinding(gameObject.get());
+				}
+				else
+				{
+					std::cerr << "Warning: uiKeyboardBinding specified for object without ButtonManagerComponent" << std::endl;
+				}
+			}
+
+			//UI controller binding
+			if (objectJson.contains("uiControllerBinding"))
+			{
+				if (gameObject->HasComponent<dae::ButtonManagerComponent>())
+				{
+					int controllerIndex = objectJson["uiControllerBinding"]["controllerIndex"];
+					AddUIControllerBinding(controllerIndex, gameObject.get());
 				}
 				else
 				{

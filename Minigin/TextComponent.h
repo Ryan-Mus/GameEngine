@@ -19,6 +19,9 @@ namespace dae
 
 		explicit TextComponent(const std::string& text, std::shared_ptr<Font> font, GameObject* owner)
 			:Component{ owner }, m_NeedsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr) {};
+
+		glm::ivec2 GetSize() const;
+		
 	private:
 		bool m_NeedsUpdate;
 		std::string m_text;

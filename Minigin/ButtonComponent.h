@@ -11,7 +11,7 @@ namespace dae
 	public:
 		ButtonComponent(float width, float height, GameObject* pOwner);
 		~ButtonComponent() override = default;
-
+		
 		void Render() const override;
 		void OnClick() const;
 
@@ -20,6 +20,8 @@ namespace dae
 
 		void SetCommand(std::shared_ptr<Command> pCommand) { m_pCommand = pCommand; }
 
+		void SetBorderAroundText();
+
 	private:
 		float m_Width;
 		float m_Height;
@@ -27,6 +29,7 @@ namespace dae
 
 		bool m_IsSelected{ false };
 		std::shared_ptr<Command> m_pCommand{ nullptr  };
+		
 	};
 }
 

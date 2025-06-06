@@ -8,38 +8,86 @@
           "components": [
             {
               "buttonManagerComponent": {
-                "buttons": ["StartButton", "QuitButton"]
+                "buttons": ["StartButton", "StartVSButton", "StartCOOPButton", "QuitButton"]
               }
             }
           ],
-		  "uiKeyboardBinding": {}
+		  "uiKeyboardBinding": {},
+		  "uiControllerBinding" : {"controllerIndex": 0}
         },
         {
           "name": "StartButton",
-          "position": [186, 225],
+          "position": [211, 225],
           "components": [
             {
               "buttonComponent": {
-                "width": 300,
-                "height": 50,
+                "width": 250,
+                "height": 40,
                 "command": "startSoloGame"
               }
             },
             {
               "textComponent": {
-                "text": "Start Game"
+                "text": "Start Solo"
+              }
+            }
+          ]
+        },
+		{
+          "name": "Title",
+          "position": [211, 125],
+          "components": [
+            {
+              "textComponent": {
+                "text": "Ms Pacman"
+              }
+            }
+          ]
+        },
+		{
+          "name": "StartVSButton",
+          "position": [185, 325],
+          "components": [
+            {
+              "buttonComponent": {
+                "width": 298,
+                "height": 40,
+                "command": "startVersusGame"
+              }
+            },
+            {
+              "textComponent": {
+                "text": "Start Versus"
+              }
+            }
+          ]
+        },
+		{
+          "name": "StartCOOPButton",
+          "position": [199, 425],
+          "components": [
+            {
+              "buttonComponent": {
+                "width":  274,
+                "height": 40,
+                "command": "startCoopGame"
+              }
+            },
+            {
+              "textComponent": {
+                "text": "Start Co-op"
               }
             }
           ]
         },
         {
           "name": "QuitButton",
-          "position": [266, 325],
+          "position": [293, 525],
           "components": [
             {
               "buttonComponent": {
-                "width": 140,
-                "height": 50,
+                "width": 106,
+                "height": 40,
                 "command": "quitGame"
               }
             },

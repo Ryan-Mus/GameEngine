@@ -11,6 +11,8 @@ namespace dae
 		ButtonManagerComponent(GameObject* pOwner);
 		~ButtonManagerComponent() override = default;
 
+		void Update() override;
+
 		void AddButton(const GameObject* pButton);
 		void RemoveButton(const GameObject* pButton);
 
@@ -21,6 +23,8 @@ namespace dae
 	private:
 		std::vector<const GameObject*> m_pButtons;
 		size_t m_SelectedButtonIndex{ 0 };
+
+		bool m_NeedsToUpdate{ true };
 	};
 }
 

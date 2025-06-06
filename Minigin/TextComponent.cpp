@@ -43,3 +43,12 @@ void dae::TextComponent::SetText(const std::string& text)
 	m_text = text;
 	m_NeedsUpdate = true;
 }
+
+glm::ivec2 dae::TextComponent::GetSize() const
+{
+	if (m_textTexture != nullptr)
+	{
+		return m_textTexture->GetSize();
+	}
+	return { 0, 0 };
+}

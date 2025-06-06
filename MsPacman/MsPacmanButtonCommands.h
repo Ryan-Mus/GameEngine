@@ -11,11 +11,34 @@ public:
 	}
 };
 
+class StartCoopLevelCommand final: public dae::Command
+{
+	public:
+	virtual void Execute() override
+	{
+		dae::SceneManager::GetInstance().SetActiveScene("Coop");
+	}
+};
+
+class StartVersusLevelCommand final: public dae::Command
+{
+	public:
+	virtual void Execute() override
+	{
+		dae::SceneManager::GetInstance().SetActiveScene("Versus");
+	}
+};
+
+
 class QuitGameCommand final: public dae::Command
 {
 	public:
 	virtual void Execute() override
 	{
-		exit(0);
+		SDL_Event quitEvent;
+		quitEvent.type = SDL_QUIT;
+		SDL_PushEvent(&quitEvent);
 	}
 };
+
+
