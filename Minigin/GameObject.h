@@ -46,7 +46,7 @@ namespace dae
 		}
 
 		template<typename T>
-		T* GetComponent()
+		T* GetComponent() const
 		{
 			auto it = components.find(std::type_index(typeid(T)));
 			assert(it != components.end() && "Component not found!");

@@ -1,0 +1,56 @@
+{
+  "scenes": [
+    {
+      "name": "MainMenu",
+      "gameObjects": [
+        {
+          "name": "ButtonManager",
+          "components": [
+            {
+              "buttonManagerComponent": {
+                "buttons": ["StartButton", "QuitButton"]
+              }
+            }
+          ],
+		  "uiKeyboardBinding": {}
+        },
+        {
+          "name": "StartButton",
+          "position": [186, 225],
+          "components": [
+            {
+              "buttonComponent": {
+                "width": 300,
+                "height": 50,
+                "command": "startSoloGame"
+              }
+            },
+            {
+              "textComponent": {
+                "text": "Start Game"
+              }
+            }
+          ]
+        },
+        {
+          "name": "QuitButton",
+          "position": [266, 325],
+          "components": [
+            {
+              "buttonComponent": {
+                "width": 140,
+                "height": 50,
+                "command": "quitGame"
+              }
+            },
+            {
+              "textComponent": {
+                "text": "Quit"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

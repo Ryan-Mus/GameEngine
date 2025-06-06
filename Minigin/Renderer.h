@@ -26,6 +26,9 @@ namespace dae
 		void RenderTexture(const Texture2D& texture, const float dstX, const float dstY,
 			const int scrX, const int scrY, const int scrWidth, const int scrHeight,const int scale) const;
 
+		void RenderRectangle(float x, float y, float width, float height, const SDL_Color& color, int lineWidth = 1) const;
+		void RenderFilledRectangle(float x, float y, float width, float height, const SDL_Color& color) const;
+
 		SDL_Renderer* GetSDLRenderer() const;
 
 		const SDL_Color& GetBackgroundColor() const { return m_clearColor; }

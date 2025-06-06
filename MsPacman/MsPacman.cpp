@@ -42,6 +42,10 @@
 #include "MsPacmanDieComponent.h"
 #include "ScorePopUp.h"
 #include "FruitBehavior.h"
+#include "ButtonComponent.h"
+#include "ButtonManagerComponent.h"
+#include "MsPacmanButtonCommands.h"
+#include "UIBinding.h" 
 
 #include  "CustomPacmanDefines.h"
 
@@ -52,6 +56,12 @@ struct PendingGridRegistration
 	std::string msPacmanObjectName;
 	std::string fruitObjectName;
 	std::vector<std::string> ghostObjectNames;
+};
+
+struct PendingButtonRegistration
+{
+    dae::ButtonManagerComponent* managerInstance{ nullptr };
+    std::vector<std::string> buttonObjectNames;
 };
 
 using ComponentGetter = std::function<dae::Component* (dae::GameObject*)>;
@@ -66,6 +76,8 @@ std::unordered_map<std::string, ComponentGetter> componentGetters = {
 	{ "ghostMovement", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<GhostMovement>(); } },
 	{ "scorePopUp", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<ScorePopUp>(); } },
 	{ "fruitBehavior", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<FruitBehavior>(); } },
+	{ "buttonComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ButtonComponent>(); } },
+	{ "buttonManagerComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ButtonManagerComponent>(); } },
 };
 
 dae::Component* GetComponentByName(dae::GameObject* gameObject, const std::string& componentName)
@@ -76,6 +88,18 @@ dae::Component* GetComponentByName(dae::GameObject* gameObject, const std::strin
 		return it->second(gameObject);
 	}
 	return nullptr;
+}
+
+std::shared_ptr<dae::Command> CreateCommand(const std::string& commandType)
+{
+    // Add commands as needed based on your game's requirements
+    if (commandType == "startSoloGame") {
+        return std::make_shared<StartSoloLevelCommand>();
+    }
+    else if (commandType == "quitGame") {
+        return std::make_shared<QuitGameCommand>();
+    }
+    return nullptr;
 }
 
 void AddObserverToSubject(dae::Component* subjectComponent, dae::Component* observerComponent)
@@ -104,6 +128,7 @@ void loadGameJSON(const std::string& path)
 
 	std::unordered_map<std::string, std::shared_ptr<dae::GameObject>> gameObjectMap;
 	std::vector<PendingGridRegistration> allPendingGridRegistrations; // To store registration tasks
+	std::vector<PendingButtonRegistration> allPendingButtonRegistrations; // To store button registration tasks
 
 	// Iterate over scenes
 	for (const auto& sceneJson : sceneData["scenes"])
@@ -396,6 +421,45 @@ void loadGameJSON(const std::string& path)
 					{
 						gameObject->AddComponent<dae::RotatorComponent>(componentJson["rotatorComponent"]["speed"]);
 					}
+
+					//ButtonComponent
+					else if (componentJson.contains("buttonComponent"))
+					{
+						float width = componentJson["buttonComponent"]["width"];
+						float height = componentJson["buttonComponent"]["height"];
+						auto& buttonComp = gameObject->AddComponent<dae::ButtonComponent>(width, height);
+						
+						// If there's a command specified, set it
+						if (componentJson["buttonComponent"].contains("command"))
+						{
+							std::string commandType = componentJson["buttonComponent"]["command"];
+							auto command = CreateCommand(commandType);
+							if (command)
+							{
+								buttonComp.SetCommand(command);
+							}
+						}
+					}
+
+					//ButtonManagerComponent
+					else if (componentJson.contains("buttonManagerComponent"))
+					{
+						auto& buttonManager = gameObject->AddComponent<dae::ButtonManagerComponent>();
+						
+						// Store button references for deferred processing
+						if (componentJson["buttonManagerComponent"].contains("buttons"))
+						{
+							PendingButtonRegistration pendingReg;
+							pendingReg.managerInstance = &buttonManager;
+							
+							for (const auto& buttonNameJson : componentJson["buttonManagerComponent"]["buttons"])
+							{
+								pendingReg.buttonObjectNames.push_back(buttonNameJson.get<std::string>());
+							}
+							
+							allPendingButtonRegistrations.push_back(pendingReg);
+						}
+					}
 				}
 			}
 
@@ -424,6 +488,19 @@ void loadGameJSON(const std::string& path)
 					auto grid = gridIt->second->GetComponent<PacmanGrid>();
 					auto localPos = grid->GridToLocalPosition(pos[0], pos[1]);
 					gameObject->SetLocalPostion({ localPos, 0.f });
+				}
+			}
+
+			//UI Keyboard Binding
+			if (objectJson.contains("uiKeyboardBinding"))
+			{
+				if (gameObject->HasComponent<dae::ButtonManagerComponent>())
+				{
+					AddUIKeyboardBinding(gameObject.get());
+				}
+				else
+				{
+					std::cerr << "Warning: uiKeyboardBinding specified for object without ButtonManagerComponent" << std::endl;
 				}
 			}
 
@@ -520,10 +597,30 @@ void loadGameJSON(const std::string& path)
 			}
 		}
 	}
+
+	// Process all pending button registrations after all game objects from all scenes are created
+	for (const auto& regInfo : allPendingButtonRegistrations)
+	{
+		if (!regInfo.managerInstance) continue;
+
+		for (const auto& buttonName : regInfo.buttonObjectNames)
+		{
+			auto it = gameObjectMap.find(buttonName);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.managerInstance->AddButton(it->second.get());
+			}
+			else
+			{
+				std::cerr << "Error: Could not find Button GameObject with name '" << buttonName << "' for button manager registration post-load." << std::endl;
+			}
+		}
+	}
 }
 
 void load()
 {
+	loadGameJSON("../Data/MainMenu.json");
 	loadGameJSON("../Data/Solo.json");
 	
 
@@ -543,7 +640,7 @@ void load()
 	dae::ServiceLocator::GetSoundService().PlaySound("MsPacman");
 	dae::ServiceLocator::GetSoundService().SetMasterVolume(32);
 
-	dae::SceneManager::GetInstance().SetActiveScene("Solo");
+	dae::SceneManager::GetInstance().SetActiveScene("MainMenu");
 }
 
 int main(int, char* []) {

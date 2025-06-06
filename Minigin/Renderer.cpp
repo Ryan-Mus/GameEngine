@@ -133,4 +133,57 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float dstX, co
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 }
 
+void dae::Renderer::RenderRectangle(float x, float y, float width, float height, const SDL_Color& color, int lineWidth) const
+{
+	SDL_Rect rect{ static_cast<int>(x), static_cast<int>(y), static_cast<int>(width), static_cast<int>(height) };
+	
+	// Save current color
+	SDL_Color oldColor{};
+	SDL_GetRenderDrawColor(m_renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);
+	
+	// Set new color
+	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+	
+	// Draw rectangle with specified line width
+	if (lineWidth == 1)
+	{
+		SDL_RenderDrawRect(m_renderer, &rect);
+	}
+	else
+	{
+		// Draw multiple concentric rectangles for thicker lines
+		for (int i = 0; i < lineWidth; ++i)
+		{
+			SDL_Rect currentRect = {
+				rect.x + i,
+				rect.y + i,
+				rect.w - 2 * i,
+				rect.h - 2 * i
+			};
+			SDL_RenderDrawRect(m_renderer, &currentRect);
+		}
+	}
+	
+	// Restore original color
+	SDL_SetRenderDrawColor(m_renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
+}
+
+void dae::Renderer::RenderFilledRectangle(float x, float y, float width, float height, const SDL_Color& color) const
+{
+	SDL_Rect rect{ static_cast<int>(x), static_cast<int>(y), static_cast<int>(width), static_cast<int>(height) };
+	
+	// Save current color
+	SDL_Color oldColor{};
+	SDL_GetRenderDrawColor(m_renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);
+	
+	// Set new color
+	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
+	
+	// Draw filled rectangle
+	SDL_RenderFillRect(m_renderer, &rect);
+	
+	// Restore original color
+	SDL_SetRenderDrawColor(m_renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
+}
+
 SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }

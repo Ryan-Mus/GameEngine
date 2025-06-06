@@ -13,3 +13,5 @@
 #define XINPUT_GAMEPAD_B              0x2000
 #define XINPUT_GAMEPAD_X              0x4000
 #define XINPUT_GAMEPAD_Y              0x8000
+
+#define XINPUT_KEYBOARD_ENTER		  13
