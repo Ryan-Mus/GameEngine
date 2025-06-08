@@ -64,3 +64,31 @@ public:
 		sceneManager.SetActiveScene("MainMenu");
 	}
 };
+
+class ChangeLetterCommand : public dae::Command
+{
+public:
+	ChangeLetterCommand(dae::GameObject* pHighscoreManager, bool increase)
+		: m_pHighscoreManager(pHighscoreManager->GetComponent<HighScoreManager>()), m_Increase{increase}
+	{
+	}
+
+	void Execute() override
+	{
+		m_pHighscoreManager->ChangeLetter(m_Increase);
+	}
+
+private:
+	HighScoreManager* m_pHighscoreManager;
+	bool m_Increase;
+};
+
+class NullCommand : public dae::Command
+{
+public:
+	void Execute() override
+	{
+
+	}
+};
+

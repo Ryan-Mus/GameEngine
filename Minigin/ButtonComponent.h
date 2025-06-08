@@ -18,6 +18,8 @@ namespace dae
 		void Select();
 		void Deselect();
 
+		bool IsSelected() const { return m_IsSelected; };
+
 		void SetCommand(std::shared_ptr<Command> pCommand) { m_pCommand = pCommand; }
 
 		void SetBorderAroundText();

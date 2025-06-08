@@ -6,6 +6,7 @@
 
 #include "TextComponent.h"
 #include "GameObject.h"
+#include "ButtonComponent.h"
 
 HighScoreManager::HighScoreManager(dae::GameObject* pOwner)
     : Component(pOwner)
@@ -22,9 +23,49 @@ void HighScoreManager::AddHighscoreDisplay(dae::GameObject* pDisplayObject, int 
 	pDisplayObject->GetComponent<dae::TextComponent>()->SetText("AAA 0");
 }
 
+void HighScoreManager::AddNameDisplay(dae::GameObject* pDisplayObject, int index)
+{
+    if (index < 0 || index >= m_pNameDisplayObjects.size())
+    {
+        return; // Invalid index
+    }
+    m_pNameDisplayObjects[index] = pDisplayObject;
+	pDisplayObject->GetComponent<dae::TextComponent>()->SetText("A");
+}
+
 void HighScoreManager::SetLastHighScoreDisplay(dae::GameObject* pDisplayObject)
 {
     m_pLastHighScoreDisplayObject = pDisplayObject;
+}
+
+void HighScoreManager::ChangeLetter(bool increase)
+{
+    for (int i{}; i < 3; ++i)
+    {
+        auto button = m_pNameDisplayObjects[i]->GetComponent<dae::ButtonComponent>();
+        if (button->IsSelected())
+        {
+            auto textComp = m_pNameDisplayObjects[i]->GetComponent<dae::TextComponent>();
+            char letter = textComp->GetText()[0];
+            if (increase)
+            {
+                if (letter >= 'Z' || letter < 'A')
+                    letter = 'A';
+                else if (letter >= 'A' && letter < 'Z')
+                    ++letter;
+            }
+            else
+            {
+                if (letter <= 'A' || letter > 'Z')
+                    letter = 'Z';
+                else if (letter > 'A' && letter <= 'Z')
+                    --letter;
+            }
+            m_LastHighScore.name[i] = letter;
+            textComp->SetText(std::string(1, letter));
+            break; // Only change the selected one
+        }
+    }
 }
 
 void HighScoreManager::LoadHighScores()
@@ -115,21 +156,29 @@ void HighScoreManager::LoadHighScores()
     if (m_pLastHighScoreDisplayObject)
     {
         m_pLastHighScoreDisplayObject->GetComponent<dae::TextComponent>()->SetText(
-            std::string(m_LastHighScore.name.begin(), m_LastHighScore.name.end()) + " " +
             std::to_string(m_LastHighScore.score));
     }
+
+	// Update the name display objects
+    for(int i = 0; i < 3; ++i)
+    {
+        if (i < m_pNameDisplayObjects.size() && m_pNameDisplayObjects[i])
+        {
+            m_pNameDisplayObjects[i]->GetComponent<dae::TextComponent>()->SetText(
+                std::string(1, m_LastHighScore.name[i]));
+        }
+	}
 	std::cout << "High scores loaded successfully." << std::endl;
 }
 
 void HighScoreManager::SaveHighScore()
 {
-    if(m_HighScores[0].name[0] == 0)
+    if (m_HighScores[0].name[0] == 0)
     {
         std::cout << "No high scores to save." << std::endl;
         return; // No high scores to save
-	}
-    // Check if LastHighScore should be included in the high scores
-    bool inserted = false;
+    }
+
     for (size_t i = 0; i < m_HighScores.size(); ++i)
     {
         if (m_LastHighScore.score > m_HighScores[i].score)
@@ -142,11 +191,9 @@ void HighScoreManager::SaveHighScore()
 
             // Insert the last high score
             m_HighScores[i] = m_LastHighScore;
-            inserted = true;
             break;
         }
     }
-
     // Write the high scores to highscore.txt
     std::ofstream highScoreFile("../data/highscore.txt");
     if (highScoreFile.is_open())

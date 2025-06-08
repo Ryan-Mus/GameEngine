@@ -193,6 +193,7 @@
     <ClInclude Include="GhostMovement.h" />
     <ClInclude Include="GhostState.h" />
     <ClInclude Include="GhostStateComponent.h" />
+    <ClInclude Include="HighscoreBinding.h" />
     <ClInclude Include="HighscoreCommands.h" />
     <ClInclude Include="HighScoreManager.h" />
     <ClInclude Include="InteractionCommands.h" />

@@ -50,6 +50,7 @@
 #include "UIBinding.h" 
 #include "HighScoreManager.h"
 #include "HighscoreCommands.h"
+#include "HighscoreBinding.h"
 
 #include  "CustomPacmanDefines.h"
 
@@ -75,10 +76,19 @@ struct PendingButtonRegistration
 	std::vector<std::string> buttonObjectNames;
 };
 
-struct PendingHighscoreDisplayRegistration
+struct PendingHighscoreRegistration
 {
 	HighScoreManager* highscoreManager{ nullptr };
-	std::vector<std::string>highscoreDisplayObjectName;
+	std::vector<std::string>nameDisplaysObjectName;
+	std::string lastScoreDisplayObjectName;
+	std::vector<std::string>highscoreDisplaysObjectName;
+};
+
+struct PendingHighscoreBindingRegistration
+{
+	dae::GameObject* pHighscoreManagerObject;
+	std::string buttonManagerName;
+	std::string sceneName;
 };
 
 struct PendingCommandRegistration
@@ -144,6 +154,10 @@ std::shared_ptr<dae::Command> CreateCommand(const CommandParameters& command)
 	{
 		return std::make_shared<OpenHighscoreMenuCommand>();
 	}
+	else if (command.commandType == "null")
+	{
+		return std::make_shared<NullCommand>();
+	}
 
 	return nullptr;
 }
@@ -175,8 +189,9 @@ void GameLoader::loadGameJSON(const std::string& path)
 	std::unordered_map<std::string, dae::GameObject*> gameObjectMap;
 	std::vector<PendingGridRegistration> allPendingGridRegistrations; // To store registration tasks
 	std::vector<PendingButtonRegistration> allPendingButtonRegistrations; // To store button registration tasks
-	std::vector<PendingHighscoreDisplayRegistration> allPendingHighscoreDisplayRegistrations; // To store highscore display registrations
+	std::vector<PendingHighscoreRegistration> allPendingHighscoreDisplayRegistrations; // To store highscore display registrations
 	std::vector<PendingCommandRegistration> allPendingCommandRegistrations; // To store command registrations
+	std::vector<PendingHighscoreBindingRegistration> allPendingHighscoreBindingRegistrations;
 
 	std::vector<dae::GameObject*> HighScoreManagerObjects;
 
@@ -361,7 +376,6 @@ void GameLoader::loadGameJSON(const std::string& path)
 						}
 					}
 
-
 					// GhostMovement
 					if (componentJson.contains("ghostMovement"))
 					{
@@ -529,18 +543,35 @@ void GameLoader::loadGameJSON(const std::string& path)
 						// Store highscore display references for deferred processing
 						if (componentJson["highScoreManager"].contains("highscoreDisplays"))
 						{
-							PendingHighscoreDisplayRegistration pendingReg;
+							PendingHighscoreRegistration pendingReg;
 							pendingReg.highscoreManager = &highscoreManager;
 							for (const auto& displayNameJson : componentJson["highScoreManager"]["highscoreDisplays"])
 							{
-								pendingReg.highscoreDisplayObjectName.push_back(displayNameJson.get<std::string>());
+								pendingReg.highscoreDisplaysObjectName.push_back(displayNameJson.get<std::string>());
+							}
+							for (const auto& nameDisplayNameJson : componentJson["highScoreManager"]["nameDisplays"])
+							{
+								pendingReg.nameDisplaysObjectName.push_back(nameDisplayNameJson.get<std::string>());
+							}
+
+							if (componentJson["highScoreManager"].contains("lastScoreDisplay"))
+							{
+								pendingReg.lastScoreDisplayObjectName = componentJson["highScoreManager"]["lastScoreDisplay"].get<std::string>();
 							}
 							allPendingHighscoreDisplayRegistrations.push_back(pendingReg);
+
+							PendingHighscoreBindingRegistration pendingBindingReg;
+							pendingBindingReg.pHighscoreManagerObject = gameObject.get();
+							pendingBindingReg.sceneName = sceneJson["name"].get<std::string>();
+							if (componentJson["highScoreManager"].contains("highscoreBinding"))
+							{
+								pendingBindingReg.buttonManagerName = componentJson["highScoreManager"]["highscoreBinding"].get<std::string>();
+								allPendingHighscoreBindingRegistrations.push_back(pendingBindingReg);
+							}
 						}
 					}
 				}
 			}
-
 			//keyboardMovement
 			if (objectJson.contains("keyboardMovement"))
 			{
@@ -595,6 +626,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 					std::cerr << "Warning: uiKeyboardBinding specified for object without ButtonManagerComponent" << std::endl;
 				}
 			}
+
 
 			scene.Add(std::move(gameObject));
 		}
@@ -725,16 +757,38 @@ void GameLoader::loadGameJSON(const std::string& path)
 	for(const auto& regInfo : allPendingHighscoreDisplayRegistrations)
 	{
 		if (!regInfo.highscoreManager) continue;
-		for (int i{}; i < static_cast<int>(regInfo.highscoreDisplayObjectName.size()); ++i)
+		for (int i{}; i < static_cast<int>(regInfo.highscoreDisplaysObjectName.size()); ++i)
 		{
-			auto it = gameObjectMap.find(regInfo.highscoreDisplayObjectName[i]);
+			auto it = gameObjectMap.find(regInfo.highscoreDisplaysObjectName[i]);
 			if (it != gameObjectMap.end())
 			{
 				regInfo.highscoreManager->AddHighscoreDisplay(it->second, i);
 			}
 			else
 			{
-				std::cerr << "Error: Could not find Highscore Display GameObject with name '" << regInfo.highscoreDisplayObjectName[i] << "' for highscore manager registration post-load." << std::endl;
+				std::cerr << "Error: Could not find Highscore Display GameObject with name '" << regInfo.highscoreDisplaysObjectName[i] << "' for highscore manager registration post-load." << std::endl;
+			}
+		}
+
+		for (int i{}; i < static_cast<int>(regInfo.nameDisplaysObjectName.size()); ++i)
+		{
+			auto it = gameObjectMap.find(regInfo.nameDisplaysObjectName[i]);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.highscoreManager->AddNameDisplay(it->second, i);
+			}
+			else
+			{
+				std::cerr << "Error: Could not find name Display GameObject with name '" << regInfo.nameDisplaysObjectName[i] << "' for highscore manager registration post-load." << std::endl;
+			}
+		}
+
+		if (!regInfo.lastScoreDisplayObjectName.empty())
+		{
+			auto it = gameObjectMap.find(regInfo.lastScoreDisplayObjectName);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.highscoreManager->SetLastHighScoreDisplay(it->second);
 			}
 		}
 	}
@@ -767,6 +821,18 @@ void GameLoader::loadGameJSON(const std::string& path)
 			std::cerr << "Error: Could not create command for button registration post-load." << std::endl;
 		}
 	}
+	for (auto& regInfo : allPendingHighscoreBindingRegistrations)
+	{
+		if (!regInfo.buttonManagerName.empty())
+		{
+			auto it = gameObjectMap.find(regInfo.buttonManagerName);
+			if (it != gameObjectMap.end())
+			{
+				AddHighscoreKeyboardBinding(it->second, regInfo.pHighscoreManagerObject, regInfo.sceneName);
+				AddHighScoreControllerBinding(0, it->second, regInfo.pHighscoreManagerObject, regInfo.sceneName);
+			}
+		}
+	}
 
 	for(auto& highscoreManagerObject : HighScoreManagerObjects)
 	{
@@ -780,5 +846,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			std::cerr << "Error: HighScoreManager component not found on GameObject." << std::endl;
 		}
 	}
+
+	
 }
 

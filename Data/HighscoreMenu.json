@@ -4,16 +4,14 @@
       "name": "HighscoreMenu",
       "gameObjects": [
         {
-          "name": "ButtonManagers",
+          "name": "ButtonManager",
           "components": [
             {
               "buttonManagerComponent": {
-                "buttons": ["Back","Load", "Save"]
+                "buttons": ["Letter0", "Letter1", "Letter2","Back","Load", "Save"]
               }
             }
-          ],
-          "uiKeyboardBinding": {},
-          "uiControllerBinding": {"controllerIndex": 0}
+          ]
         },
         {
           "name": "HighscoreManager",
@@ -22,7 +20,10 @@
               "highScoreManager": {
                 "highscoreDisplays": ["Highscore0", "Highscore1", "Highscore2",
                 "Highscore3", "Highscore4", "Highscore5", "Highscore6",
-                "Highscore7", "Highscore8", "Highscore9"]
+                "Highscore7", "Highscore8", "Highscore9"],
+				"nameDisplays": ["Letter0", "Letter1", "Letter2"],
+				"lastScoreDisplay": "LastScore",
+				"highscoreBinding": "ButtonManager"
               }
             }
           ]
@@ -100,6 +101,81 @@
             }
           ]
         },
+		{
+          "name": "Letter0",
+          "position": [50, 100],
+          "components": [
+			{
+              "buttonComponent": {
+                "width": 40,
+                "height": 40,
+                "command": {
+                  "type": "null",
+                  "gameObject": "HighscoreManager"
+                }
+              }
+            },
+            {
+              "textComponent": {
+                "text": "M"
+              }
+            }
+          ]
+        },
+		{
+          "name": "Letter1",
+          "position": [90, 100],
+          "components": [
+			{
+              "buttonComponent": {
+                "width": 40,
+                "height": 40,
+                "command": {
+                  "type": "null",
+                  "gameObject": "HighscoreManager"
+                }
+              }
+            },
+            {
+              "textComponent": {
+                "text": "U"
+              }
+            }
+          ]
+        },
+		{
+          "name": "Letter2",
+          "position": [130, 100],
+          "components": [
+			{
+              "buttonComponent": {
+                "width": 40,
+                "height": 40,
+                "command": {
+                  "type": "null",
+                  "gameObject": "HighscoreManager"
+                }
+              }
+            },
+            {
+              "textComponent": {
+                "text": "S"
+              }
+            }
+          ]
+        },
+		{
+          "name": "LastScore",
+          "position": [200, 100],
+          "components": [
+            {
+              "textComponent": {
+                "text": "0"
+              }
+            }
+          ]
+        },
+		
         {
           "name": "Highscore0",
           "position": [50, 200],

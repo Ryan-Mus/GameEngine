@@ -170,5 +170,8 @@
     <ClInclude Include="HighscoreCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HighscoreBinding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
