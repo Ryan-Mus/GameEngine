@@ -5,8 +5,8 @@
 
 namespace dae
 {
-    SceneManager::SceneManager() = default; // Define constructor
-    SceneManager::~SceneManager() = default; // Define destructor. Full Scene def is known.
+    SceneManager::SceneManager() = default;
+    SceneManager::~SceneManager() = default;
 
     Scene& SceneManager::CreateScene(const std::string& name)
     {
@@ -33,11 +33,23 @@ namespace dae
         return m_pActiveScene;
     }
 
+    void SceneManager::QueueSceneChange(std::function<void()> sceneChangeFunc)
+    {
+        m_PendingSceneChange = sceneChangeFunc;
+    }
+
     void SceneManager::Update()
     {
         if (m_pActiveScene)
         {
             m_pActiveScene->Update();
+        }
+
+        // Process pending scene change if there is one
+        if (m_PendingSceneChange)
+        {
+            m_PendingSceneChange();
+            m_PendingSceneChange = nullptr;
         }
     }
 

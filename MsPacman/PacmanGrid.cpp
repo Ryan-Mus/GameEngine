@@ -2,6 +2,7 @@
 #include <fstream>
 #include "TextureComponent.h" // Required for SetSource
 #include "Renderer.h" // Required for Renderer instance
+#include "LivesUIComponent.h"
 
 void PacmanGrid::loadGrid(const std::string& filePath)
 {
@@ -67,6 +68,11 @@ void PacmanGrid::RegisterFruit(dae::GameObject* pFruit)
 	m_pFruit = pFruit;
 }
 
+void PacmanGrid::RegisterLives(dae::GameObject* pLives)
+{
+	m_pLives = pLives;
+}
+
 void PacmanGrid::Update()
 {
 	if (!m_pMsPacman || m_pGhosts.empty())
@@ -100,6 +106,13 @@ void PacmanGrid::Update()
 					else if (stateType == GhostStateType::CHASE || stateType == GhostStateType::START)
 					{
 						Notify(MsPacmanEvent::DIE);
+						int livesLeft = m_pLives->GetComponent<LivesUIComponent>()->GetLives();
+
+						if (livesLeft <= 0)
+						{
+							Notify(MsPacmanEvent::GAME_OVER);
+							std::cout << "Game Over! No lives left." << std::endl;
+						}
 					}
 				}
 			}
@@ -167,6 +180,7 @@ void PacmanGrid::ConsumePellet(int column, int row)
 		}
 		else
 		{
+			Notify(MsPacmanEvent::GAME_OVER);
 			std::cout << "All levels completed!" << std::endl;
 			// Potentially notify game over or victory screen
 		}

@@ -48,7 +48,8 @@
                     "Pinky",
                     "Inky",
                     "Clyde"
-                  ]
+                  ],
+				  "registerLives": "livesDisplay"
                 }
               }
             ]

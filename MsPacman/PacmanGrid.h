@@ -136,6 +136,7 @@ public:
 	void RegisterMsPacman(dae::GameObject* pMsPacman);
 	void RegisterGhost(dae::GameObject* pGhost);
 	void RegisterFruit(dae::GameObject* pFruit);
+	void RegisterLives(dae::GameObject* pLives);
 
 	void Update() override;
 
@@ -148,6 +149,7 @@ private:
 	dae::Texture2D* m_pTexture{ nullptr };
 	dae::GameObject* m_pMsPacman{ nullptr };
 	dae::GameObject* m_pFruit{ nullptr };
+	dae::GameObject* m_pLives{ nullptr };
 	std::vector<dae::GameObject*> m_pGhosts{};
 
 	std::vector<LevelData> m_Levels;

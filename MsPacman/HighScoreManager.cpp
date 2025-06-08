@@ -14,12 +14,17 @@ HighScoreManager::HighScoreManager(dae::GameObject* pOwner)
 
 void HighScoreManager::AddHighscoreDisplay(dae::GameObject* pDisplayObject, int index)
 {
-    if (index < 0 || index >= m_HighScoreDisplayObjects.size())
+    if (index < 0 || index >= m_pHighScoreDisplayObjects.size())
     {
         return; // Invalid index
     }
-    m_HighScoreDisplayObjects[index] = pDisplayObject;
+    m_pHighScoreDisplayObjects[index] = pDisplayObject;
 	pDisplayObject->GetComponent<dae::TextComponent>()->SetText("AAA 0");
+}
+
+void HighScoreManager::SetLastHighScoreDisplay(dae::GameObject* pDisplayObject)
+{
+    m_pLastHighScoreDisplayObject = pDisplayObject;
 }
 
 void HighScoreManager::LoadHighScores()
@@ -79,7 +84,7 @@ void HighScoreManager::LoadHighScores()
             // Extract name (first 3 chars)
             for (int i = 0; i < 3; ++i)
             {
-                LastHighScore.name[i] = line[i];
+                m_LastHighScore.name[i] = line[i];
             }
 
             // Extract score (everything after the space)
@@ -88,11 +93,11 @@ void HighScoreManager::LoadHighScores()
             {
                 try
                 {
-                    LastHighScore.score = std::stoi(line.substr(spacePos + 1));
+                    m_LastHighScore.score = std::stoi(line.substr(spacePos + 1));
                 }
                 catch (const std::exception&)
                 {
-                    LastHighScore.score = 0;
+                    m_LastHighScore.score = 0;
                 }
             }
         }
@@ -102,10 +107,18 @@ void HighScoreManager::LoadHighScores()
 
     for (int i{}; i < 10; ++i)
     {
-        m_HighScoreDisplayObjects[i]->GetComponent<dae::TextComponent>()->SetText(
+        m_pHighScoreDisplayObjects[i]->GetComponent<dae::TextComponent>()->SetText(
             std::string(m_HighScores[i].name.begin(), m_HighScores[i].name.end()) + " " +
             std::to_string(m_HighScores[i].score));
 	}
+
+    if (m_pLastHighScoreDisplayObject)
+    {
+        m_pLastHighScoreDisplayObject->GetComponent<dae::TextComponent>()->SetText(
+            std::string(m_LastHighScore.name.begin(), m_LastHighScore.name.end()) + " " +
+            std::to_string(m_LastHighScore.score));
+    }
+	std::cout << "High scores loaded successfully." << std::endl;
 }
 
 void HighScoreManager::SaveHighScore()
@@ -119,7 +132,7 @@ void HighScoreManager::SaveHighScore()
     bool inserted = false;
     for (size_t i = 0; i < m_HighScores.size(); ++i)
     {
-        if (LastHighScore.score > m_HighScores[i].score)
+        if (m_LastHighScore.score > m_HighScores[i].score)
         {
             // Shift down all lower scores
             for (size_t j = m_HighScores.size() - 1; j > i; --j)
@@ -128,7 +141,7 @@ void HighScoreManager::SaveHighScore()
             }
 
             // Insert the last high score
-            m_HighScores[i] = LastHighScore;
+            m_HighScores[i] = m_LastHighScore;
             inserted = true;
             break;
         }

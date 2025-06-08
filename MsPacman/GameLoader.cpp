@@ -65,6 +65,7 @@ struct PendingGridRegistration
 	PacmanGrid* gridInstance{ nullptr };
 	std::string msPacmanObjectName;
 	std::string fruitObjectName;
+	std::string livesObjectName;
 	std::vector<std::string> ghostObjectNames;
 };
 
@@ -176,6 +177,8 @@ void GameLoader::loadGameJSON(const std::string& path)
 	std::vector<PendingButtonRegistration> allPendingButtonRegistrations; // To store button registration tasks
 	std::vector<PendingHighscoreDisplayRegistration> allPendingHighscoreDisplayRegistrations; // To store highscore display registrations
 	std::vector<PendingCommandRegistration> allPendingCommandRegistrations; // To store command registrations
+
+	std::vector<dae::GameObject*> HighScoreManagerObjects;
 
 	// Iterate over scenes
 	for (const auto& sceneJson : sceneData["scenes"])
@@ -334,6 +337,11 @@ void GameLoader::loadGameJSON(const std::string& path)
 							{
 								pendingReg.ghostObjectNames.push_back(ghostNameJson.get<std::string>());
 							}
+						}
+
+						if(gridComponentJson.contains("registerLives"))
+						{
+							pendingReg.livesObjectName = gridComponentJson["registerLives"];
 						}
 						allPendingGridRegistrations.push_back(pendingReg);
 					}
@@ -517,6 +525,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 					else if (componentJson.contains("highScoreManager"))
 					{
 						auto& highscoreManager = gameObject->AddComponent<HighScoreManager>();
+						HighScoreManagerObjects.push_back(gameObject.get()); // Store the HighScoreManager object for later processing
 						// Store highscore display references for deferred processing
 						if (componentJson["highScoreManager"].contains("highscoreDisplays"))
 						{
@@ -679,6 +688,18 @@ void GameLoader::loadGameJSON(const std::string& path)
 				std::cerr << "Error: Could not find Ghost GameObject with name '" << ghostName << "' for grid registration post-load." << std::endl;
 			}
 		}
+		if(!regInfo.livesObjectName.empty())
+		{
+			auto it = gameObjectMap.find(regInfo.livesObjectName);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.gridInstance->RegisterLives(it->second);
+			}
+			else
+			{
+				std::cerr << "Error: Could not find Lives UI GameObject with name '" << regInfo.livesObjectName << "' for grid registration post-load." << std::endl;
+			}
+		}
 	}
 
 	// Process all pending button registrations after all game objects from all scenes are created
@@ -744,6 +765,19 @@ void GameLoader::loadGameJSON(const std::string& path)
 		else
 		{
 			std::cerr << "Error: Could not create command for button registration post-load." << std::endl;
+		}
+	}
+
+	for(auto& highscoreManagerObject : HighScoreManagerObjects)
+	{
+		auto highscoreManager = highscoreManagerObject->GetComponent<HighScoreManager>();
+		if (highscoreManager)
+		{
+			highscoreManager->LoadHighScores();
+		}
+		else
+		{
+			std::cerr << "Error: HighScoreManager component not found on GameObject." << std::endl;
 		}
 	}
 }

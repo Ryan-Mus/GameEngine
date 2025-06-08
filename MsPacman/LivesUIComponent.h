@@ -16,10 +16,11 @@ public:
 
 	void LoseLife();
 	void ResetLives();
+	int GetLives() const { return m_Lives; }
 
 	void OnNotify(MsPacmanEvent e) override { if(e == MsPacmanEvent::DIE) LoseLife(); }
 private:
-	int m_Lives = 4;
+	int m_Lives = 3;
 	dae::Texture2D* m_pTexture{ nullptr };
 };
 

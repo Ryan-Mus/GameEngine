@@ -24,5 +24,5 @@ void LivesUIComponent::LoseLife()
 
 void LivesUIComponent::ResetLives()
 {
-	m_Lives = 4;
+	m_Lives = 3;
 }

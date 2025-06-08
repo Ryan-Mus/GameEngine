@@ -1,5 +1,9 @@
 #pragma once
 #include "GameLoader.h"
+#include "Command.h"
+#include "SceneManager.h"
+#include <SDL.h>
+#include <iostream>
 
 class StartSoloLevelCommand final: public dae::Command
 {

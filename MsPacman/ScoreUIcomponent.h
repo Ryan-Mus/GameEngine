@@ -26,7 +26,19 @@ namespace dae
 				m_ElapsedTime = 0.0f;
 				m_Streak = 0;
 			}
+
+			if (m_EndOfGame)
+			{
+				m_EndOfGameTime += Time::GetInstance().GetDeltaTime();
+				if (m_EndOfGameTime > 1.0f) // Wait for 2 seconds before going to high score screen
+				{
+					GoToHighScoreScreen();
+				}
+			}
 		}
+
+		void SaveScore();
+		void GoToHighScoreScreen();
 
 		void OnNotify(MsPacmanEvent event) override
 		{
@@ -72,6 +84,12 @@ namespace dae
 			case MsPacmanEvent::EATEN_ORANGE:
 				AddScore(500);
 				break;
+			case MsPacmanEvent::GAME_OVER:
+				SaveScore();
+				m_EndOfGame = true;
+				
+				break;
+
 
 			}
 		}
@@ -79,6 +97,8 @@ namespace dae
 		int m_Score = 0;
 		int m_Streak = 0;
 		float m_ElapsedTime = 0;
+		bool m_EndOfGame = false;
+		float m_EndOfGameTime = 0;
 	};
 }
 
