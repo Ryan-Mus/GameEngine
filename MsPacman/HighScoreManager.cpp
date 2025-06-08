@@ -2,10 +2,24 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <iostream>
+
+#include "TextComponent.h"
+#include "GameObject.h"
 
 HighScoreManager::HighScoreManager(dae::GameObject* pOwner)
     : Component(pOwner)
 {
+}
+
+void HighScoreManager::AddHighscoreDisplay(dae::GameObject* pDisplayObject, int index)
+{
+    if (index < 0 || index >= m_HighScoreDisplayObjects.size())
+    {
+        return; // Invalid index
+    }
+    m_HighScoreDisplayObjects[index] = pDisplayObject;
+	pDisplayObject->GetComponent<dae::TextComponent>()->SetText("AAA 0");
 }
 
 void HighScoreManager::LoadHighScores()
@@ -18,7 +32,7 @@ void HighScoreManager::LoadHighScores()
     }
 
     // Load high scores from file
-    std::ifstream highScoreFile("highscore.txt");
+    std::ifstream highScoreFile("../data/highscore.txt");
     if (highScoreFile.is_open())
     {
         std::string line;
@@ -56,7 +70,7 @@ void HighScoreManager::LoadHighScores()
     }
 
     // Load the last high score from lastscore.txt
-    std::ifstream lastScoreFile("lastscore.txt");
+    std::ifstream lastScoreFile("../data/lastscore.txt");
     if (lastScoreFile.is_open())
     {
         std::string line;
@@ -85,6 +99,13 @@ void HighScoreManager::LoadHighScores()
 
         lastScoreFile.close();
     }
+
+    for (int i{}; i < 10; ++i)
+    {
+        m_HighScoreDisplayObjects[i]->GetComponent<dae::TextComponent>()->SetText(
+            std::string(m_HighScores[i].name.begin(), m_HighScores[i].name.end()) + " " +
+            std::to_string(m_HighScores[i].score));
+	}
 }
 
 void HighScoreManager::SaveHighScore()
@@ -109,7 +130,7 @@ void HighScoreManager::SaveHighScore()
     }
 
     // Write the high scores to highscore.txt
-    std::ofstream highScoreFile("highscore.txt");
+    std::ofstream highScoreFile("../data/highscore.txt");
     if (highScoreFile.is_open())
     {
         for (const auto& highScore : m_HighScores)
@@ -120,11 +141,14 @@ void HighScoreManager::SaveHighScore()
         highScoreFile.close();
     }
 
-	std::ofstream lastScoreFile("lastscore.txt");
+	std::ofstream lastScoreFile("../data/lastscore.txt");
     if (lastScoreFile.is_open())
     {
         lastScoreFile << "A" << "A" << "A"
             << " " << 0 << std::endl;
         lastScoreFile.close();
 	}
+
+	std::cout << "High scores saved successfully." << std::endl;
+	LoadHighScores();
 }

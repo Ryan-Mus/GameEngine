@@ -12,10 +12,12 @@ class HighScoreManager : public dae::Component
 
 public:
 	HighScoreManager(dae::GameObject* pOwner);
-private:
+
+	void AddHighscoreDisplay(dae::GameObject* pDisplayObject, int index);
+
 	void LoadHighScores();
 	void SaveHighScore();
-
+private:
 	HighScore LastHighScore{};
 
 	std::array<HighScore, 10> m_HighScores{};

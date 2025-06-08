@@ -16,6 +16,10 @@ namespace dae
         void SetActiveScene(const std::string& name);
         Scene* GetActiveScene() const;
 
+		bool HasScene(const std::string& name) const;
+		void RemoveScene(const std::string& name);
+		void ClearScenes();
+
         void Update();
         void FixedUpdate();
         void Render();

@@ -8,7 +8,7 @@
           "components": [
             {
               "buttonManagerComponent": {
-                "buttons": ["StartButton", "StartVSButton", "StartCOOPButton", "QuitButton"]
+                "buttons": ["StartButton", "StartVSButton", "StartCOOPButton","HighScoreButton", "QuitButton"]
               }
             }
           ],
@@ -23,7 +23,10 @@
               "buttonComponent": {
                 "width": 250,
                 "height": 40,
-                "command": "startSoloGame"
+                "command": 
+				{
+					"type" : "startSoloGame"
+				}
               }
             },
             {
@@ -52,7 +55,10 @@
               "buttonComponent": {
                 "width": 298,
                 "height": 40,
-                "command": "startVersusGame"
+                "command": 
+				{
+					"type" : "startVersusGame"
+				}
               }
             },
             {
@@ -70,7 +76,10 @@
               "buttonComponent": {
                 "width":  274,
                 "height": 40,
-                "command": "startCoopGame"
+                "command": 
+				{
+					"type" : "startCoopGame"
+				}
               }
             },
             {
@@ -81,14 +90,38 @@
           ]
         },
         {
-          "name": "QuitButton",
-          "position": [293, 525],
+          "name": "HighScoreButton",
+          "position": [211, 525],
           "components": [
             {
               "buttonComponent": {
                 "width": 106,
                 "height": 40,
-                "command": "quitGame"
+                "command": 
+				{
+					"type" : "openHighscoreMenu"
+				}
+              }
+            },
+            {
+              "textComponent": {
+                "text": "Highscores"
+              }
+            }
+          ]
+        },
+		{
+          "name": "QuitButton",
+          "position": [293, 625],
+          "components": [
+            {
+              "buttonComponent": {
+                "width": 106,
+                "height": 40,
+                "command": 
+				{
+					"type" : "quitGame"
+				}
               }
             },
             {

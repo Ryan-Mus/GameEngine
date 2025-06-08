@@ -1,0 +1,216 @@
+{
+  "scenes": [
+    {
+      "name": "HighscoreMenu",
+      "gameObjects": [
+        {
+          "name": "ButtonManager",
+          "components": [
+            {
+              "buttonManagerComponent": {
+                "buttons": ["Back","Load", "Save"]
+              }
+            }
+          ],
+          "uiKeyboardBinding": {},
+          "uiControllerBinding": {"controllerIndex": 0}
+        },
+        {
+          "name": "HighscoreManager",
+          "components": [
+            {
+              "highScoreManager": {
+                "highscoreDisplays": ["Highscore0", "Highscore1", "Highscore2",
+                "Highscore3", "Highscore4", "Highscore5", "Highscore6",
+                "Highscore7", "Highscore8", "Highscore9"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Back",
+          "position": [50, 625],
+          "components": [
+            {
+              "buttonComponent": {
+                "width": 250,
+                "height": 40,
+                "command": {
+                  "type": "openMainMenu"
+                }
+              }
+            },
+            {
+              "textComponent": {
+                "text": "Back"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Title",
+          "position": [200, 50],
+          "components": [
+            {
+              "textComponent": {
+                "text": "HIGHSCORES"
+              }
+            }
+          ]
+        },
+		{
+          "name": "Load",
+          "position": [200, 625],
+          "components": [
+            {
+              "buttonComponent": {
+                "width": 298,
+                "height": 40,
+                "command": {
+                  "type": "loadHighscore",
+                  "gameObject": "HighscoreManager"
+                }
+              }
+            },
+            {
+              "textComponent": {
+                "text": "Load"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Save",
+          "position": [350, 625],
+          "components": [
+            {
+              "buttonComponent": {
+                "width": 298,
+                "height": 40,
+                "command": {
+                  "type": "saveHighscore",
+                  "gameObject": "HighscoreManager"
+                }
+              }
+            },
+            {
+              "textComponent": {
+                "text": "Save"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore0",
+          "position": [50, 100],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore1",
+          "position": [50, 150],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore2",
+          "position": [50, 200],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore3",
+          "position": [50, 250],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore4",
+          "position": [50, 300],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore5",
+          "position": [50, 350],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore6",
+          "position": [50, 400],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore7",
+          "position": [50, 450],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore8",
+          "position": [50, 500],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Highscore9",
+          "position": [50, 550],
+          "components": [
+            {
+              "textComponent": {
+                "text": "AAA 0000"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

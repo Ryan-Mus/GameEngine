@@ -163,6 +163,7 @@
     <ClCompile Include="EatenState.cpp" />
     <ClCompile Include="FrightenedState.cpp" />
     <ClCompile Include="FruitBehavior.cpp" />
+    <ClCompile Include="GameLoader.cpp" />
     <ClCompile Include="GhostMovement.cpp" />
     <ClCompile Include="GhostState.cpp" />
     <ClCompile Include="GhostStateComponent.cpp" />
@@ -188,9 +189,11 @@
     <ClInclude Include="EatenState.h" />
     <ClInclude Include="FrightenedState.h" />
     <ClInclude Include="FruitBehavior.h" />
+    <ClInclude Include="GameLoader.h" />
     <ClInclude Include="GhostMovement.h" />
     <ClInclude Include="GhostState.h" />
     <ClInclude Include="GhostStateComponent.h" />
+    <ClInclude Include="HighscoreCommands.h" />
     <ClInclude Include="HighScoreManager.h" />
     <ClInclude Include="InteractionCommands.h" />
     <ClInclude Include="LivesUIComponent.h" />

@@ -50,4 +50,33 @@ namespace dae
             m_pActiveScene->Render();
         }
     }
+
+    bool SceneManager::HasScene(const std::string& name) const
+    {
+        for (const auto& scene : m_scenes)
+        {
+            if (scene->GetName() == name)
+            {
+                return true;
+            }
+        }
+        return false;
+	}
+
+    void SceneManager::RemoveScene(const std::string& name)
+    {
+        m_scenes.erase(std::remove_if(m_scenes.begin(), m_scenes.end(),
+            [&name](const std::shared_ptr<Scene>& scene) { return scene->GetName() == name; }), m_scenes.end());
+
+        if (m_pActiveScene && m_pActiveScene->GetName() == name)
+        {
+            m_pActiveScene = nullptr;
+        }
+    }
+
+    void SceneManager::ClearScenes()
+    {
+        m_scenes.clear();
+        m_pActiveScene = nullptr;
+    }
 }

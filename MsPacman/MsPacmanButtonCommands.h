@@ -1,13 +1,18 @@
 #pragma once
-#include "Command.h"
-#include "SceneManager.h"
+#include "GameLoader.h"
 
 class StartSoloLevelCommand final: public dae::Command
 {
 public:
 	virtual void Execute() override
 	{
-		dae::SceneManager::GetInstance().SetActiveScene("Solo");
+		std::cout << "Opening Solo game..." << std::endl;
+		auto& sceneManager = dae::SceneManager::GetInstance();
+		sceneManager.ClearScenes();
+
+		auto& GameLoader = GameLoader::GetInstance();
+		GameLoader.loadGameJSON("../data/Solo.json");
+		sceneManager.SetActiveScene("Solo");
 	}
 };
 
@@ -16,7 +21,13 @@ class StartCoopLevelCommand final: public dae::Command
 	public:
 	virtual void Execute() override
 	{
-		dae::SceneManager::GetInstance().SetActiveScene("Coop");
+		std::cout << "Opening Co-op game..." << std::endl;
+		auto& sceneManager = dae::SceneManager::GetInstance();
+		sceneManager.ClearScenes();
+
+		auto& GameLoader = GameLoader::GetInstance();
+		GameLoader.loadGameJSON("../data/Coop.json");
+		sceneManager.SetActiveScene("Coop");
 	}
 };
 
@@ -25,10 +36,15 @@ class StartVersusLevelCommand final: public dae::Command
 	public:
 	virtual void Execute() override
 	{
-		dae::SceneManager::GetInstance().SetActiveScene("Versus");
+		std::cout << "Opening Versus game..." << std::endl;
+		auto& sceneManager = dae::SceneManager::GetInstance();
+		sceneManager.ClearScenes();
+
+		auto& GameLoader = GameLoader::GetInstance();
+		GameLoader.loadGameJSON("../data/Versus.json");
+		sceneManager.SetActiveScene("Versus");
 	}
 };
-
 
 class QuitGameCommand final: public dae::Command
 {
