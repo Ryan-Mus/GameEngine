@@ -1,13 +1,19 @@
 #include "SceneManager.h"
+#include "InputManager.h"
+#include <algorithm>
 #include "Scene.h"
 
 namespace dae
 {
+    SceneManager::SceneManager() = default; // Define constructor
+    SceneManager::~SceneManager() = default; // Define destructor. Full Scene def is known.
+
     Scene& SceneManager::CreateScene(const std::string& name)
     {
-        const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-        m_scenes.push_back(scene);
-        return *scene;
+        auto scene = Scene::Create(name);
+        auto& reference = *scene;
+        m_scenes.push_back(std::move(scene));
+        return reference;
     }
 
     void SceneManager::SetActiveScene(const std::string& name)
@@ -17,7 +23,7 @@ namespace dae
             if (scene->GetName() == name)
             {
                 m_pActiveScene = scene.get();
-                break;
+                return; // Found and set
             }
         }
     }
@@ -61,22 +67,38 @@ namespace dae
             }
         }
         return false;
-	}
+    }
 
     void SceneManager::RemoveScene(const std::string& name)
     {
-        m_scenes.erase(std::remove_if(m_scenes.begin(), m_scenes.end(),
-            [&name](const std::shared_ptr<Scene>& scene) { return scene->GetName() == name; }), m_scenes.end());
-
-        if (m_pActiveScene && m_pActiveScene->GetName() == name)
-        {
-            m_pActiveScene = nullptr;
+        bool activeSceneWasRemoved = false;
+        if (m_pActiveScene && m_pActiveScene->GetName() == name) {
+            activeSceneWasRemoved = true;
         }
+
+        m_scenes.erase(std::remove_if(m_scenes.begin(), m_scenes.end(),
+            [&name](const std::unique_ptr<Scene>& scene_ptr) {
+                return scene_ptr && scene_ptr->GetName() == name; // Check scene_ptr for safety
+            }), m_scenes.end());
+
+        if (activeSceneWasRemoved) {
+            m_pActiveScene = m_scenes.empty() ? nullptr : m_scenes.front().get();
+        }
+        
+        // Clean up input bindings associated with this scene
+        InputManager::GetInstance().RemoveSceneBindings(name);
     }
 
     void SceneManager::ClearScenes()
     {
-        m_scenes.clear();
+        // Clean up input bindings for all scenes
+        for (const auto& scene : m_scenes) {
+            if (scene) {
+                InputManager::GetInstance().RemoveSceneBindings(scene->GetName());
+            }
+        }
+        
+        m_scenes.clear(); // This will call destructors of unique_ptr<Scene>
         m_pActiveScene = nullptr;
     }
 }

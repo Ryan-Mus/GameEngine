@@ -5,7 +5,7 @@
 
 namespace dae 
 {
-	void AddControllerMovement(int playerIndex, GameObject* pOwner)
+	void AddControllerMovement(int playerIndex, GameObject* pOwner, const std::string& sceneName)
 	{
 		auto& input = InputManager::GetInstance();
 		input.AddController(playerIndex);
@@ -13,19 +13,23 @@ namespace dae
 		input.BindControllerCommand(XINPUT_GAMEPAD_DPAD_DOWN,
 			playerIndex,
 			KeyState::Down,
-			std::make_shared<MoveCommand>(glm::vec2(0, 1), pOwner));
+			std::make_shared<MoveCommand>(glm::vec2(0, 1), pOwner),
+			sceneName);
 		input.BindControllerCommand(XINPUT_GAMEPAD_DPAD_UP,
 			playerIndex,
 			KeyState::Down,
-			std::make_shared<MoveCommand>(glm::vec2(0, -1), pOwner));
+			std::make_shared<MoveCommand>(glm::vec2(0, -1), pOwner),
+			sceneName);
 		input.BindControllerCommand(XINPUT_GAMEPAD_DPAD_LEFT,
 			playerIndex,
 			KeyState::Down,
-			std::make_shared<MoveCommand>(glm::vec2(-1, 0), pOwner));
+			std::make_shared<MoveCommand>(glm::vec2(-1, 0), pOwner),
+			sceneName);
 		input.BindControllerCommand(XINPUT_GAMEPAD_DPAD_RIGHT,
 			playerIndex,
 			KeyState::Down,
-			std::make_shared<MoveCommand>(glm::vec2(1, 0), pOwner));
+			std::make_shared<MoveCommand>(glm::vec2(1, 0), pOwner),
+			sceneName);
 	}
 
 	void RemoveControllerMovement(int playerIndex)
@@ -37,22 +41,26 @@ namespace dae
 		input.RemoveControllerBinding(XINPUT_GAMEPAD_DPAD_RIGHT, playerIndex, KeyState::Down);
 	}
 
-	void AddKeyboardMovement(GameObject* pOwner)
+	void AddKeyboardMovement(GameObject* pOwner, const std::string& sceneName)
 	{
 		auto& input = InputManager::GetInstance();
 
-		input.BindKeyboardCommand('W'
-			, KeyState::Down,
-			std::make_shared<MoveCommand>(glm::vec2(0, -1), pOwner));
-		input.BindKeyboardCommand('A'
-			, KeyState::Down,
-			std::make_shared<MoveCommand>(glm::vec2(-1, 0), pOwner));
-		input.BindKeyboardCommand('S'
-			, KeyState::Down,
-			std::make_shared<MoveCommand>(glm::vec2(0, 1), pOwner));
-		input.BindKeyboardCommand('D'
-			, KeyState::Down,
-			std::make_shared<MoveCommand>(glm::vec2(1, 0), pOwner));
+		input.BindKeyboardCommand('W',
+			KeyState::Down,
+			std::make_shared<MoveCommand>(glm::vec2(0, -1), pOwner),
+			sceneName);
+		input.BindKeyboardCommand('A',
+			KeyState::Down,
+			std::make_shared<MoveCommand>(glm::vec2(-1, 0), pOwner),
+			sceneName);
+		input.BindKeyboardCommand('S',
+			KeyState::Down,
+			std::make_shared<MoveCommand>(glm::vec2(0, 1), pOwner),
+			sceneName);
+		input.BindKeyboardCommand('D',
+			KeyState::Down,
+			std::make_shared<MoveCommand>(glm::vec2(1, 0), pOwner),
+			sceneName);
 	}
 
 	void RemoveKeyboardMovement()

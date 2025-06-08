@@ -46,6 +46,22 @@ class StartVersusLevelCommand final: public dae::Command
 	}
 };
 
+class OpenHighscoreMenuCommand : public dae::Command
+{
+public:
+	void Execute() override
+	{
+		std::cout << "Opening Highscore Menu..." << std::endl;
+		auto& sceneManager = dae::SceneManager::GetInstance();
+		sceneManager.ClearScenes();
+
+		auto& GameLoader = GameLoader::GetInstance();
+		GameLoader.loadGameJSON("../data/HighscoreMenu.json");
+
+		sceneManager.SetActiveScene("HighscoreMenu");
+	}
+};
+
 class QuitGameCommand final: public dae::Command
 {
 	public:

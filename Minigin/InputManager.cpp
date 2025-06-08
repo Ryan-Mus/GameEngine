@@ -86,6 +86,19 @@ void dae::InputManager::BindKeyboardCommand(int keyCode, KeyState state, std::sh
     m_InputBindings.push_back(binding);
 }
 
+void dae::InputManager::BindKeyboardCommand(int keyCode, KeyState state, std::shared_ptr<Command> command, const std::string& sceneName)
+{
+    InputBinding binding;
+    binding.type = InputType::Keyboard;
+    binding.keyCode = keyCode;
+    binding.keyState = state;
+    binding.command = command;
+    binding.playerIndex = 0; // Not used for keyboard
+    binding.sceneName = sceneName;
+
+    m_InputBindings.push_back(binding);
+}
+
 void dae::InputManager::BindControllerCommand(int buttonId, int playerIndex, KeyState state, std::shared_ptr<Command> command)
 {
     InputBinding binding;
@@ -94,6 +107,19 @@ void dae::InputManager::BindControllerCommand(int buttonId, int playerIndex, Key
     binding.playerIndex = playerIndex;
     binding.keyState = state;
     binding.command = command;
+
+    m_InputBindings.push_back(binding);
+}
+
+void dae::InputManager::BindControllerCommand(int buttonId, int playerIndex, KeyState state, std::shared_ptr<Command> command, const std::string& sceneName)
+{
+    InputBinding binding;
+    binding.type = InputType::Controller;
+    binding.keyCode = buttonId;
+    binding.playerIndex = playerIndex;
+    binding.keyState = state;
+    binding.command = command;
+    binding.sceneName = sceneName;
 
     m_InputBindings.push_back(binding);
 }
@@ -248,6 +274,16 @@ void dae::InputManager::RemoveCommandBinding(std::shared_ptr<Command> command)
             [command](const InputBinding& binding) 
             {
                 return binding.command == command;
+            }),
+        m_InputBindings.end());
+}
+
+void dae::InputManager::RemoveSceneBindings(const std::string& sceneName)
+{
+    m_InputBindings.erase(
+        std::remove_if(m_InputBindings.begin(), m_InputBindings.end(),
+            [&sceneName](const InputBinding& binding) {
+                return binding.sceneName == sceneName;
             }),
         m_InputBindings.end());
 }

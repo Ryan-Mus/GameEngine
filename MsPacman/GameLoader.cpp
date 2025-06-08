@@ -46,7 +46,7 @@
 #include "FruitBehavior.h"
 #include "ButtonComponent.h"
 #include "ButtonManagerComponent.h"
-#include "MsPacmanButtonCommands.h"
+#include "MainMenuButtonCommands.h"
 #include "UIBinding.h" 
 #include "HighScoreManager.h"
 #include "HighscoreCommands.h"
@@ -171,7 +171,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 	nlohmann::json sceneData;
 	file >> sceneData;
 
-	std::unordered_map<std::string, std::shared_ptr<dae::GameObject>> gameObjectMap;
+	std::unordered_map<std::string, dae::GameObject*> gameObjectMap;
 	std::vector<PendingGridRegistration> allPendingGridRegistrations; // To store registration tasks
 	std::vector<PendingButtonRegistration> allPendingButtonRegistrations; // To store button registration tasks
 	std::vector<PendingHighscoreDisplayRegistration> allPendingHighscoreDisplayRegistrations; // To store highscore display registrations
@@ -185,7 +185,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 		// Iterate over game objects
 		for (const auto& objectJson : sceneJson["gameObjects"])
 		{
-			std::shared_ptr<dae::GameObject> gameObject;
+			std::unique_ptr<dae::GameObject> gameObject;
 
 			// Set parent if exists
 			if (objectJson.contains("parent"))
@@ -194,19 +194,19 @@ void GameLoader::loadGameJSON(const std::string& path)
 				auto it = gameObjectMap.find(parentName);
 				if (it != gameObjectMap.end())
 				{
-					gameObject = std::make_shared<dae::GameObject>(it->second.get());
+					gameObject = std::make_unique<dae::GameObject>(it->second);
 				}
 			}
 			else
 			{
-				gameObject = std::make_shared<dae::GameObject>();
+				gameObject = std::make_unique<dae::GameObject>();
 			}
 
 			//
 			if (objectJson.contains("name"))
 			{
 				std::string objectName = objectJson["name"];
-				gameObjectMap[objectName] = gameObject; // Store the game object in the map
+				gameObjectMap[objectName] = gameObject.get(); // Store the game object in the map
 			}
 			else
 			{
@@ -535,14 +535,14 @@ void GameLoader::loadGameJSON(const std::string& path)
 			//keyboardMovement
 			if (objectJson.contains("keyboardMovement"))
 			{
-				dae::AddKeyboardMovement(gameObject.get());
+				dae::AddKeyboardMovement(gameObject.get(), sceneJson["name"]);
 			}
 
 			//ControllerMovement
 			if (objectJson.contains("controllerMovement"))
 			{
 				auto controllerIndex = objectJson["controllerMovement"]["controllerIndex"];
-				dae::AddControllerMovement(controllerIndex, gameObject.get());
+				dae::AddControllerMovement(controllerIndex, gameObject.get(), sceneJson["name"]);
 			}
 
 			//Local position in grid
@@ -565,7 +565,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			{
 				if (gameObject->HasComponent<dae::ButtonManagerComponent>())
 				{
-					AddUIKeyboardBinding(gameObject.get());
+					AddUIKeyboardBinding(gameObject.get(), sceneJson["name"]);
 				}
 				else
 				{
@@ -579,7 +579,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 				if (gameObject->HasComponent<dae::ButtonManagerComponent>())
 				{
 					int controllerIndex = objectJson["uiControllerBinding"]["controllerIndex"];
-					AddUIControllerBinding(controllerIndex, gameObject.get());
+					AddUIControllerBinding(controllerIndex, gameObject.get(), sceneJson["name"]);
 				}
 				else
 				{
@@ -587,7 +587,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 				}
 			}
 
-			scene.Add(gameObject);
+			scene.Add(std::move(gameObject));
 		}
 
 		// Set up observer bindings
@@ -621,8 +621,8 @@ void GameLoader::loadGameJSON(const std::string& path)
 				auto observerObject = observerObjectIt->second;
 
 				// Now retrieve the specific components
-				auto subjectComponent = GetComponentByName(subjectObject.get(), subjectComponentType);
-				auto observerComponent = GetComponentByName(observerObject.get(), observerComponentType);
+				auto subjectComponent = GetComponentByName(subjectObject, subjectComponentType);
+				auto observerComponent = GetComponentByName(observerObject, observerComponentType);
 
 				if (!subjectComponent || !observerComponent)
 				{
@@ -646,7 +646,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			auto it = gameObjectMap.find(regInfo.msPacmanObjectName);
 			if (it != gameObjectMap.end())
 			{
-				regInfo.gridInstance->RegisterMsPacman(it->second.get());
+				regInfo.gridInstance->RegisterMsPacman(it->second);
 			}
 			else
 			{
@@ -659,7 +659,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			auto it = gameObjectMap.find(regInfo.fruitObjectName);
 			if (it != gameObjectMap.end())
 			{
-				regInfo.gridInstance->RegisterFruit(it->second.get());
+				regInfo.gridInstance->RegisterFruit(it->second);
 			}
 			else
 			{
@@ -672,7 +672,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			auto it = gameObjectMap.find(ghostName);
 			if (it != gameObjectMap.end())
 			{
-				regInfo.gridInstance->RegisterGhost(it->second.get());
+				regInfo.gridInstance->RegisterGhost(it->second);
 			}
 			else
 			{
@@ -691,7 +691,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			auto it = gameObjectMap.find(buttonName);
 			if (it != gameObjectMap.end())
 			{
-				regInfo.managerInstance->AddButton(it->second.get());
+				regInfo.managerInstance->AddButton(it->second);
 			}
 			else
 			{
@@ -704,12 +704,12 @@ void GameLoader::loadGameJSON(const std::string& path)
 	for(const auto& regInfo : allPendingHighscoreDisplayRegistrations)
 	{
 		if (!regInfo.highscoreManager) continue;
-		for (int i{}; i < regInfo.highscoreDisplayObjectName.size(); ++i)
+		for (int i{}; i < static_cast<int>(regInfo.highscoreDisplayObjectName.size()); ++i)
 		{
 			auto it = gameObjectMap.find(regInfo.highscoreDisplayObjectName[i]);
 			if (it != gameObjectMap.end())
 			{
-				regInfo.highscoreManager->AddHighscoreDisplay(it->second.get(), i);
+				regInfo.highscoreManager->AddHighscoreDisplay(it->second, i);
 			}
 			else
 			{
@@ -727,7 +727,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			auto it = gameObjectMap.find(regInfo.commandParameters.gameObjectName);
 			if (it != gameObjectMap.end())
 			{
-				regInfo.commandParameters.gameObject = it->second.get();
+				regInfo.commandParameters.gameObject = it->second;
 			}
 			else
 			{

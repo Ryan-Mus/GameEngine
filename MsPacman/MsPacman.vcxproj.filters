@@ -155,7 +155,7 @@
     <ClInclude Include="FruitBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MsPacmanButtonCommands.h">
+    <ClInclude Include="MainMenuButtonCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UIBinding.h">

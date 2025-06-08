@@ -60,23 +60,7 @@ public:
 		sceneManager.ClearScenes();
 
 		auto& GameLoader = GameLoader::GetInstance();
-		GameLoader.loadGameJSON("../data/Solo.json");
-		sceneManager.SetActiveScene("Solo");
-	}
-};
-
-class OpenHighscoreMenuCommand : public dae::Command
-{
-	public:
-	void Execute() override
-	{
-		std::cout << "Opening Highscore Menu..." << std::endl;
-		auto& sceneManager = dae::SceneManager::GetInstance();
-		sceneManager.ClearScenes();
-
-		auto& GameLoader = GameLoader::GetInstance();
-		GameLoader.loadGameJSON("../data/HighscoreMenu.json");
-		
-		sceneManager.SetActiveScene("HighscoreMenu");
+		GameLoader.loadGameJSON("../data/MainMenu.json");
+		sceneManager.SetActiveScene("MainMenu");
 	}
 };

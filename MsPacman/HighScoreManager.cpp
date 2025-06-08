@@ -110,6 +110,11 @@ void HighScoreManager::LoadHighScores()
 
 void HighScoreManager::SaveHighScore()
 {
+    if(m_HighScores[0].name[0] == 0)
+    {
+        std::cout << "No high scores to save." << std::endl;
+        return; // No high scores to save
+	}
     // Check if LastHighScore should be included in the high scores
     bool inserted = false;
     for (size_t i = 0; i < m_HighScores.size(); ++i)

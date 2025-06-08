@@ -1,36 +1,40 @@
 #pragma once
-#include "SceneManager.h"
+#include <string>
+#include <vector>
+#include <memory>
 
 namespace dae
 {
-	class GameObject;
-	class Scene final
-	{
-		friend Scene& SceneManager::CreateScene(const std::string& name);
-	public:
-		void Add(std::shared_ptr<GameObject> object);
-		void Remove(std::shared_ptr<GameObject> object);
-		void RemoveAll();
+    class GameObject;
 
-		void Update();
-		void FixedUpdate();
-		void Render() const;
+    class Scene final
+    {
+    public:
+        // Static factory function to create Scene
+        static std::unique_ptr<Scene> Create(const std::string& name);
 
-		std::string GetName() const { return m_name; }
+        void Add(std::unique_ptr<GameObject> object);
+        void Remove(GameObject* object);
+        void RemoveAll();
 
-		~Scene();
-		Scene(const Scene& other) = delete;
-		Scene(Scene&& other) = delete;
-		Scene& operator=(const Scene& other) = delete;
-		Scene& operator=(Scene&& other) = delete;
+        void Update();
+        void FixedUpdate();
+        void Render() const;
 
-	private: 
-		explicit Scene(const std::string& name);
+        std::string GetName() const { return m_name; }
+        ~Scene();
 
-		std::string m_name;
-		std::vector < std::shared_ptr<GameObject>> m_objects{};
+        Scene(const Scene& other) = delete;
+        Scene(Scene&& other) = delete;
+        Scene& operator=(const Scene& other) = delete;
+        Scene& operator=(Scene&& other) = delete;
 
-		static unsigned int m_idCounter; 
-	};
+    private:
+        // Keep constructor private so only the static factory can call it
+        explicit Scene(const std::string& name);
 
+        std::string m_name;
+        std::vector<std::unique_ptr<GameObject>> m_objects{};
+        static unsigned int m_idCounter;
+    };
 }

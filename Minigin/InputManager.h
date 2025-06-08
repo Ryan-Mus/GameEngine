@@ -2,6 +2,7 @@
 //No XInput or Windows or SDL in these headers
 #include <vector>
 #include <memory>
+#include <string>
 
 #include "GamepadController.h"
 #include "Command.h"
@@ -30,6 +31,7 @@ namespace dae
         int playerIndex;   // Controller index (0-3)
         KeyState keyState; // The state that triggers the command
         std::shared_ptr<Command> command;
+        std::string sceneName;  // Add this to track which scene owns this binding
     };
 
     class InputManager final: public Singleton<InputManager> 
@@ -42,9 +44,11 @@ namespace dae
 
         // Bind keyboard key to a command
         void BindKeyboardCommand(int keyCode, KeyState state, std::shared_ptr<Command> command);
+        void BindKeyboardCommand(int keyCode, KeyState state, std::shared_ptr<Command> command, const std::string& sceneName);
 
         // Bind controller button to a command
         void BindControllerCommand(int buttonId, int playerIndex, KeyState state, std::shared_ptr<Command> command);
+        void BindControllerCommand(int buttonId, int playerIndex, KeyState state, std::shared_ptr<Command> command, const std::string& sceneName);
 
         void RemoveKeyboardBinding(int keyCode, KeyState state);
         void RemoveControllerBinding(int buttonId, int playerIndex, KeyState state);
@@ -54,6 +58,8 @@ namespace dae
 
         // Remove a specific command binding
         void RemoveCommandBinding(std::shared_ptr<Command> command);
+
+        void RemoveSceneBindings(const std::string& sceneName);
 
         void AddController(int playerIndex);
         void RemoveController(int playerIndex);
