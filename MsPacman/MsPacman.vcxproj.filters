@@ -179,5 +179,11 @@
     <ClInclude Include="FruitUIComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FKeyCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FKeyBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

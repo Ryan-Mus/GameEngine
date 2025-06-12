@@ -56,8 +56,6 @@ public:
 	{
 		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
-			//Improve for logging
-			std::cout << "GridToWorldPosition: Out of bounds" << std::endl;
 			return { -1.f, -1.f }; // Out of bounds
 		}
 		glm::vec3 pos = GetOwner()->GetWorldPosition();
@@ -69,8 +67,6 @@ public:
 	{
 		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
-			//Improve for logging
-			std::cout << "GridToLocalPosition: Out of bounds" << std::endl;
 			return { -1.f, -1.f }; // Out of bounds
 		}
 		glm::vec2 localPos = { column * m_CellSize, row * m_CellSize };
@@ -85,8 +81,6 @@ public:
 
 		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
-			//Improve for logging
-			std::cout << "WorldToGridPosition: Out of bounds" << std::endl;
 			return { -1, -1 }; // Out of bounds
 		}
 		return { column, row };
@@ -98,7 +92,6 @@ public:
 		int row = static_cast<int>(y / m_CellSize);
 		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
-			std::cout << "LocalToGridPosition: Out of bounds" << std::endl;
 			return { -1, -1 }; // Out of bounds
 		}
 		return { column, row };
@@ -110,7 +103,6 @@ public:
 	{
 		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
 		{
-			std::cout << "GetCellType: Out of bounds" << std::endl;
 			return CellType::Empty; // Out of bounds
 		}
 		return m_Grid[row][column].type;
@@ -125,6 +117,7 @@ public:
 	void loadGrid(const std::string& filePath);
 	void AddLevelData(const LevelData& levelData);
 	void LoadLevel(int levelIndex);
+	void GoToNextLevel();
 
 	glm::ivec2 GetMsPacmanPos() const
 	{

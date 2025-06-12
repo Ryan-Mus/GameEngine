@@ -188,6 +188,8 @@
     <ClInclude Include="ChaseState.h" />
     <ClInclude Include="CustomPacmanDefines.h" />
     <ClInclude Include="EatenState.h" />
+    <ClInclude Include="FKeyBindings.h" />
+    <ClInclude Include="FKeyCommands.h" />
     <ClInclude Include="FrightenedState.h" />
     <ClInclude Include="FruitBehavior.h" />
     <ClInclude Include="FruitUIComponent.h" />

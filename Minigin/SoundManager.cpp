@@ -99,6 +99,11 @@ namespace dae
         eventQueue.PushEvent(event);
     }
 
+    int SoundManager::GetMasterVolume()
+    {
+        return soundServiceImpl->GetMasterVolume();
+    }
+
     void SoundManager::WorkerThread()
     {
         while (running)

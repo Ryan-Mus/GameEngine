@@ -16,5 +16,6 @@ namespace dae
         void StopMusic() override {}
 
         void SetMasterVolume(int) override {}
+        int  GetMasterVolume() override { return -1; }
     };
 }

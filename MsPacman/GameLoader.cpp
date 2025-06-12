@@ -52,6 +52,7 @@
 #include "HighscoreCommands.h"
 #include "HighscoreBinding.h"
 #include "FruitUIComponent.h"
+#include "FKeyBindings.h"
 
 #include  "CustomPacmanDefines.h"
 
@@ -624,6 +625,12 @@ void GameLoader::loadGameJSON(const std::string& path)
 				dae::AddControllerMovement(controllerIndex, gameObject.get(), sceneJson["name"]);
 			}
 
+			//SkipLevel
+			if (objectJson.contains("skipLevel"))
+			{
+				AddSkipLevelBinding(gameObject.get(), sceneJson["name"]);
+			}
+
 			//Local position in grid
 			if (objectJson.contains("gridPosition"))
 			{
@@ -713,6 +720,11 @@ void GameLoader::loadGameJSON(const std::string& path)
 				// Assuming subjectComponent has an AddObserver method
 				AddObserverToSubject(subjectComponent, observerComponent);
 			}
+		}
+
+		if (sceneJson.contains("soundBindings"))
+		{
+			AddSoundBindings();
 		}
 	}
 

@@ -257,3 +257,18 @@ void PacmanGrid::LoadLevel(int levelIndex)
 	m_FruitEaten = false;
 	Notify(MsPacmanEvent::START_LEVEL); // Notify observers that a new level has started
 }
+
+void PacmanGrid::GoToNextLevel()
+{
+	Notify(MsPacmanEvent::LEVEL_COMPLETE);
+	if (m_CurrentLevelIndex + 1 < static_cast<int>(m_Levels.size()))
+	{
+		LoadLevel(m_CurrentLevelIndex + 1);
+		std::cout << "Skip level" << std::endl;
+	}
+	else
+	{
+		Notify(MsPacmanEvent::GAME_OVER);
+		std::cout << "All levels completed!" << std::endl;
+	}
+}

@@ -31,12 +31,15 @@ void FruitBehavior::Update()
 	if (m_Path[m_CurrentPathIndex] == movement->GetGridPosition())
 	{
 		++m_CurrentPathIndex;
+		//End of path
 		if (m_CurrentPathIndex >= m_Path.size())
 		{
 			m_IsSpawned = false;
 			m_CurrentPathIndex = 0;
 			auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
 			animator->PlayAnimation("Idle");
+
+			GetOwner()->SetLocalPostion({ -10, -10, 0 }); //outside of the map;
 			return;
 		}
 	}

@@ -31,6 +31,7 @@ namespace dae
         void StopMusic() override;
 
         void SetMasterVolume(int volume) override;
+        int  GetMasterVolume() override;
 
         // New method to set the internal sound service
         void SetSoundServiceImpl(std::unique_ptr<ISoundService> service);

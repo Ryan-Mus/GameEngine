@@ -134,4 +134,9 @@ namespace dae
     	Mix_Volume(-1, pImpl->masterVolume); // Set volume for all channels
     	Mix_VolumeMusic(pImpl->masterVolume); // Set volume for music
     }
+
+    int SoundServiceSDL::GetMasterVolume()
+    {
+        return pImpl->masterVolume;
+    }
 }

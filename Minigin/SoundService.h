@@ -17,5 +17,6 @@ namespace dae
         virtual void StopMusic() = 0;
 
         virtual void SetMasterVolume(int volume) = 0;
+        virtual int GetMasterVolume() = 0;
     };
 }

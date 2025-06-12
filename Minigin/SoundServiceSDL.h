@@ -19,6 +19,7 @@ namespace dae
         void StopMusic() override;
 
         void SetMasterVolume(int volume) override;
+        int  GetMasterVolume() override;
 
     private:
         class Impl;

@@ -5,6 +5,5 @@ class GameLoader : public dae::Singleton<GameLoader>
 {
 public: 
 	void loadGameJSON(const std::string& path);
-
 };
 
