@@ -129,6 +129,7 @@ void FruitBehavior::OnNotify(MsPacmanEvent e)
 			m_IsEaten = true;
 			auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
 			animator->PlayAnimation("Idle");
+			GetOwner()->SetLocalPostion({ -10, -10, 0 }); //outside of the map;
 			break;
 		}
 		case MsPacmanEvent::EATEN_STRAWBERRY:
@@ -137,6 +138,7 @@ void FruitBehavior::OnNotify(MsPacmanEvent e)
 			m_IsEaten = true;
 			auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
 			animator->PlayAnimation("Idle");
+			GetOwner()->SetLocalPostion({ -10, -10, 0 }); //outside of the map;
 			break;
 		}
 		case MsPacmanEvent::EATEN_ORANGE:
@@ -145,6 +147,7 @@ void FruitBehavior::OnNotify(MsPacmanEvent e)
 			m_IsEaten = true;
 			auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
 			animator->PlayAnimation("Idle");
+			GetOwner()->SetLocalPostion({ -10, -10, 0 }); //outside of the map;
 			break;
 		}
 		default:

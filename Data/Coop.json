@@ -1,7 +1,7 @@
 {
     "scenes": [
       {
-        "name": "Solo",
+        "name": "Coop",
         "gameObjects": [
           {
             "name": "grid",
@@ -42,6 +42,7 @@
                     }
                   ],
                   "registerMsPacman": "msPacman",
+				  "registerPacman" : "pacman",
                   "registerFruit": "fruit",
                   "registerGhosts": [
                     "Blinky",
@@ -142,7 +143,99 @@
                 }
               }
             ],
-            "keyboardMovement": {},
+			"keyboardMovement": {},
+            "controllerMovement": {
+              "controllerIndex": 1
+            }
+          },
+		  {
+            "name": "pacman",
+            "parent": "grid",
+            "gridPosition": 
+            {
+              "pos": [16, 23],
+              "grid": "grid"
+            },
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 456,
+                  "y": 144,
+                  "width": 16,
+                  "height": 16,
+                  "offset": [-4, -3]
+                }
+              },
+              {
+                "pacmanMovement": {
+                  "speed": 200.0,
+                  "grid": "grid"
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "Right",
+                      "loop": true,
+                      "frames": [
+                        [456, 144, 16, 16, 0.1],
+                        [472, 144, 16, 16, 0.1],
+                        [488, 144, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Left",
+                      "loop": true,
+                      "frames": [
+                        [456, 160, 16, 16, 0.1],
+                        [472, 160, 16, 16, 0.1],
+                        [488, 144, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Up",
+                      "loop": true,
+                      "frames": [
+                        [456, 176, 16, 16, 0.1],
+                        [472, 176, 16, 16, 0.1],
+                        [488, 144, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Down",
+                      "loop": true,
+                      "frames": [
+                        [456, 192, 16, 16, 0.1],
+                        [472, 192, 16, 16, 0.1],
+                        [488, 144, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Death",
+                      "loop": false,
+                      "frames": [
+                        [472, 144, 16, 16, 0.1],
+                        [472, 192, 16, 16, 0.1],
+                        [472, 160, 16, 16, 0.1],
+                        [472, 176, 16, 16, 0.1],
+                        [472, 144, 16, 16, 0.1],
+                        [472, 192, 16, 16, 0.1],
+                        [472, 160, 16, 16, 0.1],
+                        [472, 176, 16, 16, 0.1],
+                        [472, 144, 16, 16, 0.1]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "dieComponent":
+                {
+  
+                }
+              }
+            ],
             "controllerMovement": {
               "controllerIndex": 0
             }
@@ -959,6 +1052,16 @@
               "component": "dieComponent"
           }
         },
+		{
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"
+          },
+          "observer": {
+              "gameObject": "pacman",
+              "component": "dieComponent"
+          }
+        },
         {
           "subject": {
             "gameObject": "grid",
@@ -988,8 +1091,8 @@
             "gameObject": "fruit",
             "component": "fruitBehavior"
           }
-        },
-		{
+		},
+        {
           "subject": {
             "gameObject": "grid",
             "component": "pacmanGrid"

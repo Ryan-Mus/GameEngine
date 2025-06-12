@@ -51,6 +51,7 @@
 #include "HighScoreManager.h"
 #include "HighscoreCommands.h"
 #include "HighscoreBinding.h"
+#include "FruitUIComponent.h"
 
 #include  "CustomPacmanDefines.h"
 
@@ -65,9 +66,18 @@ struct PendingGridRegistration
 {
 	PacmanGrid* gridInstance{ nullptr };
 	std::string msPacmanObjectName;
+	std::string pacmanObjectName;
 	std::string fruitObjectName;
 	std::string livesObjectName;
 	std::vector<std::string> ghostObjectNames;
+};
+
+struct PendingFruitRegistration
+{
+	FruitUIComponent* fruitUIComponent{ nullptr };
+	std::string cherryIconObject;
+	std::string strawberryIconObject;
+	std::string orangeIconObject;
 };
 
 struct PendingButtonRegistration
@@ -111,6 +121,7 @@ std::unordered_map<std::string, ComponentGetter> componentGetters = {
 	{ "fruitBehavior", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<FruitBehavior>(); } },
 	{ "buttonComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ButtonComponent>(); } },
 	{ "buttonManagerComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ButtonManagerComponent>(); } },
+	{ "fruitUIComponent", [](dae::GameObject* obj) -> dae::Component* {return obj->GetComponent<FruitUIComponent>(); } }
 };
 
 dae::Component* GetComponentByName(dae::GameObject* gameObject, const std::string& componentName)
@@ -192,6 +203,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 	std::vector<PendingHighscoreRegistration> allPendingHighscoreDisplayRegistrations; // To store highscore display registrations
 	std::vector<PendingCommandRegistration> allPendingCommandRegistrations; // To store command registrations
 	std::vector<PendingHighscoreBindingRegistration> allPendingHighscoreBindingRegistrations;
+	std::vector<PendingFruitRegistration> allPendingFruitRegistrations;
 
 	std::vector<dae::GameObject*> HighScoreManagerObjects;
 
@@ -209,7 +221,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			if (objectJson.contains("parent"))
 			{
 				std::string parentName = objectJson["parent"];
-				auto it = gameObjectMap.find(parentName);
+			auto it = gameObjectMap.find(parentName);
 				if (it != gameObjectMap.end())
 				{
 					gameObject = std::make_unique<dae::GameObject>(it->second);
@@ -339,6 +351,11 @@ void GameLoader::loadGameJSON(const std::string& path)
 						if (gridComponentJson.contains("registerMsPacman"))
 						{
 							pendingReg.msPacmanObjectName = gridComponentJson["registerMsPacman"];
+						}
+
+						if(gridComponentJson.contains("registerPacman"))
+						{
+							pendingReg.pacmanObjectName = gridComponentJson["registerPacman"];
 						}
 
 						if (gridComponentJson.contains("registerFruit"))
@@ -570,6 +587,28 @@ void GameLoader::loadGameJSON(const std::string& path)
 							}
 						}
 					}
+
+					//FruitUIComponent
+					else if (componentJson.contains("fruitUIComponent"))
+					{
+						auto& fruitUIComponent = gameObject->AddComponent<FruitUIComponent>();
+						PendingFruitRegistration pendingReg;
+						pendingReg.fruitUIComponent = &fruitUIComponent;
+						if (componentJson["fruitUIComponent"].contains("cherryIcon"))
+						{
+							pendingReg.cherryIconObject = componentJson["fruitUIComponent"]["cherryIcon"];
+						}
+						if (componentJson["fruitUIComponent"].contains("strawberryIcon"))
+						{
+							pendingReg.strawberryIconObject = componentJson["fruitUIComponent"]["strawberryIcon"];
+						}
+						if (componentJson["fruitUIComponent"].contains("orangeIcon"))
+						{
+							pendingReg.orangeIconObject = componentJson["fruitUIComponent"]["orangeIcon"];
+						}
+
+						allPendingFruitRegistrations.push_back(pendingReg);
+					}
 				}
 			}
 			//keyboardMovement
@@ -692,6 +731,19 @@ void GameLoader::loadGameJSON(const std::string& path)
 			else
 			{
 				std::cerr << "Error: Could not find MsPacman GameObject with name '" << regInfo.msPacmanObjectName << "' for grid registration post-load." << std::endl;
+			}
+		}
+
+		if(!regInfo.pacmanObjectName.empty())
+		{
+			auto it = gameObjectMap.find(regInfo.pacmanObjectName);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.gridInstance->RegisterPacman(it->second);
+			}
+			else
+			{
+				std::cerr << "Error: Could not find Pacman GameObject with name '" << regInfo.pacmanObjectName << "' for grid registration post-load." << std::endl;
 			}
 		}
 
@@ -844,6 +896,28 @@ void GameLoader::loadGameJSON(const std::string& path)
 		else
 		{
 			std::cerr << "Error: HighScoreManager component not found on GameObject." << std::endl;
+		}
+	}
+
+	for (auto& regInfo : allPendingFruitRegistrations)
+	{
+		if (regInfo.fruitUIComponent)
+		{
+			auto it = gameObjectMap.find(regInfo.cherryIconObject);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.fruitUIComponent->RegisterFruit(it->second);
+			}
+			it = gameObjectMap.find(regInfo.strawberryIconObject);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.fruitUIComponent->RegisterFruit(it->second);
+			}
+			it = gameObjectMap.find(regInfo.orangeIconObject);
+			if (it != gameObjectMap.end())
+			{
+				regInfo.fruitUIComponent->RegisterFruit(it->second);
+			}
 		}
 	}
 

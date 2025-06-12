@@ -58,10 +58,20 @@ std::unique_ptr<GhostState> FrightenedState::OnNotify(MsPacmanEvent e)
 	}
 	if (e != MsPacmanEvent::EATEN_GHOST) return nullptr;
 
-	auto pacmanPos = m_pGhost->GetComponent<GhostMovement>()->GetGrid()->GetMsPacmanPos();
-    if (m_pGhost->GetComponent<GhostMovement>()->GetGridPosition() == pacmanPos)
+    auto grid = m_pGhost->GetComponent<GhostMovement>()->GetGrid();
+    auto msPacmanPos = grid->GetMsPacmanPos();
+    if (m_pGhost->GetComponent<GhostMovement>()->GetGridPosition() == msPacmanPos)
     {
         return std::make_unique<EatenState>(m_pGhost);
+    }
+
+    if (grid->IsCoopMode())
+    {
+        auto pacmanPos = grid->GetPacmanPos();
+        if (m_pGhost->GetComponent<GhostMovement>()->GetGridPosition() == pacmanPos)
+        {
+            return std::make_unique<EatenState>(m_pGhost);
+        }
     }
 
 	return nullptr;

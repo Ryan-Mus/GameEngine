@@ -24,14 +24,24 @@ void ScorePopUp::Update()
 
 void ScorePopUp::OnNotify(MsPacmanEvent e)
 {
+	glm::ivec2 pos;
+	if (m_pGrid->IsScoreForMsPacman())
+	{
+		pos = m_pGrid->GetMsPacmanPos();
+	}
+	else
+	{
+		pos = m_pGrid->GetPacmanPos();
+	}
+
 	if (e == MsPacmanEvent::EATEN_GHOST)
 	{
 		++m_Streak;
 		auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
 
 		GetOwner()->SetLocalPostion({
-			(m_Grid->GetMsPacmanPos().x * m_Grid->GetCellSize()),
-			(m_Grid->GetMsPacmanPos().y * m_Grid->GetCellSize()),
+			(pos.x * m_pGrid->GetCellSize()),
+			(pos.y * m_pGrid->GetCellSize()),
 			0});
 
 		switch (m_Streak)
@@ -60,8 +70,8 @@ void ScorePopUp::OnNotify(MsPacmanEvent e)
 		auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
 		animator->PlayAnimation("cherry");
 		GetOwner()->SetLocalPostion({
-			(m_Grid->GetMsPacmanPos().x * m_Grid->GetCellSize()),
-			(m_Grid->GetMsPacmanPos().y * m_Grid->GetCellSize()),
+			(pos.x * m_pGrid->GetCellSize()),
+			(pos.y * m_pGrid->GetCellSize()),
 			0 });
 	}
 
@@ -70,8 +80,8 @@ void ScorePopUp::OnNotify(MsPacmanEvent e)
 		auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
 		animator->PlayAnimation("strawberry");
 		GetOwner()->SetLocalPostion({
-			(m_Grid->GetMsPacmanPos().x * m_Grid->GetCellSize()),
-			(m_Grid->GetMsPacmanPos().y * m_Grid->GetCellSize()),
+			(pos.x * m_pGrid->GetCellSize()),
+			(pos.y * m_pGrid->GetCellSize()),
 			0 });
 	}
 
@@ -80,8 +90,8 @@ void ScorePopUp::OnNotify(MsPacmanEvent e)
 		auto animator = GetOwner()->GetComponent<dae::SpriteSheetAnimator>();
 		animator->PlayAnimation("orange");
 		GetOwner()->SetLocalPostion({
-			(m_Grid->GetMsPacmanPos().x * m_Grid->GetCellSize()),
-			(m_Grid->GetMsPacmanPos().y * m_Grid->GetCellSize()),
+			(pos.x * m_pGrid->GetCellSize()),
+			(pos.y * m_pGrid->GetCellSize()),
 			0 });
 	}
 

@@ -58,6 +58,11 @@ void PacmanGrid::RegisterMsPacman(dae::GameObject* pMsPacman)
 	m_pMsPacman = pMsPacman;
 }
 
+void PacmanGrid::RegisterPacman(dae::GameObject* pPacman)
+{
+	m_pPacman = pPacman;
+}
+
 void PacmanGrid::RegisterGhost(dae::GameObject* pGhost)
 {
 	m_pGhosts.emplace_back(pGhost);
@@ -75,12 +80,29 @@ void PacmanGrid::RegisterLives(dae::GameObject* pLives)
 
 void PacmanGrid::Update()
 {
-	if (!m_pMsPacman || m_pGhosts.empty())
+	UpdatePacman(m_pMsPacman);
+	UpdatePacman(m_pPacman);
+}
+
+
+void PacmanGrid::UpdatePacman(dae::GameObject* pacman)
+{
+	if (!pacman || m_pGhosts.empty())
 	{
 		return;
 	}
 
-	const auto pacmanGridPos = GetMsPacmanPos();
+	glm::ivec2 pacmanGridPos;
+	if (pacman == m_pMsPacman)
+	{
+		pacmanGridPos = GetMsPacmanPos();
+		m_IsScoreForMsPacman = true;
+	}
+	else
+	{
+		pacmanGridPos = GetPacmanPos();
+		m_IsScoreForMsPacman = false;
+	}
 
 	for (auto& pGhost : m_pGhosts)
 	{
@@ -108,7 +130,7 @@ void PacmanGrid::Update()
 						Notify(MsPacmanEvent::DIE);
 						int livesLeft = m_pLives->GetComponent<LivesUIComponent>()->GetLives();
 
-						if (livesLeft <= 0)
+						if (livesLeft < 0)
 						{
 							Notify(MsPacmanEvent::GAME_OVER);
 							std::cout << "Game Over! No lives left." << std::endl;
@@ -131,7 +153,7 @@ void PacmanGrid::Update()
 		}
 	}
 
-	auto pos = m_pMsPacman->GetLocalPosition();
+	auto pos = pacman->GetLocalPosition();
 	auto gridPos = LocalToGridPosition(pos.x, pos.y);
 	auto cellType = GetCellType(gridPos.first, gridPos.second);
 
@@ -140,7 +162,7 @@ void PacmanGrid::Update()
 		ConsumePellet(gridPos.first, gridPos.second);
 	}
 
-	setMsPacmanPos(gridPos.first, gridPos.second);
+	SetPacmanPos(pacman, { gridPos.first,gridPos.second });
 }
 
 void PacmanGrid::ConsumePellet(int column, int row)

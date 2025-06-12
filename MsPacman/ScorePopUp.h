@@ -14,9 +14,9 @@ public:
 
 	void OnNotify(MsPacmanEvent e) override;
 
-	void SetGrid(PacmanGrid* grid) { m_Grid = grid; }
+	void SetGrid(PacmanGrid* grid) { m_pGrid = grid; }
 private:
-	PacmanGrid* m_Grid{ nullptr };
+	PacmanGrid* m_pGrid{ nullptr };
 	float m_ElapsedTime{ 0.0f };
 	int m_Streak{ 0 };
 };

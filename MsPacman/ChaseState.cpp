@@ -31,23 +31,39 @@ std::unique_ptr<GhostState> ChaseState::Update()
 		}
 		case GhostType::Pinky:
 		{
-			auto pacmanPos = m_pGrid->GetMsPacmanPos();
+			glm::ivec2 pacmanPos;
+			if (m_pGrid->IsCoopMode())
+			{
+				pacmanPos = m_pGrid->GetPacmanPos();
+			}
+			else
+			{
+				pacmanPos = m_pGrid->GetMsPacmanPos();
+			}
 			auto pacmanDirection = m_pGhost->GetComponent<GhostMovement>()->GetDirection();
-			target = { pacmanPos.x + pacmanDirection.x * 4, pacmanPos.y + pacmanDirection.y * 4 };
+			target = { pacmanPos.x + pacmanDirection.x * 3, pacmanPos.y};
 			break;
 		}
 		case GhostType::Inky:
 		{
 			auto pacmanPos = m_pGrid->GetMsPacmanPos();
 			auto pacmanDirection = m_pGhost->GetComponent<GhostMovement>()->GetDirection();
-			target = { pacmanPos.x + pacmanDirection.x * 2, pacmanPos.y + pacmanDirection.y * 2 };
+			target = { pacmanPos.x - pacmanDirection.x * 3, pacmanPos.y };
 			break;
 		}
 		case GhostType::Clyde:
 		{
-			auto pacmanPos = m_pGrid->GetMsPacmanPos();
+			glm::ivec2 pacmanPos;
+			if (m_pGrid->IsCoopMode())
+			{
+				pacmanPos = m_pGrid->GetPacmanPos();
+			}
+			else
+			{
+				pacmanPos = m_pGrid->GetMsPacmanPos();
+			}
 			auto pacmanDirection = m_pGhost->GetComponent<GhostMovement>()->GetDirection();
-			target = { pacmanPos.x + pacmanDirection.x * 3, pacmanPos.y + pacmanDirection.y * 3 };
+			target = { pacmanPos.x, pacmanPos.y + pacmanDirection.y * 3 };
 			break;
 		}
 	default:

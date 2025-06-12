@@ -126,28 +126,43 @@ public:
 	void AddLevelData(const LevelData& levelData);
 	void LoadLevel(int levelIndex);
 
-	
-
 	glm::ivec2 GetMsPacmanPos() const
 	{
 		return m_MsPacmanPos;
 	}
 
+	glm::ivec2 GetPacmanPos() const
+	{
+		return m_PacmanPos;
+	}
+
+	bool IsCoopMode() const
+	{
+		return m_pPacman != nullptr;
+	}
+
 	void RegisterMsPacman(dae::GameObject* pMsPacman);
+	void RegisterPacman(dae::GameObject* pPacman);
 	void RegisterGhost(dae::GameObject* pGhost);
 	void RegisterFruit(dae::GameObject* pFruit);
 	void RegisterLives(dae::GameObject* pLives);
 
 	void Update() override;
+	void UpdatePacman(dae::GameObject* pacman);
+
+	bool IsScoreForMsPacman() { return m_IsScoreForMsPacman; };
+
 
 private:
 	int m_Rows{};
 	int m_Columns{};
 	int m_CellSize{};
 	glm::ivec2 m_MsPacmanPos{ 0, 0 }; // Pacman's position in the grid
+	glm::ivec2 m_PacmanPos{ 0, 0 }; // Pacman's position in the grid
 	std::vector<std::vector<Cell>> m_Grid;
 	dae::Texture2D* m_pTexture{ nullptr };
 	dae::GameObject* m_pMsPacman{ nullptr };
+	dae::GameObject* m_pPacman{ nullptr };
 	dae::GameObject* m_pFruit{ nullptr };
 	dae::GameObject* m_pLives{ nullptr };
 	std::vector<dae::GameObject*> m_pGhosts{};
@@ -159,13 +174,21 @@ private:
 
 	bool m_FruitEaten{ false };
 
-	void setMsPacmanPos(int column, int row)
+	bool m_IsScoreForMsPacman{ true };
+
+	void SetPacmanPos(dae::GameObject* pacman, const glm::ivec2& pos)
 	{
-		if (column < 0 || column >= m_Columns || row < 0 || row >= m_Rows)
+		if (pacman)
 		{
-			std::cout << "SetMsPacmanPos: Out of bounds" << std::endl;
-			return; // Out of bounds
+			if (pacman == m_pMsPacman)
+			{
+				m_MsPacmanPos = pos;
+			}
+			else if (pacman == m_pPacman)
+			{
+				m_PacmanPos = pos;
+			}
 		}
-		m_MsPacmanPos = { column, row };
 	}
+
 };
