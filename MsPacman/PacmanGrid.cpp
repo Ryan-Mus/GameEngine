@@ -3,6 +3,7 @@
 #include "TextureComponent.h" // Required for SetSource
 #include "Renderer.h" // Required for Renderer instance
 #include "LivesUIComponent.h"
+#include "FruitBehavior.h"
 
 void PacmanGrid::loadGrid(const std::string& filePath)
 {
@@ -141,7 +142,7 @@ void PacmanGrid::UpdatePacman(dae::GameObject* pacman)
 		}
 	}
 
-	if (m_pFruit && !m_FruitEaten)
+	if ((m_pFruit && !m_FruitEaten && m_pFruit->GetComponent<FruitBehavior>()->IsSpawned()))
 	{
 		const auto fruitWorldPos = m_pFruit->GetWorldPosition();
 		const auto fruitGridPosPair = WorldToGridPosition(fruitWorldPos.x, fruitWorldPos.y);

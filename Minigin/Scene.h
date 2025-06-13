@@ -3,10 +3,10 @@
 #include <vector>
 #include <memory>
 
+#include "GameObject.h"
+
 namespace dae
 {
-    class GameObject;
-
     class Scene final
     {
     public:

@@ -160,11 +160,11 @@ std::shared_ptr<dae::Command> CreateCommand(const CommandParameters& command)
 	else if (command.commandType == "saveHighscore") {
 		return std::make_shared<SaveHighscoreCommand>(command.gameObject);
 	}
-	else if(command.commandType == "openMainMenu")
+	else if (command.commandType == "openMainMenu")
 	{
 		return std::make_shared<OpenMainMenuCommand>();
 	}
-	else if(command.commandType == "openHighscoreMenu")
+	else if (command.commandType == "openHighscoreMenu")
 	{
 		return std::make_shared<OpenHighscoreMenuCommand>();
 	}
@@ -224,7 +224,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			if (objectJson.contains("parent"))
 			{
 				std::string parentName = objectJson["parent"];
-			auto it = gameObjectMap.find(parentName);
+				auto it = gameObjectMap.find(parentName);
 				if (it != gameObjectMap.end())
 				{
 					gameObject = std::make_unique<dae::GameObject>(it->second);
@@ -356,7 +356,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 							pendingReg.msPacmanObjectName = gridComponentJson["registerMsPacman"];
 						}
 
-						if(gridComponentJson.contains("registerPacman"))
+						if (gridComponentJson.contains("registerPacman"))
 						{
 							pendingReg.pacmanObjectName = gridComponentJson["registerPacman"];
 						}
@@ -374,7 +374,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 							}
 						}
 
-						if(gridComponentJson.contains("registerLives"))
+						if (gridComponentJson.contains("registerLives"))
 						{
 							pendingReg.livesObjectName = gridComponentJson["registerLives"];
 						}
@@ -484,13 +484,13 @@ void GameLoader::loadGameJSON(const std::string& path)
 						if (componentJson["ghostStateComponent"].contains("playerMovement"))
 						{
 							//AddKeyboardGhostMovement(&comp,sceneJson["name"]);
-							if(componentJson["ghostStateComponent"]["playerMovement"].contains("controllerIndex"))
+							if (componentJson["ghostStateComponent"]["playerMovement"].contains("controllerIndex"))
 							{
 								int controllerIndex = componentJson["ghostStateComponent"]["playerMovement"]["controllerIndex"];
 								AddControllerGhostMovement(controllerIndex, &comp, sceneJson["name"]);
 							}
 						}
-						
+
 					}
 
 					//PickUpPelletsComponent
@@ -674,7 +674,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 				}
 				else
 				{
-					std::cerr << "Warning: uiKeyboardBinding specified for object without ButtonManagerComponent" << std::endl;
+					std::cout << "Warning: uiKeyboardBinding specified for object without ButtonManagerComponent" << std::endl;
 				}
 			}
 
@@ -688,7 +688,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 				}
 				else
 				{
-					std::cerr << "Warning: uiKeyboardBinding specified for object without ButtonManagerComponent" << std::endl;
+					std::cout << "Warning: uiKeyboardBinding specified for object without ButtonManagerComponent" << std::endl;
 				}
 			}
 
@@ -763,11 +763,11 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find MsPacman GameObject with name '" << regInfo.msPacmanObjectName << "' for grid registration post-load." << std::endl;
+				std::cout << "Error: Could not find MsPacman GameObject with name '" << regInfo.msPacmanObjectName << "' for grid registration post-load." << std::endl;
 			}
 		}
 
-		if(!regInfo.pacmanObjectName.empty())
+		if (!regInfo.pacmanObjectName.empty())
 		{
 			auto it = gameObjectMap.find(regInfo.pacmanObjectName);
 			if (it != gameObjectMap.end())
@@ -776,7 +776,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find Pacman GameObject with name '" << regInfo.pacmanObjectName << "' for grid registration post-load." << std::endl;
+				std::cout << "Error: Could not find Pacman GameObject with name '" << regInfo.pacmanObjectName << "' for grid registration post-load." << std::endl;
 			}
 		}
 
@@ -789,7 +789,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find Fruit GameObject with name '" << regInfo.fruitObjectName << "' for grid registration post-load." << std::endl;
+				std::cout << "Error: Could not find Fruit GameObject with name '" << regInfo.fruitObjectName << "' for grid registration post-load." << std::endl;
 			}
 		}
 
@@ -802,10 +802,10 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find Ghost GameObject with name '" << ghostName << "' for grid registration post-load." << std::endl;
+				std::cout << "Error: Could not find Ghost GameObject with name '" << ghostName << "' for grid registration post-load." << std::endl;
 			}
 		}
-		if(!regInfo.livesObjectName.empty())
+		if (!regInfo.livesObjectName.empty())
 		{
 			auto it = gameObjectMap.find(regInfo.livesObjectName);
 			if (it != gameObjectMap.end())
@@ -814,7 +814,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find Lives UI GameObject with name '" << regInfo.livesObjectName << "' for grid registration post-load." << std::endl;
+				std::cout << "Error: Could not find Lives UI GameObject with name '" << regInfo.livesObjectName << "' for grid registration post-load." << std::endl;
 			}
 		}
 	}
@@ -833,13 +833,13 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find Button GameObject with name '" << buttonName << "' for button manager registration post-load." << std::endl;
+				std::cout << "Error: Could not find Button GameObject with name '" << buttonName << "' for button manager registration post-load." << std::endl;
 			}
 		}
 	}
 
 	// Process highscore display registrations
-	for(const auto& regInfo : allPendingHighscoreDisplayRegistrations)
+	for (const auto& regInfo : allPendingHighscoreDisplayRegistrations)
 	{
 		if (!regInfo.highscoreManager) continue;
 		for (int i{}; i < static_cast<int>(regInfo.highscoreDisplaysObjectName.size()); ++i)
@@ -851,7 +851,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find Highscore Display GameObject with name '" << regInfo.highscoreDisplaysObjectName[i] << "' for highscore manager registration post-load." << std::endl;
+				std::cout << "Error: Could not find Highscore Display GameObject with name '" << regInfo.highscoreDisplaysObjectName[i] << "' for highscore manager registration post-load." << std::endl;
 			}
 		}
 
@@ -864,7 +864,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find name Display GameObject with name '" << regInfo.nameDisplaysObjectName[i] << "' for highscore manager registration post-load." << std::endl;
+				std::cout << "Error: Could not find name Display GameObject with name '" << regInfo.nameDisplaysObjectName[i] << "' for highscore manager registration post-load." << std::endl;
 			}
 		}
 
@@ -878,11 +878,11 @@ void GameLoader::loadGameJSON(const std::string& path)
 		}
 	}
 
-	for(auto& regInfo : allPendingCommandRegistrations)
+	for (auto& regInfo : allPendingCommandRegistrations)
 	{
 		if (!regInfo.buttonComponent) continue;
-		
-		if(!regInfo.commandParameters.gameObjectName.empty())
+
+		if (!regInfo.commandParameters.gameObjectName.empty())
 		{
 			auto it = gameObjectMap.find(regInfo.commandParameters.gameObjectName);
 			if (it != gameObjectMap.end())
@@ -891,7 +891,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 			else
 			{
-				std::cerr << "Error: Could not find GameObject with name '" << regInfo.commandParameters.gameObjectName << "' for command registration post-load." << std::endl;
+				std::cout << "Error: Could not find GameObject with name '" << regInfo.commandParameters.gameObjectName << "' for command registration post-load." << std::endl;
 				continue; // Skip this command if the GameObject is not found
 			}
 		}
@@ -903,7 +903,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 		}
 		else
 		{
-			std::cerr << "Error: Could not create command for button registration post-load." << std::endl;
+			std::cout << "Error: Could not create command for button registration post-load." << std::endl;
 		}
 	}
 	for (auto& regInfo : allPendingHighscoreBindingRegistrations)
@@ -919,7 +919,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 		}
 	}
 
-	for(auto& highscoreManagerObject : HighScoreManagerObjects)
+	for (auto& highscoreManagerObject : HighScoreManagerObjects)
 	{
 		auto highscoreManager = highscoreManagerObject->GetComponent<HighScoreManager>();
 		if (highscoreManager)
@@ -928,7 +928,7 @@ void GameLoader::loadGameJSON(const std::string& path)
 		}
 		else
 		{
-			std::cerr << "Error: HighScoreManager component not found on GameObject." << std::endl;
+			std::cout << "Error: HighScoreManager component not found on GameObject." << std::endl;
 		}
 	}
 
@@ -953,7 +953,4 @@ void GameLoader::loadGameJSON(const std::string& path)
 			}
 		}
 	}
-
-	
 }
-

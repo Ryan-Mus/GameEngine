@@ -26,6 +26,8 @@ class FruitBehavior final : public dae::Component, public MsPacmanObserver
 public:
 	explicit FruitBehavior(dae::GameObject* owner);
 
+	bool IsSpawned() { return m_IsSpawned; };
+
 private:
 	void Update() override;
 
