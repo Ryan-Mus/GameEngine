@@ -1,4 +1,4 @@
-# Controls for msPacman
+## Controls for msPacman
 DPAD for movement/menus
 A to confirm
 
@@ -8,20 +8,51 @@ Enter for confirm
 F1 to skip a level 
 F2 to mute.
 
-# Minigin
+## Game Engine Fundamentals
+This game engine is made for 2D games. 
+### GameObjects
+gameobjects can be linked with eachother with the parent-child relation.
+Gameobjects have a worldspace and localspace.
+### Components
+gameobjects can have custom components.
 
-Minigin is a very small project using [SDL2](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D c++ game projects. It is in no way a game engine, only a barebone start project where everything sdl related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes.
+List of provided components:
+  - ButtonComponent
+  - ButtonManagerComponent
+  - FpsComponent
+  - SpriteSheetAnimatorComponent
+  - TextComponent
+  - TextureComponent
 
-[![Build Status](https://github.com/avadae/minigin/actions/workflows/msbuild.yml/badge.svg)](https://github.com/avadae/msbuild/actions)
-[![GitHub Release](https://img.shields.io/github/v/release/avadae/minigin?logo=github&sort=semver)](https://github.com/avadae/minigin/releases/latest)
+### Service Locator
+Game engine has service locator where currently can get the soundservice
 
-# Goal
+### Commands
+The engine can make use of commands to execute certain code. Is used for button presses and for input. 
 
-Minigin can/may be used as a start project for the exam assignment in the course [Programming 4](https://youtu.be/j96Oh6vzhmg) at DAE. In that assignment students need to recreate a popular 80's arcade game with a game engine they need to program themselves. During the course we discuss several game programming patterns, using the book '[Game Programming Patterns](https://gameprogrammingpatterns.com/)' by [Robert Nystrom](https://github.com/munificent) as reading material. 
+### Input Manager
+Keyboard and controller are supported to handle input. Execute custom commands depending on keystate of keyboard or controller. Input handled by xinput.
 
-# Disclaimer
+### Scene Manager
+Make different scenes using the scene manager and easily switch scenes.
 
-Minigin is, despite perhaps the suggestion in its name, **not** a game engine. It is just a very simple sdl2 ready project with some of the scaffolding in place to get started. None of the patterns discussed in the course are used yet (except singleton which use we challenge during the course). It is up to the students to implement their own vision for their engine, apply patterns as they see fit, create their game as efficient as possible.
+### Events
+Subject and observer class can be used to make use of events.
+
+### Time Singleton
+Acces the deltatime anywhere by using the engine time singleton.
+
+## Game Engine special Functionalities
+### Sound Manager
+The sound manager class can multithread any soundservice.
+SDL sound service is provided by the engine.
+### SpriteSheet Animator
+Easily add animations to a gameobject with a texture. 
+All animations should be on the same texture file.
+### Button and ButtonManager
+Easily make menus for keyboard and controller with the use of buttons and the buttons manager to navigate all the buttons>
+
+
 
 # Use
 
