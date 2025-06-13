@@ -212,6 +212,8 @@
     <ClInclude Include="PacmanMovement.h" />
     <ClInclude Include="PickUpPelletsComponent.h" />
     <ClInclude Include="MainMenuButtonCommands.h" />
+    <ClInclude Include="PlayerGhostBindings.h" />
+    <ClInclude Include="PlayerGhostCommands.h" />
     <ClInclude Include="RotatorComponent.h" />
     <ClInclude Include="ScorePopUp.h" />
     <ClInclude Include="ScoreUIcomponent.h" />

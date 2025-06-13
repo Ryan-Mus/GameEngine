@@ -3,6 +3,7 @@
 #include "FrightenedState.h"
 #include "SpriteSheetAnimatorComponent.h"
 #include "GhostStateComponent.h"
+#include "GameObject.h"
 
 void ChaseState::OnEnter()
 {
@@ -65,6 +66,13 @@ std::unique_ptr<GhostState> ChaseState::Update()
 			auto pacmanDirection = m_pGhost->GetComponent<GhostMovement>()->GetDirection();
 			target = { pacmanPos.x, pacmanPos.y + pacmanDirection.y * 3 };
 			break;
+		}
+		case GhostType::PlayerGhost:
+		{
+			auto stateComponent = m_pGhost->GetComponent<GhostStateComponent>();
+			auto ghostPos = m_pGhost->GetLocalPosition();
+			auto ghostGridPos = m_pGrid->LocalToGridPosition(ghostPos.x, ghostPos.y);
+			target = { ghostGridPos.first + stateComponent->GetPlayerDirection().x, ghostGridPos.second + stateComponent->GetPlayerDirection().y };
 		}
 	default:
 		break;

@@ -185,5 +185,11 @@
     <ClInclude Include="FKeyBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerGhostCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGhostBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

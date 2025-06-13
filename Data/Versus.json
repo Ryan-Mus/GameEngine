@@ -1,0 +1,1007 @@
+{
+    "scenes": [
+      {
+        "name": "Versus",
+        "gameObjects": [
+          {
+            "name": "grid",
+            "position": [0, 64],
+			"skipLevel":{}, 
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 228,
+                  "y": 0,
+                  "width": 224,
+                  "height": 248
+                }
+              },
+              {
+                "pacmanGrid": {
+                  "initialLevelIndex": 0,
+                  "levels": [
+                    {
+                      "gridFile": "Level1.txt",
+                      "textureSourceX": 228,
+                      "textureSourceY": 0,
+                      "textureSourceWidth": 224,
+                      "textureSourceHeight": 248
+                    },
+                    {
+                      "gridFile": "Level2.txt",
+                      "textureSourceX": 228,
+                      "textureSourceY": 248,
+                      "textureSourceWidth": 224,
+                      "textureSourceHeight": 248
+                    },
+                    {
+                      "gridFile": "Level3.txt",
+                      "textureSourceX": 228,
+                      "textureSourceY": 496,
+                      "textureSourceWidth": 224,
+                      "textureSourceHeight": 248
+                    }
+                  ],
+                  "registerMsPacman": "msPacman",
+                  "registerFruit": "fruit",
+                  "registerGhosts": [
+                    "Blinky",
+                    "Pinky",
+                    "Inky",
+                    "Clyde"
+                  ],
+				  "registerLives": "livesDisplay"
+                }
+              }
+            ]
+          },
+          {
+            "name": "msPacman",
+            "parent": "grid",
+            "gridPosition": 
+            {
+              "pos": [14, 23],
+              "grid": "grid"
+            },
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 456,
+                  "y": 0,
+                  "width": 16,
+                  "height": 16,
+                  "offset": [-4, -4]
+                }
+              },
+              {
+                "pacmanMovement": {
+                  "speed": 200.0,
+                  "grid": "grid"
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "Right",
+                      "loop": true,
+                      "frames": [
+                        [456, 0, 16, 16, 0.1],
+                        [472, 0, 16, 16, 0.1],
+                        [488, 0, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Left",
+                      "loop": true,
+                      "frames": [
+                        [456, 16, 16, 16, 0.1],
+                        [472, 16, 16, 16, 0.1],
+                        [488, 16, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Up",
+                      "loop": true,
+                      "frames": [
+                        [456, 32, 16, 16, 0.1],
+                        [472, 32, 16, 16, 0.1],
+                        [488, 32, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Down",
+                      "loop": true,
+                      "frames": [
+                        [456, 48, 16, 16, 0.1],
+                        [472, 48, 16, 16, 0.1],
+                        [488, 48, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Death",
+                      "loop": false,
+                      "frames": [
+                        [472, 0, 16, 16, 0.1],
+                        [472, 48, 16, 16, 0.1],
+                        [472, 16, 16, 16, 0.1],
+                        [472, 32, 16, 16, 0.1],
+                        [472, 0, 16, 16, 0.1],
+                        [472, 48, 16, 16, 0.1],
+                        [472, 16, 16, 16, 0.1],
+                        [472, 32, 16, 16, 0.1],
+                        [472, 0, 16, 16, 0.1]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "dieComponent":
+                {
+  
+                }
+              }
+            ],
+            "keyboardMovement": {},
+            "controllerMovement": {
+              "controllerIndex": 1
+            }
+          },
+          {	
+            "name": "Blinky",
+            "parent": "grid",
+            "components": [
+              {
+                "textureComponent": 
+                {
+                  "x": 456,
+                  "y": 64,
+                  "width": 16,
+                  "height": 16,
+                  "offset": [-4, -4]
+                }
+              },
+              {
+                "spriteSheetAnimator": 
+                {
+                  "animations": 
+                  [
+                    {
+                      "name": "Right",
+                      "loop": true,
+                      "frames": [
+                        [456, 64, 16, 16, 0.1],
+                        [472, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Left",
+                      "loop": true,
+                      "frames": [
+                        [488, 64, 16, 16, 0.1],
+                        [504, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Up",
+                      "loop": true,
+                      "frames": [
+                        [520, 64, 16, 16, 0.1],
+                        [536, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Down",
+                      "loop": true,
+                      "frames": [
+                        [552, 64, 16, 16, 0.1],
+                        [568, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Frightened",
+                      "loop": true,
+                      "frames": [
+                        [584, 64, 16, 16, 0.1],
+                        [600, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "FrightenedEnd",
+                      "loop": true,
+                      "frames": [
+                        [584, 64, 16, 16, 0.1],
+                                  [616, 64, 16, 16, 0.1],
+                                  [600, 64, 16, 16, 0.1],
+                        [632, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "EyesRight",
+                      "loop": true,
+                      "frames": [
+                        [584, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesLeft",
+                      "loop": true,
+                      "frames": [
+                        [600, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesUp",
+                      "loop": true,
+                      "frames": [
+                        [616, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesDown",
+                      "loop": true,
+                      "frames": [
+                        [632, 80, 16, 16, 10]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                  "ghostMovement": 
+                  {
+                      "speed": 150.0,
+                      "grid": "grid"
+                  }
+              },
+              {
+                  "ghostStateComponent": 
+                  {
+                  "initialState": "StartState",
+                  "ghostType": "PlayerGhost",
+				  "playerMovement": {"controllerIndex": 0}
+                  }
+              }
+            ]
+          },
+          {
+            "name": "Pinky",
+            "parent": "grid",
+            "components": [
+              {
+                "textureComponent": 
+                {
+                  "x": 456,
+                  "y": 80,
+                  "width": 16,
+                  "height": 16,
+                  "offset": [-4, -4]
+                }
+              },
+              {
+                "spriteSheetAnimator": 
+                {
+                  "animations": 
+                  [
+                    {
+                      "name": "Right",
+                      "loop": true,
+                      "frames": [
+                        [456, 80, 16, 16, 0.1],
+                        [472, 80, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Left",
+                      "loop": true,
+                      "frames": [
+                        [488, 80, 16, 16, 0.1],
+                        [504, 80, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Up",
+                      "loop": true,
+                      "frames": [
+                        [520, 80, 16, 16, 0.1],
+                        [536, 80, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Down",
+                      "loop": true,
+                      "frames": [
+                        [552, 80, 16, 16, 0.1],
+                        [568, 80, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Frightened",
+                      "loop": true,
+                      "frames": [
+                        [584, 64, 16, 16, 0.1],
+                        [600, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "FrightenedEnd",
+                      "loop": true,
+                      "frames": [
+                        [584, 64, 16, 16, 0.1],
+                                  [616, 64, 16, 16, 0.1],
+                                  [600, 64, 16, 16, 0.1],
+                        [632, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "EyesRight",
+                      "loop": true,
+                      "frames": [
+                        [584, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesLeft",
+                      "loop": true,
+                      "frames": [
+                        [600, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesUp",
+                      "loop": true,
+                      "frames": [
+                        [616, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesDown",
+                      "loop": true,
+                      "frames": [
+                        [632, 80, 16, 16, 10]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                  "ghostMovement": 
+                  {
+                      "speed": 150.0,
+                      "grid": "grid"
+                  }
+              },
+              {
+                  "ghostStateComponent": 
+                  {
+                  "initialState": "StartState",
+                  "ghostType": "Pinky"
+                  }
+              }
+            ]
+          },
+          {
+            "name": "Inky",
+            "parent": "grid",
+            "components": [
+              {
+                "textureComponent": 
+                {
+                  "x": 456,
+                  "y": 96,
+                  "width": 16,
+                  "height": 16,
+                  "offset": [-4, -4]
+                }
+              },
+              {
+                "spriteSheetAnimator": 
+                {
+                  "animations": 
+                  [
+                    {
+                      "name": "Right",
+                      "loop": true,
+                      "frames": [
+                        [456, 96, 16, 16, 0.1],
+                        [472, 96, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Left",
+                      "loop": true,
+                      "frames": [
+                        [488, 96, 16, 16, 0.1],
+                        [504, 96, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Up",
+                      "loop": true,
+                      "frames": [
+                        [520, 96, 16, 16, 0.1],
+                        [536, 96, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Down",
+                      "loop": true,
+                      "frames": [
+                        [552, 96, 16, 16, 0.1],
+                        [568, 96, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Frightened",
+                      "loop": true,
+                      "frames": [
+                        [584, 64, 16, 16, 0.1],
+                        [600, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "FrightenedEnd",
+                      "loop": true,
+                      "frames": [
+                        [584, 64, 16, 16, 0.1],
+                                  [616, 64, 16, 16, 0.1],
+                                  [600, 64, 16, 16, 0.1],
+                        [632, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "EyesRight",
+                      "loop": true,
+                      "frames": [
+                        [584, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesLeft",
+                      "loop": true,
+                      "frames": [
+                        [600, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesUp",
+                      "loop": true,
+                      "frames": [
+                        [616, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesDown",
+                      "loop": true,
+                      "frames": [
+                        [632, 80, 16, 16, 10]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                  "ghostMovement": 
+                  {
+                      "speed": 150.0,
+                      "grid": "grid"
+                  }
+              },
+              {
+                  "ghostStateComponent": 
+                  {
+                  "initialState": "StartState",
+                  "ghostType": "Inky"
+                  }
+              }
+            ]
+          },	
+          {
+            "name": "Clyde",
+            "parent": "grid",
+            "components": [
+              {
+                "textureComponent": 
+                {
+                  "x": 456,
+                  "y": 112,
+                  "width": 16,
+                  "height": 16,
+                  "offset": [-4, -4]
+                }
+              },
+              {
+                "spriteSheetAnimator": 
+                {
+                  "animations": 
+                  [
+                    {
+                      "name": "Right",
+                      "loop": true,
+                      "frames": [
+                        [456, 112, 16, 16, 0.1],
+                        [472, 112, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Left",
+                      "loop": true,
+                      "frames": [
+                        [488, 112, 16, 16, 0.1],
+                        [504, 112, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Up",
+                      "loop": true,
+                      "frames": [
+                        [520, 112, 16, 16, 0.1],
+                        [536, 112, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Down",
+                      "loop": true,
+                      "frames": [
+                        [552, 112, 16, 16, 0.1],
+                        [568, 112, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "Frightened",
+                      "loop": true,
+                      "frames": [
+                        [584, 64, 16, 16, 0.1],
+                        [600, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "FrightenedEnd",
+                      "loop": true,
+                      "frames": [
+                        [584, 64, 16, 16, 0.1],
+                                  [616, 64, 16, 16, 0.1],
+                                  [600, 64, 16, 16, 0.1],
+                        [632, 64, 16, 16, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "EyesRight",
+                      "loop": true,
+                      "frames": [
+                        [584, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesLeft",
+                      "loop": true,
+                      "frames": [
+                        [600, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesUp",
+                      "loop": true,
+                      "frames": [
+                        [616, 80, 16, 16, 10]
+                      ]
+                    },
+                    {
+                      "name": "EyesDown",
+                      "loop": true,
+                      "frames": [
+                        [632, 80, 16, 16, 10]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                  "ghostMovement": 
+                  {
+                      "speed": 150.0,
+                      "grid": "grid"
+                  }
+              },
+              {
+                  "ghostStateComponent": 
+                  {
+                  "initialState": "StartState",
+                  "ghostType": "Clyde"
+                  }
+              }
+            ]
+          },
+          {
+            "name": "highScore",
+            "components": [
+              {
+                "textComponent": {
+                  "text": "High Score: 0"
+                }
+              },
+              {
+                "scoreUIComponent": {}
+              }
+            ]
+          },
+          {
+            "name": "livesDisplay",
+            "position": [0, 816],
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 472,
+                  "y": 0,
+                  "width": 1,
+                  "height": 1
+                }
+              },
+              {
+                "livesUIComponent": {}
+              }
+            ]
+          },
+          {
+            "name": "scorePopUp",
+            "parent": "grid",
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 456,
+                  "y": 128,
+                  "width": 1,
+                  "height": 1
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "200",
+                      "loop": false,
+                      "frames": [
+                        [456, 128, 16, 16, 1.0],
+                        [456, 128, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "400",
+                      "loop": false,
+                      "frames": [
+                        [472, 128, 16, 16, 1.0],
+                        [456, 128, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "800",
+                      "loop": false,
+                      "frames": [
+                        [488, 128, 16, 16, 1.0],
+                        [456, 128, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "1600",
+                      "loop": false,
+                      "frames": [
+                        [504, 128, 16, 16, 1.0],
+                        [456, 128, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "cherry",
+                      "loop": false,
+                      "frames": [
+                        [504, 16, 16, 16, 1.0],
+                        [504, 16, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "strawberry",
+                      "loop": false,
+                      "frames": [
+                        [520, 16, 16, 16, 1.0],
+                        [520, 16, 1, 1, 0.1]
+                      ]
+                    },
+                    {
+                      "name": "orange",
+                      "loop": false,
+                      "frames": [
+                        [536, 16, 16, 16, 1.0],
+                        [536, 16, 1, 1, 0.1]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "scorePopUp": {}
+              }
+            ]
+          },
+          {
+            "name": "fruit",
+            "parent": "grid",
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 504,
+                  "y": 16,
+                  "width": 16,
+                  "height": 16,
+                  "offset": [-4, -4]
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "Cherry",
+                      "loop": true,
+                      "frames": [
+                        [504, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "Strawberry",
+                      "loop": true,
+                      "frames": [
+                        [520, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "Orange",
+                      "loop": true,
+                      "frames": [
+                        [536, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "Idle",
+                      "loop": true,
+                      "frames": [
+                        [504, 0, 1, 1, 1.0]
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "ghostMovement": {
+                  "speed": 100.0,
+                  "grid": "grid"
+                }
+              },
+              {
+                "fruitBehavior": {}
+              }
+            ]
+          },
+		  {
+            "name": "fruitUI",
+			"position": [500, 816],
+            "components": [
+			{
+              "fruitUIComponent":
+			  {
+				  "cherryIcon": "cherryIcon",
+				  "strawberryIcon": "strawberryIcon",
+				  "orangeIcon": "orangeIcon"
+			  }
+			}
+            ]
+          },
+		  {
+			"name": "cherryIcon",
+			"parent": "fruitUI",
+			"position": [0,0],
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 504,
+                  "y": 0,
+                  "width": 1,
+                  "height": 1
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "true",
+                      "loop": false,
+                      "frames": [
+                        [504, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "false",
+                      "loop": false,
+                      "frames": [
+                        [504, 0, 1, 1, 1.0]
+                      ]
+                    }
+                  ]
+                }
+              }
+            ] 
+		  },
+		  {
+			"name": "strawberryIcon",
+			"parent": "fruitUI",
+			"position": [48,0],
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 520,
+                  "y": 0,
+                  "width": 1,
+                  "height": 1
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "true",
+                      "loop": false,
+                      "frames": [
+                        [520, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "false",
+                      "loop": false,
+                      "frames": [
+                        [520, 0, 1, 1, 1.0]
+                      ]
+                    }
+                  ]
+                }
+              }
+            ] 
+		  },
+		  {
+			"name": "orangeIcon",
+			"parent": "fruitUI",
+			"position": [96,0],
+            "components": [
+              {
+                "textureComponent": {
+                  "x": 536,
+                  "y": 0,
+                  "width": 1,
+                  "height": 1
+                }
+              },
+              {
+                "spriteSheetAnimator": {
+                  "animations": [
+                    {
+                      "name": "true",
+                      "loop": false,
+                      "frames": [
+                        [536, 0, 16, 16, 1.0]
+                      ]
+                    },
+                    {
+                      "name": "false",
+                      "loop": false,
+                      "frames": [
+                        [536, 0, 1, 1, 1.0]
+                      ]
+                    }
+                  ]
+                }
+              }
+            ] 
+		  }
+        ],
+        "observerBindings": [
+        {
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"		
+          },
+          "observer": {
+              "gameObject": "highScore",
+              "component": "scoreUIComponent"
+          }
+        },
+        {
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"	
+          },
+          "observer": {
+              "gameObject": "Blinky",
+              "component": "ghostStateComponent"
+          }
+        },
+        {
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"	
+          },
+          "observer": {
+              "gameObject": "Pinky",
+              "component": "ghostStateComponent"
+          }
+        },
+        {
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"	
+          },
+          "observer": {
+              "gameObject": "Inky",
+              "component": "ghostStateComponent"
+          }
+        },
+        {
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"	
+          },
+          "observer": {
+              "gameObject": "Clyde",
+              "component": "ghostStateComponent"
+          }
+        },
+        {
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"
+          },
+          "observer": {
+              "gameObject": "msPacman",
+              "component": "dieComponent"
+          }
+        },
+        {
+          "subject": {
+            "gameObject": "grid",
+            "component": "pacmanGrid"
+          },
+          "observer": {
+            "gameObject": "livesDisplay",
+            "component": "livesUIComponent"
+          }
+        },
+        {
+          "subject": {
+            "gameObject": "grid",
+            "component": "pacmanGrid"
+          },
+          "observer": {
+            "gameObject": "scorePopUp",
+            "component": "scorePopUp"
+          }
+        },
+        {
+          "subject": {
+            "gameObject": "grid",
+            "component": "pacmanGrid"
+          },
+          "observer": {
+            "gameObject": "fruit",
+            "component": "fruitBehavior"
+          }
+        },
+		{
+          "subject": {
+            "gameObject": "grid",
+            "component": "pacmanGrid"
+          },
+          "observer": {
+            "gameObject": "fruitUI",
+            "component": "fruitUIComponent"
+          }
+        }
+        ]
+      }
+    ]
+}

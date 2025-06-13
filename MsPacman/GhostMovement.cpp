@@ -41,8 +41,8 @@ glm::ivec2 GhostMovement::CalculateNextStep(const std::pair<int, int>& start, co
 
     // Direction vectors for adjacent cells (up, down, left, right)
     std::vector<glm::ivec2> directions = {
-        {0, 1}, // Up
-        {0, -1},  // Down
+        {0, -1}, // Up
+        {0, 1},  // Down
         {-1, 0}, // Left
         {1, 0}   // Right
     };

@@ -53,6 +53,7 @@
 #include "HighscoreBinding.h"
 #include "FruitUIComponent.h"
 #include "FKeyBindings.h"
+#include "PlayerGhostBindings.h"
 
 #include  "CustomPacmanDefines.h"
 
@@ -469,9 +470,26 @@ void GameLoader::loadGameJSON(const std::string& path)
 								type = GhostType::Clyde;
 								startPosition = { 16, 14 };
 							}
+							else if (ghostType == "PlayerGhost")
+							{
+								type = GhostType::PlayerGhost;
+								startPosition = { 13, 11 };
+							}
 						}
+
 						// Add GhostStateComponent
-						gameObject->AddComponent<GhostStateComponent>(std::move(initialState), type, startPosition);
+						auto& comp = gameObject->AddComponent<GhostStateComponent>(std::move(initialState), type, startPosition);
+
+						if (componentJson["ghostStateComponent"].contains("playerMovement"))
+						{
+							//AddKeyboardGhostMovement(&comp,sceneJson["name"]);
+							if(componentJson["ghostStateComponent"]["playerMovement"].contains("controllerIndex"))
+							{
+								int controllerIndex = componentJson["ghostStateComponent"]["playerMovement"]["controllerIndex"];
+								AddControllerGhostMovement(controllerIndex, &comp, sceneJson["name"]);
+							}
+						}
+						
 					}
 
 					//PickUpPelletsComponent

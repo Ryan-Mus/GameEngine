@@ -17,6 +17,7 @@ public:
 		auto& GameLoader = GameLoader::GetInstance();
 		GameLoader.loadGameJSON("../data/Solo.json");
 		sceneManager.SetActiveScene("Solo");
+		std::cout << "Solo game loaded." << std::endl;
 	}
 };
 
@@ -32,6 +33,7 @@ class StartCoopLevelCommand final: public dae::Command
 		auto& GameLoader = GameLoader::GetInstance();
 		GameLoader.loadGameJSON("../data/Coop.json");
 		sceneManager.SetActiveScene("Coop");
+		std::cout << "Co-op game loaded." << std::endl;
 	}
 };
 
@@ -47,6 +49,7 @@ class StartVersusLevelCommand final: public dae::Command
 		auto& GameLoader = GameLoader::GetInstance();
 		GameLoader.loadGameJSON("../data/Versus.json");
 		sceneManager.SetActiveScene("Versus");
+		std::cout << "Versus game loaded." << std::endl;
 	}
 };
 
@@ -63,6 +66,7 @@ public:
 		GameLoader.loadGameJSON("../data/HighscoreMenu.json");
 
 		sceneManager.SetActiveScene("HighscoreMenu");
+		std::cout << "Highscore Menu loaded." << std::endl;
 	}
 };
 
