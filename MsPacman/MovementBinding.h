@@ -8,7 +8,7 @@ namespace dae
 	void AddControllerMovement(int playerIndex, GameObject* pOwner, const std::string& sceneName)
 	{
 		auto& input = InputManager::GetInstance();
-		input.AddController(playerIndex);
+		if(!input.GetController(playerIndex)) input.AddController(playerIndex);
 
 		input.BindControllerCommand(XINPUT_GAMEPAD_DPAD_DOWN,
 			playerIndex,

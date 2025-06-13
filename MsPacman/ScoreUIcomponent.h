@@ -50,12 +50,13 @@ namespace dae
 				break;
 			case MsPacmanEvent::EATEN_BIG_PELLET:
 				AddScore(50);
-				dae::ServiceLocator::GetSoundService().PlaySound("eatBigPellet", 0);
+				dae::ServiceLocator::GetSoundService().PlaySound("eatBigPellet", 2);
 				m_Streak = 0; // Reset streak on big pellet
 				m_ElapsedTime = 0; // Reset elapsed time on big pellet
 				break;
 			case MsPacmanEvent::EATEN_GHOST:
 				++m_Streak;
+				dae::ServiceLocator::GetSoundService().PlaySound("ghostEat");
 				switch (m_Streak)
 				{
 				case 1:
@@ -87,6 +88,7 @@ namespace dae
 			case MsPacmanEvent::GAME_OVER:
 				SaveScore();
 				m_EndOfGame = true;
+				dae::ServiceLocator::GetSoundService().PlaySound("endSong", 0);
 				
 				break;
 

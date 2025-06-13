@@ -7,7 +7,7 @@
 void AddControllerGhostMovement(int playerIndex, GhostStateComponent* stateComp, const std::string& sceneName)
 {
 	auto& input = dae::InputManager::GetInstance();
-	input.AddController(playerIndex);
+	if (!input.GetController(playerIndex)) input.AddController(playerIndex);
 
 	input.BindControllerCommand(XINPUT_GAMEPAD_DPAD_DOWN,
 		playerIndex,

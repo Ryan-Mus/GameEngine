@@ -24,8 +24,13 @@ void load()
 
 	dae::ServiceLocator::GetSoundService().LoadSound("MsPacman", "Sounds/msstart.wav");
 	dae::ServiceLocator::GetSoundService().LoadSound("eatPellet", "Sounds/msdot.wav");
-	dae::ServiceLocator::GetSoundService().LoadSound("eatBigPellet", "Sounds/msghostblue.wav");
+	dae::ServiceLocator::GetSoundService().LoadSound("eatBigPellet", "Sounds/msghostretreat.wav");
 	dae::ServiceLocator::GetSoundService().LoadSound("Ghost1", "Sounds/msghost1.wav");
+	dae::ServiceLocator::GetSoundService().LoadSound("die", "Sounds/msdie.wav");
+	dae::ServiceLocator::GetSoundService().LoadSound("fruit", "Sounds/msfruit.wav");
+	dae::ServiceLocator::GetSoundService().LoadSound("fruitBounce", "Sounds/msfruitbounce.wav");
+	dae::ServiceLocator::GetSoundService().LoadSound("ghostEat", "Sounds/msghosteat.wav");
+	dae::ServiceLocator::GetSoundService().LoadSound("endSong", "Sounds/mscutscene3.wav");
 
 	dae::ServiceLocator::GetSoundService().PlaySound("MsPacman");
 	dae::ServiceLocator::GetSoundService().SetMasterVolume(32);

@@ -123,7 +123,8 @@ std::unordered_map<std::string, ComponentGetter> componentGetters = {
 	{ "fruitBehavior", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<FruitBehavior>(); } },
 	{ "buttonComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ButtonComponent>(); } },
 	{ "buttonManagerComponent", [](dae::GameObject* obj) -> dae::Component* { return obj->GetComponent<dae::ButtonManagerComponent>(); } },
-	{ "fruitUIComponent", [](dae::GameObject* obj) -> dae::Component* {return obj->GetComponent<FruitUIComponent>(); } }
+	{ "fruitUIComponent", [](dae::GameObject* obj) -> dae::Component* {return obj->GetComponent<FruitUIComponent>(); } },
+	{ "pacmanMovement", [](dae::GameObject* obj) -> dae::Component* {return obj->GetComponent<PacmanMovement>(); } }
 };
 
 dae::Component* GetComponentByName(dae::GameObject* gameObject, const std::string& componentName)
@@ -750,6 +751,8 @@ void GameLoader::loadGameJSON(const std::string& path)
 	for (const auto& regInfo : allPendingGridRegistrations)
 	{
 		if (!regInfo.gridInstance) continue;
+
+		regInfo.gridInstance->Notify(MsPacmanEvent::START_LEVEL);
 
 		if (!regInfo.msPacmanObjectName.empty())
 		{

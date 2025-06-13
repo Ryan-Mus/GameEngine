@@ -7,6 +7,8 @@
 #include "Renderer.h"
 #include "CustomPacmanDefines.h"
 
+#include <ServiceLocator.h>
+
 
 void LivesUIComponent::Render() const
 {
@@ -20,6 +22,7 @@ void LivesUIComponent::Render() const
 void LivesUIComponent::LoseLife()
 {
 	m_Lives--;
+	dae::ServiceLocator::GetSoundService().PlaySound("die");
 }
 
 void LivesUIComponent::ResetLives()

@@ -26,6 +26,7 @@ void AddUIKeyboardBinding(dae::GameObject* pButtonManager, const std::string& sc
 void AddUIControllerBinding(int playerId, dae::GameObject* pButtonManager, const std::string& sceneName = "")
 {
 	auto& input = dae::InputManager::GetInstance();
+	if (!input.GetController(0)) input.AddController(0);
 
 	input.BindControllerCommand(XINPUT_GAMEPAD_DPAD_UP, playerId,
 		dae::KeyState::Pressed,

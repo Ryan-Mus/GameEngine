@@ -1059,8 +1059,28 @@
               "component": "pacmanGrid"
           },
           "observer": {
+              "gameObject": "msPacman",
+              "component": "pacmanMovement"
+          }
+        },
+		{
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"
+          },
+          "observer": {
               "gameObject": "pacman",
               "component": "dieComponent"
+          }
+        },
+		{
+          "subject": {
+              "gameObject": "grid",
+              "component": "pacmanGrid"
+          },
+          "observer": {
+              "gameObject": "pacman",
+              "component": "pacmanMovement"
           }
         },
         {

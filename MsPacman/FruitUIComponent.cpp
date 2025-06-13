@@ -1,6 +1,7 @@
 #include "FruitUIComponent.h"
 #include <SpriteSheetAnimatorComponent.h>
 #include <GameObject.h>
+#include <ServiceLocator.h>
 
 void FruitUIComponent::OnNotify(MsPacmanEvent e)
 {
@@ -11,18 +12,21 @@ void FruitUIComponent::OnNotify(MsPacmanEvent e)
 		{
 			auto anim = m_pFruits[0]->GetComponent<dae::SpriteSheetAnimator>();
 			anim->PlayAnimation("true");
+			dae::ServiceLocator::GetSoundService().PlaySound("fruit");
 			break;
 		}
 		case MsPacmanEvent::EATEN_STRAWBERRY:
 		{
 			auto anim = m_pFruits[1]->GetComponent<dae::SpriteSheetAnimator>();
 			anim->PlayAnimation("true");
+			dae::ServiceLocator::GetSoundService().PlaySound("fruit");
 			break;
 		}
 		case MsPacmanEvent::EATEN_ORANGE:
 		{
 			auto anim = m_pFruits[2]->GetComponent<dae::SpriteSheetAnimator>();
 			anim->PlayAnimation("true");
+			dae::ServiceLocator::GetSoundService().PlaySound("fruit");
 			break;
 		}
 		default:
