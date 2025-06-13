@@ -1,3 +1,13 @@
+# Controls for msPacman
+DPAD for movement/menus
+A to confirm
+
+WASD for movement/menus
+Enter for confirm
+
+F1 to skip a level 
+F2 to mute.
+
 # Minigin
 
 Minigin is a very small project using [SDL2](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D c++ game projects. It is in no way a game engine, only a barebone start project where everything sdl related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes.
