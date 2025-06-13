@@ -15,22 +15,22 @@ HighScoreManager::HighScoreManager(dae::GameObject* pOwner)
 
 void HighScoreManager::AddHighscoreDisplay(dae::GameObject* pDisplayObject, int index)
 {
-    if (index < 0 || index >= m_pHighScoreDisplayObjects.size())
+    if (index < 0 || static_cast<size_t>(index) >= m_pHighScoreDisplayObjects.size())
     {
         return; // Invalid index
     }
-    m_pHighScoreDisplayObjects[index] = pDisplayObject;
-	pDisplayObject->GetComponent<dae::TextComponent>()->SetText("AAA 0");
+    m_pHighScoreDisplayObjects[static_cast<size_t>(index)] = pDisplayObject;
+    pDisplayObject->GetComponent<dae::TextComponent>()->SetText("AAA 0");
 }
 
 void HighScoreManager::AddNameDisplay(dae::GameObject* pDisplayObject, int index)
 {
-    if (index < 0 || index >= m_pNameDisplayObjects.size())
+    if (index < 0 || static_cast<size_t>(index) >= m_pNameDisplayObjects.size())
     {
         return; // Invalid index
     }
-    m_pNameDisplayObjects[index] = pDisplayObject;
-	pDisplayObject->GetComponent<dae::TextComponent>()->SetText("A");
+    m_pNameDisplayObjects[static_cast<size_t>(index)] = pDisplayObject;
+    pDisplayObject->GetComponent<dae::TextComponent>()->SetText("A");
 }
 
 void HighScoreManager::SetLastHighScoreDisplay(dae::GameObject* pDisplayObject)
@@ -40,7 +40,7 @@ void HighScoreManager::SetLastHighScoreDisplay(dae::GameObject* pDisplayObject)
 
 void HighScoreManager::ChangeLetter(bool increase)
 {
-    for (int i{}; i < 3; ++i)
+    for (size_t i = 0; i < 3; ++i)
     {
         auto button = m_pNameDisplayObjects[i]->GetComponent<dae::ButtonComponent>();
         if (button->IsSelected())
@@ -89,7 +89,7 @@ void HighScoreManager::LoadHighScores()
             if (line.length() >= 5) // At minimum "XXX 0"
             {
                 // Extract name (first 3 chars)
-                for (int i = 0; i < 3; ++i)
+                for (size_t i = 0; i < 3; ++i)
                 {
                     m_HighScores[idx].name[i] = line[i];
                 }
@@ -123,7 +123,7 @@ void HighScoreManager::LoadHighScores()
         if (std::getline(lastScoreFile, line) && line.length() >= 5)
         {
             // Extract name (first 3 chars)
-            for (int i = 0; i < 3; ++i)
+            for (size_t i = 0; i < 3; ++i)
             {
                 m_LastHighScore.name[i] = line[i];
             }
@@ -146,12 +146,12 @@ void HighScoreManager::LoadHighScores()
         lastScoreFile.close();
     }
 
-    for (int i{}; i < 10; ++i)
+    for (size_t i = 0; i < 10; ++i)
     {
         m_pHighScoreDisplayObjects[i]->GetComponent<dae::TextComponent>()->SetText(
             std::string(m_HighScores[i].name.begin(), m_HighScores[i].name.end()) + " " +
             std::to_string(m_HighScores[i].score));
-	}
+    }
 
     if (m_pLastHighScoreDisplayObject)
     {
@@ -159,16 +159,16 @@ void HighScoreManager::LoadHighScores()
             std::to_string(m_LastHighScore.score));
     }
 
-	// Update the name display objects
-    for(int i = 0; i < 3; ++i)
+    // Update the name display objects
+    for (size_t i = 0; i < 3; ++i)
     {
         if (i < m_pNameDisplayObjects.size() && m_pNameDisplayObjects[i])
         {
             m_pNameDisplayObjects[i]->GetComponent<dae::TextComponent>()->SetText(
                 std::string(1, m_LastHighScore.name[i]));
         }
-	}
-	std::cout << "High scores loaded successfully." << std::endl;
+    }
+    std::cout << "High scores loaded successfully." << std::endl;
 }
 
 void HighScoreManager::SaveHighScore()
@@ -206,14 +206,14 @@ void HighScoreManager::SaveHighScore()
         highScoreFile.close();
     }
 
-	std::ofstream lastScoreFile("../data/lastscore.txt");
+    std::ofstream lastScoreFile("../data/lastscore.txt");
     if (lastScoreFile.is_open())
     {
         lastScoreFile << "A" << "A" << "A"
             << " " << 0 << std::endl;
         lastScoreFile.close();
-	}
+    }
 
-	std::cout << "High scores saved successfully." << std::endl;
-	LoadHighScores();
+    std::cout << "High scores saved successfully." << std::endl;
+    LoadHighScores();
 }

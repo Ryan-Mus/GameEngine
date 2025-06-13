@@ -36,7 +36,7 @@ private:
 	bool m_IsEaten{ false };
 	bool m_IsSpawned{ false };
 	std::vector<glm::ivec2> m_Path;
-	int m_CurrentPathIndex{ 0 };
+	size_t m_CurrentPathIndex{ 0 };
 
 	FruitType m_FruitType{ FruitType::Cherry };
 };
