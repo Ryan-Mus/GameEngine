@@ -1,3 +1,5 @@
+Git link: https://github.com/Ryan-Mus/GameEngine/
+
 ## Controls for msPacman
 DPAD for movement/menus
 A to confirm
@@ -52,8 +54,5 @@ All animations should be on the same texture file.
 ### Button and ButtonManager
 Easily make menus for keyboard and controller with the use of buttons and the buttons manager to navigate all the buttons>
 
-
-
-# Use
-
-Either download the latest release of this project and compile/run in visual studio or, since students need to have their work on github too, they can use this repository as a template (see the "Use this template" button at the top right corner). There is no point in forking this project.
+## Use
+Download the latest release of this project and compile/run in visual studio
